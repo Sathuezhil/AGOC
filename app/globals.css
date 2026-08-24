@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #1e1e22;
+  --fg: #f7f4ef;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-feature-settings: "ss01" on, "cv11" on;
+}
+
+::selection {
+  background: #c04a31;
+  color: #fff;
+}
+
+.hairline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(77, 116, 54, 0.55),
+    transparent
+  );
+}
+
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.22) 45%,
+    transparent 70%
+  );
+  transition: transform 0.6s ease;
+}
+
+.btn-shine:hover::after {
+  transform: translateX(120%);
+}
+
+.olive-label {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  max-width: 100%;
+  border: 1px solid #7a9e58;
+  border-radius: 999px;
+  padding: 0.42rem 1.1rem;
+}
+
+@keyframes oliveShine {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes oliveIconShine {
+  0%,
+  100% {
+    filter: brightness(1.15) drop-shadow(0 0 5px rgba(184, 224, 138, 0.4));
+  }
+  50% {
+    filter: brightness(1.55) drop-shadow(0 0 8px rgba(220, 245, 180, 0.55));
+  }
+}
+
+.text-olive:not(svg) {
+  background-image: linear-gradient(
+    90deg,
+    #5a8a40 0%,
+    #c8e89a 28%,
+    #f4ffe0 50%,
+    #c8e89a 72%,
+    #5a8a40 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: oliveShine 2.4s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(184, 224, 138, 0.35));
+}
+
+.olive-label.text-olive:not(svg) {
+  filter: drop-shadow(0 0 6px rgba(184, 224, 138, 0.28));
+}
+
+.animate-fadeUp.text-olive:not(svg) {
+  animation:
+    fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    oliveShine 2.4s linear infinite;
+}
+
+.hover\:text-olive:hover:not(svg) {
+  background-image: linear-gradient(
+    90deg,
+    #5a8a40 0%,
+    #c8e89a 28%,
+    #f4ffe0 50%,
+    #c8e89a 72%,
+    #5a8a40 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: oliveShine 2.4s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(184, 224, 138, 0.35));
+}
+
+.text-olive.hover\:text-crimson:hover,
+.group:hover .text-olive.group-hover\:text-crimson {
+  background-image: none;
+  color: #c04a31;
+  -webkit-text-fill-color: #c04a31;
+  filter: none;
+  animation: none;
+}
+
+svg.text-olive,
+.text-olive svg {
+  color: #6b9450;
+  -webkit-text-fill-color: #6b9450;
+  animation: oliveIconShine 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .text-olive:not(svg),
+  .hover\:text-olive:hover:not(svg),
+  .animate-fadeUp.text-olive:not(svg) {
+    background-position: 50% 50%;
+    animation: none !important;
+  }
+
+  svg.text-olive,
+  .text-olive svg {
+    animation: none !important;
+    filter: drop-shadow(0 0 5px rgba(184, 224, 138, 0.4));
+  }
+}
+
+input,
+textarea,
+select {
+  color-scheme: dark;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #f4f4f4;
+  transition: background-color 9999s ease-in-out 0s;
+}
