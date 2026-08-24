@@ -31,6 +31,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const { addEnquiry } = await import("@/lib/enquiries");
+    await addEnquiry({ name, email, phone, service, message });
+
     const key = process.env.RESEND_API_KEY;
     if (key) {
       await fetch("https://api.resend.com/emails", {

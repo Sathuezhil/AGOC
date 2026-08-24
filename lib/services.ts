@@ -1,4 +1,6 @@
 /** Local images live in /public/images */
+import { rewriteImageRefs } from "./media";
+
 export type Service = {
   slug: string;
   title: string;
@@ -8,15 +10,16 @@ export type Service = {
   focus?: string;
   gallery: string[];
   points: string[];
+  hidden?: boolean;
 };
 
-export const services: Service[] = [
+export const DEFAULT_SERVICES: Service[] = [
   {
-    slug: "private-security",
-    title: "Private Security",
-    short: "Discreet protection for people, homes, and businesses.",
+    slug: "private-guarding",
+    title: "Private Guarding Services",
+    short: "Licensed officers for homes, offices, and private sites.",
     summary:
-      "Tailored private protection for individuals, families, and high-value properties. Our officers provide a visible, professional presence with the discretion that sensitive environments require.",
+      "Dedicated private guarding for residences, compounds, offices, and high-value locations. Our licensed officers deliver a calm, professional presence with clear reporting and shift discipline.",
     image: "/images/private-security.jpg",
     focus: "top",
     gallery: [
@@ -25,100 +28,99 @@ export const services: Service[] = [
       "/images/surveillance.jpg",
     ],
     points: [
-      "Trained officers for personal and property protection",
-      "24/7 monitoring with rapid on-ground response",
-      "Access control, alarms, and surveillance integration",
-      "Discreet coverage for high-profile clients",
-      "Risk assessments and emergency coordination",
+      "Licensed, verified private security officers",
+      "Day, night, and 24-hour post coverage",
+      "Visitor control, patrols, and incident logs",
+      "Discreet protection for homes and private clients",
+      "Supervised shifts with a named site contact",
     ],
   },
   {
-    slug: "general-security",
-    title: "Security Guards",
-    short: "Certified guards for commercial, residential, and event sites.",
+    slug: "facility-management",
+    title: "Facility Management Services",
+    short: "Day-to-day site operations kept tidy and under control.",
     summary:
-      "Fully certified security teams deployed across offices, hotels, hospitals, warehouses, cafes, and residential communities throughout Dubai and the UAE.",
-    image: "/images/security-guards.png",
-    focus: "center 38%",
+      "Facility management that keeps buildings running smoothly — access points, common areas, maintenance coordination, and on-site support so your property stays presentable and secure.",
+    image: "/images/office.jpg",
     gallery: [
-      "/images/private-security.jpg",
-      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/building-cleaning.jpg",
       "/images/briefing.jpg",
     ],
     points: [
-      "Licensed, verified, and professionally uniformed staff",
-      "Coverage for commercial, residential, and industrial sites",
-      "Event security and crowd management",
-      "Patrols, visitor control, and incident reporting",
-      "Flexible shifts for day, night, and 24-hour posts",
+      "On-site facility support and coordination",
+      "Common-area upkeep and vendor liaison",
+      "Access and occupancy-aware scheduling",
+      "Reporting that building managers can use",
+      "Aligned with security and housekeeping teams",
     ],
   },
   {
-    slug: "transport-security",
-    title: "Transport Security",
-    short: "Safe movement of people, cargo, and valuables.",
+    slug: "housekeeping",
+    title: "Housekeeping Services",
+    short: "Reliable housekeeping for homes, hotels, and workplaces.",
     summary:
-      "Secure transit for people and goods, supported by trained escorts, real-time tracking, and tightly controlled access from origin to destination.",
-    image: "/images/transport-security.jpg",
+      "Professional housekeeping teams for residential compounds, hotels, offices, and shared facilities. Clean spaces, consistent schedules, and staff who work around how the building is used.",
+    image: "/images/building-cleaning.jpg",
     gallery: [
+      "/images/office.jpg",
       "/images/city.jpg",
-      "/images/object-protection.jpg",
       "/images/hero2.jpg",
     ],
     points: [
-      "Escort teams for people and high-value cargo",
-      "Real-time tracking and route monitoring",
-      "Secure logistics and handover protocols",
-      "Airport, warehouse, and last-mile protection",
-      "Trained personnel for transit risk scenarios",
+      "Residential, hotel, and commercial housekeeping",
+      "Daily, weekly, and deep-clean schedules",
+      "Trained, supervised, uniformed teams",
+      "Supplies and checklists matched to the site",
+      "Quiet service that respects occupants",
     ],
   },
   {
-    slug: "guard-house",
-    title: "Guard House",
-    short: "Staffed entry stations that control who comes in.",
+    slug: "lifeguard",
+    title: "Lifeguard Services",
+    short: "Trained lifeguards for pools, beaches, and leisure sites.",
     summary:
-      "A professional presence at your gate. We staff and operate guard houses with CCTV, communication systems, and clear access procedures for communities and facilities.",
-    image: "/images/city.jpg",
+      "Qualified lifeguard coverage for pools, beach clubs, hotels, and residential leisure areas. Vigilant water safety with clear emergency procedures and professional presentation.",
+    image: "/images/hero2.jpg",
     gallery: [
-      "/images/surveillance.jpg",
+      "/images/city.jpg",
       "/images/security-guards.png",
-      "/images/office.jpg",
-    ],
-    points: [
-      "Entry-point staffing and visitor verification",
-      "CCTV monitoring from the gatehouse",
-      "Access logs and communication with site teams",
-      "Weather-ready, durable post operations",
-      "Clear protocols for deliveries and contractors",
-    ],
-  },
-  {
-    slug: "object-protection",
-    title: "Object Protection",
-    short: "Precision security for valuables in storage or transit.",
-    summary:
-      "Focused protection for high-value items — during storage, exhibition, or movement — with monitoring, handling protocols, and loss-prevention measures.",
-    image: "/images/object-protection.jpg",
-    gallery: [
-      "/images/transport-security.jpg",
       "/images/briefing.jpg",
-      "/images/data-protection.jpg",
     ],
     points: [
-      "Protection for high-value assets and collections",
-      "Monitored storage and transit coverage",
-      "Theft, loss, and damage prevention",
-      "Custom plans for unique objects",
-      "Chain-of-custody procedures",
+      "Certified lifeguards for pools and leisure sites",
+      "Rescue readiness and emergency response",
+      "Shift cover matched to peak swimming hours",
+      "Clear pool rules and guest guidance",
+      "Coordination with facility and medical contacts",
     ],
   },
   {
-    slug: "club-bouncers",
-    title: "Club Bouncers",
-    short: "Calm, firm door control for nightlife venues.",
+    slug: "cctv-control",
+    title: "CCTV Control Services",
+    short: "Live monitoring and control-room coverage for your cameras.",
     summary:
-      "Door teams who check IDs, manage capacity, and keep venues safe without turning the night into a confrontation. Professional presence, clear judgement.",
+      "CCTV control services that watch the feed — not just record it. Operators monitor cameras, raise alerts, and coordinate response so incidents are caught early across your sites.",
+    image: "/images/surveillance.jpg",
+    gallery: [
+      "/images/data-protection.jpg",
+      "/images/office.jpg",
+      "/images/briefing.jpg",
+    ],
+    points: [
+      "Live CCTV monitoring and alert handling",
+      "Control-room operators for multi-camera sites",
+      "Incident logging and escalation protocols",
+      "Integration with guards and access control",
+      "Coverage windows tailored to risk hours",
+    ],
+  },
+  {
+    slug: "events-club-bouncer",
+    title: "Events & Club Bouncer Security Services",
+    short: "Door teams and event security that keep nights under control.",
+    summary:
+      "Event and club security with trained door teams who manage entry, capacity, and behaviour without turning the night into a confrontation. Professional presence for venues, parties, and corporate gatherings.",
     image: "/images/club-bouncers.jpg",
     gallery: [
       "/images/private-security.jpg",
@@ -127,59 +129,38 @@ export const services: Service[] = [
     ],
     points: [
       "ID checks and authorised guest entry",
-      "Capacity control at entry and exit points",
-      "Behaviour monitoring inside the venue",
-      "De-escalation of conflict and illegal activity",
-      "Coordination with management and authorities",
+      "Capacity control at doors and VIP areas",
+      "Crowd management for events and openings",
+      "De-escalation and incident response",
+      "Coordination with venue management and authorities",
     ],
   },
   {
-    slug: "defense-training",
-    title: "Defense Training",
-    short: "Practical self-defense and situational awareness.",
+    slug: "parking-control",
+    title: "Parking Control Services",
+    short: "Orderly parking, access, and vehicle flow on site.",
     summary:
-      "Hands-on training in physical defense, conflict de-escalation, and real-world readiness — for teams, staff, and individuals who want more than theory.",
-    image: "/images/defense-training.jpg",
-    focus: "top",
+      "Parking control officers who manage vehicle entry, bay discipline, and traffic flow for malls, towers, compounds, and event venues — reducing congestion and unauthorised parking.",
+    image: "/images/city.jpg",
     gallery: [
+      "/images/transport-security.jpg",
       "/images/security-guards.png",
-      "/images/briefing.jpg",
-      "/images/private-security.jpg",
-    ],
-    points: [
-      "Physical and tactical defense fundamentals",
-      "Strength, agility, and awareness drills",
-      "Self-defense and de-escalation methods",
-      "Scenario-based practical sessions",
-      "Programs for corporate and private groups",
-    ],
-  },
-  {
-    slug: "data-protection",
-    title: "Data Protection",
-    short: "Confidential handling of client information.",
-    summary:
-      "We treat client information as part of the brief. Access is controlled, records are handled with care, and our processes align with recognised data-protection standards.",
-    image: "/images/data-protection.jpg",
-    gallery: [
-      "/images/surveillance.jpg",
       "/images/office.jpg",
-      "/images/briefing.jpg",
     ],
     points: [
-      "Confidential handling of client records",
-      "Access-controlled information practices",
-      "Alignment with GDPR and global privacy norms",
-      "Secure reporting and document workflows",
-      "Staff trained in information discipline",
+      "Entry and exit control for vehicles",
+      "Unauthorised parking prevention",
+      "Traffic flow during peak hours and events",
+      "Visitor and resident parking guidance",
+      "Coordination with security and facility teams",
     ],
   },
   {
     slug: "building-cleaning",
-    title: "Building Cleaning",
-    short: "Professional cleaning for residential and commercial sites.",
+    title: "Building Cleaning Services",
+    short: "Professional cleaning for residential and commercial buildings.",
     summary:
-      "A well-kept building is safer and more welcoming. We provide professional cleaning across residential, commercial, and industrial properties in the UAE.",
+      "A well-kept building is safer and more welcoming. We provide professional building cleaning across residential, commercial, and industrial properties in the UAE.",
     image: "/images/building-cleaning.jpg",
     gallery: [
       "/images/office.jpg",
@@ -194,8 +175,146 @@ export const services: Service[] = [
       "A cleaner site that supports security standards",
     ],
   },
+  {
+    slug: "lady-security-guard",
+    title: "Lady Security Guard",
+    short: "Female officers for sites that need discreet, trusted coverage.",
+    summary:
+      "Female security officers for malls, offices, hospitals, events, and residential sites where gender-appropriate screening and discreet presence matter. Licensed, professional, and client-ready.",
+    image: "/images/security-guards.png",
+    focus: "center 38%",
+    gallery: [
+      "/images/private-security.jpg",
+      "/images/briefing.jpg",
+      "/images/office.jpg",
+    ],
+    points: [
+      "Licensed female security officers",
+      "Suitable for malls, offices, hospitals, and events",
+      "Gender-appropriate screening and visitor checks",
+      "Discreet coverage for private and VIP settings",
+      "Uniformed presence with clear reporting",
+    ],
+  },
 ];
 
-export function getService(slug: string) {
-  return services.find((service) => service.slug === slug);
+export function slugify(title: string) {
+  const slug = title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || "service";
+}
+
+function normalize(service: Service): Service {
+  return rewriteImageRefs({
+    ...service,
+    gallery: service.gallery ?? [],
+    points: service.points ?? [],
+    hidden: Boolean(service.hidden),
+  });
+}
+
+export async function getServices() {
+  const { servicesCollection } = await import("./db");
+  const { ensureSeeded } = await import("./seed");
+  await ensureSeeded();
+  const docs = await (await servicesCollection())
+    .find({})
+    .sort({ sortOrder: 1, title: 1 })
+    .toArray();
+  return docs.map(({ _id: _unused, sortOrder: _order, ...item }) => {
+    void _unused;
+    void _order;
+    return normalize(item as Service);
+  });
+}
+
+export async function getVisibleServices() {
+  return (await getServices()).filter((service) => !service.hidden);
+}
+
+export async function getService(slug: string) {
+  const { servicesCollection } = await import("./db");
+  const { ensureSeeded } = await import("./seed");
+  await ensureSeeded();
+  const doc = await (await servicesCollection()).findOne({ slug });
+  if (!doc) return undefined;
+  const { _id: _unused, sortOrder: _order, ...item } = doc;
+  void _unused;
+  void _order;
+  return normalize(item as Service);
+}
+
+export async function saveServices(items: Service[]) {
+  const { servicesCollection } = await import("./db");
+  const { ensureSeeded } = await import("./seed");
+  await ensureSeeded();
+  const col = await servicesCollection();
+  await col.deleteMany({});
+  if (!items.length) return;
+  await col.insertMany(
+    items.map((item, index) => ({
+      ...normalize(item),
+      sortOrder: index,
+    })),
+  );
+}
+
+export async function upsertService(input: Service, previousSlug?: string) {
+  const { servicesCollection } = await import("./db");
+  const { ensureSeeded } = await import("./seed");
+  await ensureSeeded();
+  const col = await servicesCollection();
+  const slug = slugify(input.slug || input.title);
+  const next = normalize({ ...input, slug });
+  const oldSlug = previousSlug || slug;
+
+  const taken = await col.findOne({ slug });
+  if (taken && taken.slug !== oldSlug) {
+    throw new Error("A service with this slug already exists.");
+  }
+
+  const old = await col.findOne({ slug: oldSlug });
+  const sortOrder =
+    typeof old?.sortOrder === "number" ? old.sortOrder : await col.countDocuments();
+
+  if (old && oldSlug !== slug) {
+    await col.deleteOne({ slug: oldSlug });
+    await col.insertOne({ ...next, sortOrder });
+    return next;
+  }
+
+  if (old) {
+    await col.updateOne({ slug: oldSlug }, { $set: { ...next, sortOrder } });
+    return next;
+  }
+
+  await col.insertOne({ ...next, sortOrder });
+  return next;
+}
+
+export async function deleteService(slug: string) {
+  const { servicesCollection } = await import("./db");
+  const { ensureSeeded } = await import("./seed");
+  await ensureSeeded();
+  const result = await (await servicesCollection()).deleteOne({ slug });
+  return result.deletedCount > 0;
+}
+
+export async function setServiceHidden(slug: string, hidden: boolean) {
+  const { servicesCollection } = await import("./db");
+  const { ensureSeeded } = await import("./seed");
+  await ensureSeeded();
+  const col = await servicesCollection();
+  const result = await col.findOneAndUpdate(
+    { slug },
+    { $set: { hidden } },
+    { returnDocument: "after" },
+  );
+  if (!result) return null;
+  const { _id: _unused, sortOrder: _order, ...item } = result;
+  void _unused;
+  void _order;
+  return normalize(item as Service);
 }

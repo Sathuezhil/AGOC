@@ -1,0 +1,175 @@
+[
+  {
+    "slug": "private-guarding",
+    "title": "Private Guarding Services",
+    "short": "Licensed officers for homes, offices, and private sites.",
+    "summary": "Dedicated private guarding for residences, compounds, offices, and high-value locations. Our licensed officers deliver a calm, professional presence with clear reporting and shift discipline.",
+    "image": "/images/private-security.jpg",
+    "focus": "top",
+    "gallery": [
+      "/images/security-guards.png",
+      "/images/briefing.jpg",
+      "/images/surveillance.jpg"
+    ],
+    "points": [
+      "Licensed, verified private security officers",
+      "Day, night, and 24-hour post coverage",
+      "Visitor control, patrols, and incident logs",
+      "Discreet protection for homes and private clients",
+      "Supervised shifts with a named site contact"
+    ]
+  },
+  {
+    "slug": "facility-management",
+    "title": "Facility Management Services",
+    "short": "Day-to-day site operations kept tidy and under control.",
+    "summary": "Facility management that keeps buildings running smoothly — access points, common areas, maintenance coordination, and on-site support so your property stays presentable and secure.",
+    "image": "/images/office.jpg",
+    "gallery": [
+      "/images/city.jpg",
+      "/images/building-cleaning.jpg",
+      "/images/briefing.jpg"
+    ],
+    "points": [
+      "On-site facility support and coordination",
+      "Common-area upkeep and vendor liaison",
+      "Access and occupancy-aware scheduling",
+      "Reporting that building managers can use",
+      "Aligned with security and housekeeping teams"
+    ]
+  },
+  {
+    "slug": "housekeeping",
+    "title": "Housekeeping Services",
+    "short": "Reliable housekeeping for homes, hotels, and workplaces.",
+    "summary": "Professional housekeeping teams for residential compounds, hotels, offices, and shared facilities. Clean spaces, consistent schedules, and staff who work around how the building is used.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Residential, hotel, and commercial housekeeping",
+      "Daily, weekly, and deep-clean schedules",
+      "Trained, supervised, uniformed teams",
+      "Supplies and checklists matched to the site",
+      "Quiet service that respects occupants"
+    ]
+  },
+  {
+    "slug": "lifeguard",
+    "title": "Lifeguard Services",
+    "short": "Trained lifeguards for pools, beaches, and leisure sites.",
+    "summary": "Qualified lifeguard coverage for pools, beach clubs, hotels, and residential leisure areas. Vigilant water safety with clear emergency procedures and professional presentation.",
+    "image": "/images/hero2.jpg",
+    "gallery": [
+      "/images/city.jpg",
+      "/images/security-guards.png",
+      "/images/briefing.jpg"
+    ],
+    "points": [
+      "Certified lifeguards for pools and leisure sites",
+      "Rescue readiness and emergency response",
+      "Shift cover matched to peak swimming hours",
+      "Clear pool rules and guest guidance",
+      "Coordination with facility and medical contacts"
+    ]
+  },
+  {
+    "slug": "cctv-control",
+    "title": "CCTV Control Services",
+    "short": "Live monitoring and control-room coverage for your cameras.",
+    "summary": "CCTV control services that watch the feed — not just record it. Operators monitor cameras, raise alerts, and coordinate response so incidents are caught early across your sites.",
+    "image": "/images/surveillance.jpg",
+    "gallery": [
+      "/images/data-protection.jpg",
+      "/images/office.jpg",
+      "/images/briefing.jpg"
+    ],
+    "points": [
+      "Live CCTV monitoring and alert handling",
+      "Control-room operators for multi-camera sites",
+      "Incident logging and escalation protocols",
+      "Integration with guards and access control",
+      "Coverage windows tailored to risk hours"
+    ]
+  },
+  {
+    "slug": "events-club-bouncer",
+    "title": "Events & Club Bouncer Security Services",
+    "short": "Door teams and event security that keep nights under control.",
+    "summary": "Event and club security with trained door teams who manage entry, capacity, and behaviour without turning the night into a confrontation. Professional presence for venues, parties, and corporate gatherings.",
+    "image": "/images/club-bouncers.jpg",
+    "gallery": [
+      "/images/private-security.jpg",
+      "/images/city.jpg",
+      "/images/hero.jpg"
+    ],
+    "points": [
+      "ID checks and authorised guest entry",
+      "Capacity control at doors and VIP areas",
+      "Crowd management for events and openings",
+      "De-escalation and incident response",
+      "Coordination with venue management and authorities"
+    ]
+  },
+  {
+    "slug": "parking-control",
+    "title": "Parking Control Services",
+    "short": "Orderly parking, access, and vehicle flow on site.",
+    "summary": "Parking control officers who manage vehicle entry, bay discipline, and traffic flow for malls, towers, compounds, and event venues — reducing congestion and unauthorised parking.",
+    "image": "/images/city.jpg",
+    "gallery": [
+      "/images/transport-security.jpg",
+      "/images/security-guards.png",
+      "/images/office.jpg"
+    ],
+    "points": [
+      "Entry and exit control for vehicles",
+      "Unauthorised parking prevention",
+      "Traffic flow during peak hours and events",
+      "Visitor and resident parking guidance",
+      "Coordination with security and facility teams"
+    ]
+  },
+  {
+    "slug": "building-cleaning",
+    "title": "Building Cleaning Services",
+    "short": "Professional cleaning for residential and commercial buildings.",
+    "summary": "A well-kept building is safer and more welcoming. We provide professional building cleaning across residential, commercial, and industrial properties in the UAE.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Residential, commercial, and industrial cleaning",
+      "Common areas, offices, and facility upkeep",
+      "Schedules that work around occupancy",
+      "Trained, supervised, uniformed teams",
+      "A cleaner site that supports security standards"
+    ]
+  },
+  {
+    "slug": "lady-security-guard",
+    "title": "Lady Security Guard",
+    "short": "Female officers for sites that need discreet, trusted coverage.",
+    "summary": "Female security officers for malls, offices, hospitals, events, and residential sites where gender-appropriate screening and discreet presence matter. Licensed, professional, and client-ready.",
+    "image": "/images/security-guards.png",
+    "focus": "center 38%",
+    "gallery": [
+      "/images/private-security.jpg",
+      "/images/briefing.jpg",
+      "/images/office.jpg"
+    ],
+    "points": [
+      "Licensed female security officers",
+      "Suitable for malls, offices, hospitals, and events",
+      "Gender-appropriate screening and visitor checks",
+      "Discreet coverage for private and VIP settings",
+      "Uniformed presence with clear reporting"
+    ]
+  }
+]

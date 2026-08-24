@@ -40,6 +40,7 @@ export default function CoverImage({
         objectPosition,
         ...(bounce ? { animationDelay: `${delay}ms` } : {}),
       }}
+      unoptimized={src.startsWith("/api/media")}
       className={`${fit === "contain" ? "object-contain" : "object-cover"} ${motion || ""} ${className}`}
     />
   );

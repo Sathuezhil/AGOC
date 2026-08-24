@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { headers } from "next/headers";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import JsonLd from "@/components/JsonLd";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -35,19 +37,37 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+const themeInitScript = `(function(){try{var p=location.pathname;var t=(p==='/login'||p.indexOf('/admin')===0)?'dark':localStorage.getItem('agoc-theme');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = (await headers()).get("x-pathname") ?? "";
+  const bare =
+    pathname === "/login" || pathname.startsWith("/admin");
+
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className={`${display.variable} ${sans.variable} font-sans antialiased`}>
-        <JsonLd />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        {bare ? (
+          children
+        ) : (
+          <ThemeProvider>
+            <JsonLd />
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <WhatsAppButton />
+          </ThemeProvider>
+        )}
       </body>
     </html>
   );

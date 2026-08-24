@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 import { navLinks } from "@/lib/site";
 
 export default function Header() {
@@ -32,7 +33,7 @@ export default function Header() {
             : "border-black/5"
         }`}
       >
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5 md:px-6">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-2.5 md:px-6">
           <Link
             href="/"
             aria-label="AGOC Security home"
@@ -51,7 +52,7 @@ export default function Header() {
                   className={`group relative text-[0.8rem] tracking-[0.14em] uppercase transition duration-300 ${
                     active
                       ? "text-crimson"
-                      : "text-ink/70 hover:text-ink"
+                      : "text-black/70 hover:text-black"
                   }`}
                 >
                   {link.label}
@@ -65,7 +66,8 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <ThemeToggle />
             <Link
               href="/contact"
               className="btn-shine hidden items-center gap-2 bg-crimson px-4 py-2.5 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-crimson-dark hover:shadow-lg lg:inline-flex"
@@ -92,7 +94,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="border-b border-black/10 pb-3 text-lg tracking-wide text-ink transition hover:text-crimson"
+                className="border-b border-black/10 pb-3 text-lg tracking-wide text-black transition hover:text-crimson"
               >
                 {link.label}
               </Link>

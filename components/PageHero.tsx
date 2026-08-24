@@ -19,7 +19,7 @@ export default function PageHero({
           backgroundPosition: "center",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-crimson/40" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#121214] via-[#1E1E22]/88 to-crimson/40" />
       <div className="relative mx-auto max-w-6xl px-6">
         <p
           className="olive-label animate-fadeUp text-sm font-semibold tracking-[0.32em] text-olive uppercase opacity-0"
@@ -34,7 +34,7 @@ export default function PageHero({
           {title}
         </h1>
         <p
-          className="mt-5 max-w-2xl animate-fadeUp text-base leading-relaxed text-sand/80 opacity-0 md:text-lg"
+          className="mt-5 max-w-2xl animate-fadeUp text-base leading-relaxed text-white/80 opacity-0 md:text-lg"
           style={{ animationDelay: "340ms" }}
         >
           {text}
@@ -51,7 +51,7 @@ export default function PageHero({
           </Link>
           <Link
             href="/services"
-            className="border border-white/25 px-6 py-3 text-sm font-medium tracking-wide text-white transition duration-300 hover:border-olive hover:text-olive"
+            className="border border-white/35 px-6 py-3 text-sm font-medium tracking-wide text-white transition duration-300 hover:border-olive hover:text-olive"
           >
             View services
           </Link>

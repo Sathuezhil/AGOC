@@ -19,6 +19,8 @@ npm-debug.log*
 .env*
 !.env.example
 
+/data/enquiries.json
+
 # typescript
 next-env.d.ts
 *.tsbuildinfo

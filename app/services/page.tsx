@@ -3,7 +3,8 @@ import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import CoverImage from "@/components/CoverImage";
-import { services } from "@/lib/services";
+import { getContent } from "@/lib/content";
+import { getVisibleServices } from "@/lib/services";
 
 export const metadata: Metadata = {
   title: "Our Services",
@@ -11,13 +12,18 @@ export const metadata: Metadata = {
     "Private security, guards, transport protection, surveillance, club door teams, defense training, and building cleaning across Dubai and the UAE.",
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const [content, services] = await Promise.all([
+    getContent(),
+    getVisibleServices(),
+  ]);
+
   return (
     <>
       <PageHero
-        eyebrow="Our services"
-        title="A full bench of protection."
-        text="From a single villa gate to a multi-site commercial roster — officers, systems, and support that hold together."
+        eyebrow={content.servicesPage.eyebrow}
+        title={content.servicesPage.title}
+        text={content.servicesPage.text}
       />
 
       <section className="mx-auto max-w-6xl space-y-16 px-6 py-24">
@@ -42,7 +48,7 @@ export default function ServicesPage() {
                 <p className="olive-label text-sm tracking-[0.22em] text-olive uppercase">
                   {String(i + 1).padStart(2, "0")}
                 </p>
-                <h2 className="mt-2 font-display text-4xl text-white">
+                <h2 className="mt-2 font-display text-4xl text-sand">
                   {service.title}
                 </h2>
                 <p className="mt-4 leading-relaxed text-mist">{service.summary}</p>

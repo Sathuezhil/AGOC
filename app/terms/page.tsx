@@ -18,18 +18,18 @@ export default function TermsPage() {
           enquiry only. Security services are delivered under a separate written
           agreement.
         </p>
-        <h2 className="font-display text-2xl text-white">Use of the site</h2>
+        <h2 className="font-display text-2xl text-sand">Use of the site</h2>
         <p>
           You may browse and submit a genuine enquiry. Do not misuse forms,
           attempt to disrupt the site, or scrape content for competing use.
         </p>
-        <h2 className="font-display text-2xl text-white">Liability</h2>
+        <h2 className="font-display text-2xl text-sand">Liability</h2>
         <p>
           Website content is general. It is not a quote, a guarantee of
           availability, or professional advice for a specific site. Operational
           terms are set out in the service contract.
         </p>
-        <h2 className="font-display text-2xl text-white">Governing law</h2>
+        <h2 className="font-display text-2xl text-sand">Governing law</h2>
         <p>These terms are governed by the laws of the United Arab Emirates.</p>
       </article>
     </>

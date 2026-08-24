@@ -2,19 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+:root,
+html[data-theme="dark"] {
+  --c-ink: 30 30 34;
+  --c-night: 42 42 48;
+  --c-coal: 53 53 60;
+  --c-sand: 247 244 239;
+  --c-mist: 196 192 184;
   --bg: #1e1e22;
   --fg: #f7f4ef;
 }
 
+html[data-theme="light"] {
+  --c-ink: 247 244 239;
+  --c-night: 255 255 255;
+  --c-coal: 238 234 228;
+  --c-sand: 22 22 26;
+  --c-mist: 74 72 68;
+  --bg: #f7f4ef;
+  --fg: #16161a;
+}
+
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
 }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
+  background: rgb(var(--c-ink));
+  color: rgb(var(--c-sand));
   font-feature-settings: "ss01" on, "cv11" on;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 ::selection {
@@ -143,6 +165,46 @@ svg.text-olive,
   color: #6b9450;
   -webkit-text-fill-color: #6b9450;
   animation: oliveIconShine 2.4s ease-in-out infinite;
+}
+
+/* Light theme: solid readable colors, no neon shine wash */
+html[data-theme="light"] .text-olive:not(svg),
+html[data-theme="light"] .hover\:text-olive:hover:not(svg),
+html[data-theme="light"] .animate-fadeUp.text-olive:not(svg) {
+  background-image: none;
+  color: #3a5829;
+  -webkit-text-fill-color: #3a5829;
+  animation: none;
+  filter: none;
+}
+
+html[data-theme="light"] .olive-label {
+  border-color: #4d7436;
+  background: rgba(77, 116, 54, 0.08);
+}
+
+html[data-theme="light"] .olive-label.text-olive:not(svg) {
+  filter: none;
+}
+
+html[data-theme="light"] svg.text-olive,
+html[data-theme="light"] .text-olive svg {
+  color: #3a5829;
+  -webkit-text-fill-color: #3a5829;
+  animation: none;
+  filter: none;
+}
+
+html[data-theme="light"] input,
+html[data-theme="light"] textarea,
+html[data-theme="light"] select {
+  color-scheme: light;
+}
+
+html[data-theme="light"] input:-webkit-autofill,
+html[data-theme="light"] textarea:-webkit-autofill,
+html[data-theme="light"] select:-webkit-autofill {
+  -webkit-text-fill-color: #16161a;
 }
 
 @media (prefers-reduced-motion: reduce) {

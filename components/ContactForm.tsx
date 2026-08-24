@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { services } from "@/lib/services";
 
 const initial = {
   name: "",
@@ -11,7 +10,11 @@ const initial = {
   message: "",
 };
 
-export default function ContactForm() {
+export default function ContactForm({
+  services,
+}: {
+  services: { title: string }[];
+}) {
   const [form, setForm] = useState(initial);
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">(
     "idle",
@@ -44,7 +47,7 @@ export default function ContactForm() {
   }
 
   const field =
-    "w-full border border-white/10 bg-ink/60 px-4 py-3 text-sm text-sand outline-none transition placeholder:text-mist/60 focus:border-olive";
+    "w-full border border-sand/15 bg-night px-4 py-3 text-sm text-sand outline-none transition placeholder:text-mist focus:border-olive shadow-sm";
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
@@ -83,7 +86,7 @@ export default function ContactForm() {
         >
           <option value="">Select a service</option>
           {services.map((service) => (
-            <option key={service.slug} value={service.title}>
+            <option key={service.title} value={service.title}>
               {service.title}
             </option>
           ))}

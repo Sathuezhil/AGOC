@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#1E1E22",
-        night: "#2A2A30",
-        coal: "#35353C",
+        ink: "rgb(var(--c-ink) / <alpha-value>)",
+        night: "rgb(var(--c-night) / <alpha-value>)",
+        coal: "rgb(var(--c-coal) / <alpha-value>)",
         crimson: {
           DEFAULT: "#C04A31",
           dark: "#9A3A27",
@@ -24,8 +24,8 @@ const config: Config = {
         },
         gold: "#4D7436",
         steel: "#A6A6A6",
-        sand: "#F7F4EF",
-        mist: "#C4C0B8",
+        sand: "rgb(var(--c-sand) / <alpha-value>)",
+        mist: "rgb(var(--c-mist) / <alpha-value>)",
       },
       fontFamily: {
         display: ["var(--font-display)", "serif"],

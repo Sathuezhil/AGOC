@@ -6,10 +6,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "npx tsx scripts/seed-mongo.ts"
   },
   "dependencies": {
     "lucide-react": "^0.539.0",
+    "mongodb": "^7.5.0",
     "next": "^15.4.6",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
@@ -24,6 +26,7 @@
     "eslint-config-next": "^15.4.6",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.23.12",
     "typescript": "^5.9.2"
   }
 }
