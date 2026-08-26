@@ -13,4 +13,6 @@ export function revalidateSite() {
   revalidatePath("/admin/content");
   revalidatePath("/admin/media");
   revalidatePath("/admin/enquiries");
+  revalidatePath("/admin/team");
+  revalidatePath("/admin/settings");
 }

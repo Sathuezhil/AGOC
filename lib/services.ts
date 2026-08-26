@@ -1,5 +1,5 @@
 /** Local images live in /public/images */
-import { rewriteImageRefs } from "./media";
+import { rewriteImageRefs, uniqueMediaSrcs } from "./media-path";
 
 export type Service = {
   slug: string;
@@ -176,6 +176,27 @@ export const DEFAULT_SERVICES: Service[] = [
     ],
   },
   {
+    slug: "deep-cleaning",
+    title: "Deep Cleaning Services",
+    short: "Thorough deep cleans for homes, offices, and facilities.",
+    summary:
+      "Intensive deep cleaning for residences, offices, and commercial spaces — kitchens, washrooms, floors, glass, and hard-to-reach areas. Ideal for move-in/move-out, post-renovation, seasonal refresh, and sites that need more than routine housekeeping.",
+    image: "/images/building-cleaning.jpg",
+    focus: "center 40%",
+    gallery: [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg",
+    ],
+    points: [
+      "Full deep clean for homes, offices, and facilities",
+      "Kitchens, washrooms, floors, glass, and fittings",
+      "Move-in, move-out, and post-renovation cleans",
+      "Trained teams with site-safe products and checklists",
+      "One-off or scheduled deep-clean programmes",
+    ],
+  },
+  {
     slug: "lady-security-guard",
     title: "Lady Security Guard",
     short: "Female officers for sites that need discreet, trusted coverage.",
@@ -207,12 +228,16 @@ export function slugify(title: string) {
 }
 
 function normalize(service: Service): Service {
-  return rewriteImageRefs({
+  const rewritten = rewriteImageRefs({
     ...service,
     gallery: service.gallery ?? [],
     points: service.points ?? [],
     hidden: Boolean(service.hidden),
   });
+  return {
+    ...rewritten,
+    gallery: uniqueMediaSrcs(rewritten.gallery),
+  };
 }
 
 export async function getServices() {

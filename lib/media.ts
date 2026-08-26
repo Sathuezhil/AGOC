@@ -1,6 +1,16 @@
 import { GridFSBucket, type GridFSFile } from "mongodb";
 import { getDb } from "./db";
+import { mediaSrc, srcToFilename } from "./media-path";
 
+export {
+  mediaSrc,
+  normalizeMediaSrc,
+  publicToMediaSrc,
+  rewriteImageRefs,
+  srcToFilename,
+  sameMediaSrc,
+  uniqueMediaSrcs,
+} from "./media-path";
 const BUCKET = "media";
 const ALLOWED = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"]);
 
@@ -10,59 +20,6 @@ export type MediaFile = {
   filename: string;
   uploaded: boolean;
 };
-
-export function mediaSrc(filename: string) {
-  const clean = filename.replace(/^\/+/, "").replace(/^api\/media\//, "");
-  return `/api/media/${clean.split("/").map(encodeURIComponent).join("/")}`;
-}
-
-/** Collapse broken nested paths and map /images/* → /api/media/images/* */
-export function normalizeMediaSrc(src: string) {
-  if (!src || typeof src !== "string") return src;
-  let s = src.trim();
-  if (
-    !s.includes("/images") &&
-    !s.includes("logo.png") &&
-    !s.includes("/api/media") &&
-    !s.includes("/uploads/")
-  ) {
-    return s;
-  }
-
-  while (s.includes("/api/media/api/media/")) {
-    s = s.replaceAll("/api/media/api/media/", "/api/media/");
-  }
-
-  const nested = s.match(
-    /\/(?:api\/media\/)+((?:images|uploads)\/.+|logo\.png)$/,
-  );
-  if (nested?.[1]) return mediaSrc(nested[1]);
-
-  if (s.startsWith("/api/media/")) return s;
-  if (s.startsWith("/images/")) return mediaSrc(s.slice(1));
-  if (s === "/logo.png") return mediaSrc("logo.png");
-  return s;
-}
-
-export function publicToMediaSrc(src: string) {
-  return normalizeMediaSrc(src);
-}
-
-export function rewriteImageRefs<T>(value: T): T {
-  const walk = (node: unknown): unknown => {
-    if (typeof node === "string") return normalizeMediaSrc(node);
-    if (Array.isArray(node)) return node.map(walk);
-    if (node && typeof node === "object") {
-      const out: Record<string, unknown> = {};
-      for (const [key, val] of Object.entries(node as Record<string, unknown>)) {
-        out[key] = walk(val);
-      }
-      return out;
-    }
-    return node;
-  };
-  return walk(value) as T;
-}
 
 export async function mediaBucket() {
   return new GridFSBucket(await getDb(), { bucketName: BUCKET });
@@ -96,12 +53,20 @@ export function mediaContentType(name: string, stored?: string) {
 export async function listMedia(): Promise<MediaFile[]> {
   const bucket = await mediaBucket();
   const files = await bucket.find({}).sort({ filename: 1 }).toArray();
-  return files.map((file) => ({
-    src: mediaSrc(file.filename),
-    name: file.filename.split("/").pop() || file.filename,
-    filename: file.filename,
-    uploaded: file.metadata?.kind === "upload",
-  }));
+  const seen = new Set<string>();
+  const items: MediaFile[] = [];
+  for (const file of files) {
+    const key = file.filename.replace(/^\/+/, "");
+    if (seen.has(key)) continue;
+    seen.add(key);
+    items.push({
+      src: mediaSrc(file.filename),
+      name: file.filename.split("/").pop() || file.filename,
+      filename: file.filename,
+      uploaded: file.metadata?.kind === "upload",
+    });
+  }
+  return items;
 }
 
 export async function findMediaFile(filename: string): Promise<GridFSFile | null> {
@@ -172,14 +137,4 @@ export async function deleteMedia(src: string) {
 /** @deprecated use deleteMedia */
 export async function deleteUpload(src: string) {
   return deleteMedia(src);
-}
-
-export function srcToFilename(src: string) {
-  const normalized = normalizeMediaSrc(src.split("?")[0]);
-  if (normalized.startsWith("/api/media/")) {
-    return decodeURIComponent(normalized.slice("/api/media/".length));
-  }
-  if (normalized.startsWith("/images/")) return normalized.slice(1);
-  if (normalized === "/logo.png") return "logo.png";
-  return normalized.replace(/^\//, "");
 }

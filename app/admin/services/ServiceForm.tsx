@@ -3,10 +3,11 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Service } from "@/lib/services";
+import { uniqueMediaSrcs } from "@/lib/media-path";
 import ImagePicker from "../ImagePicker";
 
 const field =
-  "w-full border border-white/10 bg-ink px-3 py-2 text-sm text-sand outline-none focus:border-olive";
+  "w-full border border-sand/10 bg-ink px-3 py-2 text-sm text-sand outline-none focus:border-olive";
 
 const empty: Service = {
   slug: "",
@@ -42,7 +43,9 @@ export default function ServiceForm({
     setError("");
     const payload: Service = {
       ...form,
-      gallery: form.gallery.map((item) => item.trim()).filter(Boolean),
+      gallery: uniqueMediaSrcs(
+        form.gallery.map((item) => item.trim()).filter(Boolean),
+      ),
       points: form.points.map((item) => item.trim()).filter(Boolean),
     };
     const url =
@@ -114,7 +117,9 @@ export default function ServiceForm({
       <ImagePicker
         label="Main image"
         value={form.image}
-        onChange={(src) => set("image", src)}
+        onChange={(src) => {
+          setForm((current) => ({ ...current, image: src, focus: "center" }));
+        }}
       />
       <label className="block">
         <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
@@ -122,10 +127,13 @@ export default function ServiceForm({
         </span>
         <input
           className={field}
-          placeholder="top / center 38%"
+          placeholder="Leave as center after crop"
           value={form.focus ?? ""}
           onChange={(e) => set("focus", e.target.value)}
         />
+        <p className="mt-1 text-[11px] text-mist/80">
+          After cropping, keep this as <span className="text-sand">center</span> so the site shows exactly what you cropped.
+        </p>
       </label>
       <div>
         <p className="mb-2 text-xs tracking-[0.16em] text-mist uppercase">

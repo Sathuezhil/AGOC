@@ -1,17 +1,13 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { SiteContent, TeamKind, TeamMember } from "@/lib/content";
+import type { SiteContent } from "@/lib/content";
 import ImagePicker from "../ImagePicker";
 
-function memberKind(member: TeamMember): TeamKind {
-  if (member.kind) return member.kind;
-  return member.founder ? "founder" : "member";
-}
-
 const field =
-  "w-full border border-white/10 bg-ink px-3 py-2 text-sm text-sand outline-none focus:border-olive";
+  "w-full border border-sand/10 bg-ink px-3 py-2 text-sm text-sand outline-none focus:border-olive";
 
 const tabs = [
   { id: "hero", label: "Hero" },
@@ -78,7 +74,7 @@ export default function ContentForm({ initial }: { initial: SiteContent }) {
             className={`px-3 py-1.5 text-xs tracking-wide uppercase ${
               tab === item.id
                 ? "bg-crimson text-white"
-                : "border border-white/15 text-mist hover:text-white"
+                : "border border-sand/15 text-mist hover:text-sand"
             }`}
           >
             {item.label}
@@ -129,7 +125,7 @@ export default function ContentForm({ initial }: { initial: SiteContent }) {
             />
           </Field>
           {form.hero.slides.map((slide, i) => (
-            <div key={i} className="border border-white/10 p-4">
+            <div key={i} className="border border-sand/10 p-4">
               <p className="mb-3 text-xs text-mist uppercase">Slide {i + 1}</p>
               <ImagePicker
                 label="Image"
@@ -348,7 +344,7 @@ export default function ContentForm({ initial }: { initial: SiteContent }) {
             />
           </Field>
           {form.home.pillars.map((item, i) => (
-            <div key={i} className="grid gap-2 border border-white/10 p-3 md:grid-cols-2">
+            <div key={i} className="grid gap-2 border border-sand/10 p-3 md:grid-cols-2">
               <input
                 className={field}
                 placeholder="Pillar title"
@@ -372,7 +368,7 @@ export default function ContentForm({ initial }: { initial: SiteContent }) {
             </div>
           ))}
           {form.home.features.map((item, i) => (
-            <div key={i} className="grid gap-2 border border-white/10 p-3 md:grid-cols-2">
+            <div key={i} className="grid gap-2 border border-sand/10 p-3 md:grid-cols-2">
               <input
                 className={field}
                 placeholder="Feature title"
@@ -396,7 +392,7 @@ export default function ContentForm({ initial }: { initial: SiteContent }) {
             </div>
           ))}
           {form.home.stats.map((item, i) => (
-            <div key={i} className="grid gap-2 border border-white/10 p-3 md:grid-cols-2">
+            <div key={i} className="grid gap-2 border border-sand/10 p-3 md:grid-cols-2">
               <input
                 className={field}
                 placeholder="Stat value"
@@ -420,7 +416,7 @@ export default function ContentForm({ initial }: { initial: SiteContent }) {
             </div>
           ))}
           {form.home.whyItems.map((item, i) => (
-            <div key={i} className="grid gap-2 border border-white/10 p-3 md:grid-cols-2">
+            <div key={i} className="grid gap-2 border border-sand/10 p-3 md:grid-cols-2">
               <input
                 className={field}
                 value={item.title}
@@ -510,7 +506,7 @@ export default function ContentForm({ initial }: { initial: SiteContent }) {
             }
           />
           {form.about.values.map((item, i) => (
-            <div key={i} className="grid gap-2 border border-white/10 p-3 md:grid-cols-2">
+            <div key={i} className="grid gap-2 border border-sand/10 p-3 md:grid-cols-2">
               <input
                 className={field}
                 value={item.title}
@@ -532,7 +528,7 @@ export default function ContentForm({ initial }: { initial: SiteContent }) {
             </div>
           ))}
           {form.about.stayItems.map((item, i) => (
-            <div key={i} className="grid gap-2 border border-white/10 p-3 md:grid-cols-2">
+            <div key={i} className="grid gap-2 border border-sand/10 p-3 md:grid-cols-2">
               <input
                 className={field}
                 value={item.title}
@@ -553,134 +549,19 @@ export default function ContentForm({ initial }: { initial: SiteContent }) {
               />
             </div>
           ))}
-          <div className="border-t border-white/10 pt-4">
-            <p className="mb-3 text-xs tracking-[0.16em] text-mist uppercase">
+          <div className="border-t border-sand/10 pt-4">
+            <p className="mb-2 text-xs tracking-[0.16em] text-mist uppercase">
               Founder & team
             </p>
-            <div className="space-y-4">
-              {(form.about.team ?? []).map((member, i) => (
-                <div key={i} className="space-y-3 border border-white/10 p-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="text-sm text-sand">
-                      {memberKind(member) === "founder"
-                        ? "Founder"
-                        : memberKind(member) === "coordinator"
-                          ? "Coordinator"
-                          : "Team member"}
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const team = form.about.team.filter((_, index) => index !== i);
-                        setForm({ ...form, about: { ...form.about, team } });
-                      }}
-                      className="text-xs tracking-wide text-crimson uppercase"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                  <ImagePicker
-                    label="Photo"
-                    value={member.image}
-                    onChange={(src) => {
-                      const team = [...form.about.team];
-                      team[i] = { ...team[i], image: src };
-                      setForm({ ...form, about: { ...form.about, team } });
-                    }}
-                  />
-                  <input
-                    className={field}
-                    placeholder="Name"
-                    value={member.name}
-                    onChange={(e) => {
-                      const team = [...form.about.team];
-                      team[i] = { ...team[i], name: e.target.value };
-                      setForm({ ...form, about: { ...form.about, team } });
-                    }}
-                  />
-                  <input
-                    className={field}
-                    placeholder="Position / role"
-                    value={member.role}
-                    onChange={(e) => {
-                      const team = [...form.about.team];
-                      team[i] = { ...team[i], role: e.target.value };
-                      setForm({ ...form, about: { ...form.about, team } });
-                    }}
-                  />
-                  <textarea
-                    rows={3}
-                    className={field}
-                    placeholder="Short description"
-                    value={member.bio}
-                    onChange={(e) => {
-                      const team = [...form.about.team];
-                      team[i] = { ...team[i], bio: e.target.value };
-                      setForm({ ...form, about: { ...form.about, team } });
-                    }}
-                  />
-                  <label className="block text-xs tracking-wide text-mist uppercase">
-                    Role on page
-                    <select
-                      className={`${field} mt-2`}
-                      value={memberKind(member)}
-                      onChange={(e) => {
-                        const next = e.target.value as TeamKind;
-                        const team = form.about.team.map((item, index) => {
-                          if (index === i) {
-                            return {
-                              ...item,
-                              kind: next,
-                              founder: next === "founder",
-                            };
-                          }
-                          if (next === "founder" && memberKind(item) === "founder") {
-                            return { ...item, kind: "member" as const, founder: false };
-                          }
-                          if (
-                            next === "coordinator" &&
-                            memberKind(item) === "coordinator"
-                          ) {
-                            return { ...item, kind: "member" as const, founder: false };
-                          }
-                          return item;
-                        });
-                        setForm({ ...form, about: { ...form.about, team } });
-                      }}
-                    >
-                      <option value="founder">Founder (separate section)</option>
-                      <option value="coordinator">Coordinator (under Team Members)</option>
-                      <option value="member">Team member</option>
-                    </select>
-                  </label>
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={() =>
-                  setForm({
-                    ...form,
-                    about: {
-                      ...form.about,
-                      team: [
-                        ...(form.about.team ?? []),
-                        {
-                          name: "",
-                          role: "",
-                          bio: "",
-                          image: "/images/office.jpg",
-                          kind: "member",
-                          founder: false,
-                        },
-                      ],
-                    },
-                  })
-                }
-                className="text-xs tracking-wide text-olive uppercase"
-              >
-                Add team member
-              </button>
-            </div>
+            <p className="text-sm text-mist">
+              Team photos, roles, and bios are managed on the Team page.
+            </p>
+            <Link
+              href="/admin/team"
+              className="mt-3 inline-flex text-sm tracking-wide text-olive underline-offset-4 hover:underline"
+            >
+              Open Team members →
+            </Link>
           </div>
         </div>
       )}
@@ -793,6 +674,9 @@ export default function ContentForm({ initial }: { initial: SiteContent }) {
               ["description", "SEO description"],
               ["email", "Email"],
               ["whatsapp", "WhatsApp (digits)"],
+              ["facebook", "Facebook URL"],
+              ["instagram", "Instagram URL"],
+              ["tiktok", "TikTok URL"],
               ["address", "Address"],
               ["footerBlurb", "Footer blurb"],
             ] as const

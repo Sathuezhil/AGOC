@@ -8,7 +8,9 @@ export type TeamMember = {
   name: string;
   role: string;
   bio: string;
-  image: string;
+  education?: string;
+  closing?: string;
+  image?: string;
   kind?: TeamKind;
   founder?: boolean;
 };
@@ -27,6 +29,9 @@ export type SiteContent = {
     email: string;
     phones: string[];
     whatsapp: string;
+    facebook: string;
+    instagram: string;
+    tiktok: string;
     address: string;
     hours: { days: string; time: string }[];
     footerBlurb: string;
@@ -108,6 +113,9 @@ export const DEFAULT_CONTENT: SiteContent = {
     email: fallbackSite.email,
     phones: [...fallbackSite.phones],
     whatsapp: fallbackSite.whatsapp,
+    facebook: fallbackSite.facebook,
+    instagram: fallbackSite.instagram,
+    tiktok: fallbackSite.tiktok,
     address: fallbackSite.address,
     hours: fallbackSite.hours.map((row) => ({ ...row })),
     footerBlurb:
@@ -267,10 +275,13 @@ export const DEFAULT_CONTENT: SiteContent = {
     membersTitle: "Team Members",
     team: [
       {
-        name: "Founder",
+        name: "Abdul Moeez Awan",
         role: "Founder & Managing Director",
-        bio: "Built AGOC on licensed teams, clear reporting, and quiet professionalism across Dubai and the UAE.",
-        image: "/images/briefing.jpg",
+        education: "BSc in Human Resources Management",
+        bio: "I am proud to lead AGOC with a clear focus on people, professionalism, and trust. Our teams are trained to protect what matters most to our clients — with discipline, care, and integrity every day. I remain committed to building lasting partnerships across Dubai and the UAE through reliable service and honest standards.",
+        closing:
+          "Leading with Integrity. Serving with Excellence. Growing Through Trust.",
+        image: "",
         kind: "founder",
         founder: true,
       },

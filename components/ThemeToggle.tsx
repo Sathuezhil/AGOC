@@ -3,12 +3,21 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
-export default function ThemeToggle() {
+export default function ThemeToggle({
+  variant = "header",
+}: {
+  variant?: "header" | "admin";
+}) {
   const { theme, setTheme } = useTheme();
+  const admin = variant === "admin";
 
   return (
     <div
-      className="flex items-center rounded-full border border-black/10 bg-black/[0.04] p-0.5"
+      className={
+        admin
+          ? "flex items-center rounded-full border border-sand/15 bg-sand/[0.04] p-0.5"
+          : "flex items-center rounded-full border border-black/10 bg-black/[0.04] p-0.5"
+      }
       role="group"
       aria-label="Color theme"
     >
@@ -20,8 +29,10 @@ export default function ThemeToggle() {
         title="Light theme"
         className={`inline-flex h-9 items-center gap-1.5 rounded-full px-2.5 text-[0.65rem] tracking-[0.12em] uppercase transition duration-300 sm:px-3 ${
           theme === "light"
-            ? "bg-white text-black shadow-sm"
-            : "text-black/50 hover:text-black"
+            ? "bg-white text-navy shadow-sm"
+            : admin
+              ? "text-mist hover:text-sand"
+              : "text-navy/45 hover:text-navy"
         }`}
       >
         <Sun size={14} strokeWidth={2} />
@@ -35,8 +46,10 @@ export default function ThemeToggle() {
         title="Dark theme"
         className={`inline-flex h-9 items-center gap-1.5 rounded-full px-2.5 text-[0.65rem] tracking-[0.12em] uppercase transition duration-300 sm:px-3 ${
           theme === "dark"
-            ? "bg-[#1E1E22] text-[#F7F4EF] shadow-sm"
-            : "text-black/50 hover:text-black"
+            ? "bg-navy text-white shadow-sm"
+            : admin
+              ? "text-mist hover:text-sand"
+              : "text-navy/45 hover:text-navy"
         }`}
       >
         <Moon size={14} strokeWidth={2} />

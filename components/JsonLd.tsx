@@ -18,6 +18,11 @@ export default function JsonLd() {
       addressRegion: "Dubai",
       addressCountry: "AE",
     },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: site.map.lat,
+      longitude: site.map.lng,
+    },
     areaServed: "AE",
   };
 

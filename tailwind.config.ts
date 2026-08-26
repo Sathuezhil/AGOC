@@ -12,18 +12,29 @@ const config: Config = {
         ink: "rgb(var(--c-ink) / <alpha-value>)",
         night: "rgb(var(--c-night) / <alpha-value>)",
         coal: "rgb(var(--c-coal) / <alpha-value>)",
+        /* CTA / strong accent — olive green */
         crimson: {
-          DEFAULT: "#C04A31",
-          dark: "#9A3A27",
-          soft: "#D46B56",
-        },
-        olive: {
           DEFAULT: "#4D7436",
           dark: "#3A5829",
-          light: "#6B9450",
+          soft: "#6B9450",
         },
-        gold: "#4D7436",
-        steel: "#A6A6A6",
+        /* Labels / accents — gold */
+        olive: {
+          DEFAULT: "#C9A227",
+          dark: "#A6851F",
+          light: "#E0C35A",
+        },
+        gold: {
+          DEFAULT: "#C9A227",
+          dark: "#A6851F",
+          soft: "#E0C35A",
+        },
+        navy: {
+          DEFAULT: "#0B1D36",
+          deep: "#071525",
+          soft: "#163154",
+        },
+        steel: "#A8B0BD",
         sand: "rgb(var(--c-sand) / <alpha-value>)",
         mist: "rgb(var(--c-mist) / <alpha-value>)",
       },
@@ -32,7 +43,7 @@ const config: Config = {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(77,116,54,0.18), 0 24px 60px rgba(0,0,0,0.45)",
+        glow: "0 0 0 1px rgba(201,162,39,0.22), 0 24px 60px rgba(0,0,0,0.5)",
       },
       transitionTimingFunction: {
         out: "cubic-bezier(0.22, 1, 0.36, 1)",
@@ -72,20 +83,20 @@ const config: Config = {
           "50%": { transform: "translateY(-8px)" },
         },
         imageFloat: {
-          "0%, 100%": { transform: "translateY(3%) scale(1.05)" },
-          "50%": { transform: "translateY(-3%) scale(1.05)" },
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-4px)" },
         },
         imageFloatAlt: {
-          "0%, 100%": { transform: "translateY(-3%) scale(1.05)" },
-          "50%": { transform: "translateY(3%) scale(1.05)" },
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(4px)" },
         },
         imageFloatFast: {
-          "0%, 100%": { transform: "translateY(5%) scale(1.05)" },
-          "50%": { transform: "translateY(-5%) scale(1.05)" },
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-6px)" },
         },
         imageFloatAltFast: {
-          "0%, 100%": { transform: "translateY(-5%) scale(1.05)" },
-          "50%": { transform: "translateY(5%) scale(1.05)" },
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(6px)" },
         },
         pulseRing: {
           "0%": { transform: "scale(1)", opacity: "0.55" },

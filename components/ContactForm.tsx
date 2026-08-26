@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 const initial = {
   name: "",
@@ -12,14 +12,28 @@ const initial = {
 
 export default function ContactForm({
   services,
+  defaultService = "",
 }: {
   services: { title: string }[];
+  defaultService?: string;
 }) {
-  const [form, setForm] = useState(initial);
+  const matched =
+    services.find((s) => s.title === defaultService)?.title ||
+    services.find(
+      (s) => s.title.toLowerCase() === defaultService.trim().toLowerCase(),
+    )?.title ||
+    "";
+
+  const [form, setForm] = useState({ ...initial, service: matched });
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">(
     "idle",
   );
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!matched) return;
+    setForm((prev) => (prev.service === matched ? prev : { ...prev, service: matched }));
+  }, [matched]);
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -39,7 +53,7 @@ export default function ContactForm({
       }
 
       setStatus("ok");
-      setForm(initial);
+      setForm({ ...initial, service: matched });
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : "Something went wrong.");
@@ -47,11 +61,11 @@ export default function ContactForm({
   }
 
   const field =
-    "w-full border border-sand/15 bg-night px-4 py-3 text-sm text-sand outline-none transition placeholder:text-mist focus:border-olive shadow-sm";
+    "contact-field w-full rounded-lg border border-sand/15 bg-night px-3.5 py-3 text-sm text-sand outline-none transition placeholder:text-mist/80 focus:border-gold focus:shadow-[0_0_0_3px_rgba(201,162,39,0.18)]";
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
-      <div className="grid gap-4 md:grid-cols-2">
+    <form onSubmit={onSubmit} className="space-y-3.5">
+      <div className="grid gap-3.5 sm:grid-cols-2">
         <input
           required
           name="name"
@@ -95,21 +109,21 @@ export default function ContactForm({
       <textarea
         required
         name="message"
-        rows={5}
+        rows={4}
         placeholder="Tell us about the site, hours, and what you need protected."
         value={form.message}
         onChange={(e) => setForm({ ...form, message: e.target.value })}
-        className={`${field} resize-y`}
+        className={`${field} min-h-[6.5rem] resize-y`}
       />
       <button
         type="submit"
         disabled={status === "sending"}
-        className="btn-shine w-full bg-crimson py-3.5 text-sm font-medium tracking-[0.16em] text-white uppercase transition duration-300 hover:bg-crimson-dark disabled:opacity-70"
+        className="btn-shine w-full rounded-lg bg-crimson py-3.5 text-sm font-medium tracking-[0.16em] text-white uppercase transition duration-300 hover:bg-crimson-dark disabled:opacity-70"
       >
         {status === "sending" ? "Sending…" : "Send request"}
       </button>
       {status === "ok" && (
-        <p className="text-base text-olive">
+        <p className="text-sm text-olive">
           Thank you. Our team will contact you shortly.
         </p>
       )}

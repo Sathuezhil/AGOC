@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import type { Slide } from "@/lib/content";
+import { sameMediaSrc } from "@/lib/media-path";
 
 type HeroContent = {
   eyebrow: string;
@@ -14,10 +15,25 @@ type HeroContent = {
   slides: Slide[];
 };
 
+function uniqueSlides(slides: Slide[]) {
+  const seen = new Set<string>();
+  const out: Slide[] = [];
+  for (const slide of slides) {
+    if (!slide?.src?.trim()) continue;
+    const key = slide.src;
+    if ([...seen].some((s) => sameMediaSrc(s, key))) continue;
+    seen.add(key);
+    out.push(slide);
+  }
+  return out;
+}
+
 export default function Hero({ content }: { content: HeroContent }) {
-  const slides = content.slides.length
-    ? content.slides
-    : [{ src: "/images/hero.jpg", alt: "AGOC Security" }];
+  const slides = uniqueSlides(
+    content.slides.length
+      ? content.slides
+      : [{ src: "/images/hero.jpg", alt: "AGOC Security" }],
+  );
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -50,49 +66,53 @@ export default function Hero({ content }: { content: HeroContent }) {
           />
         </div>
       ))}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#121214] via-[#1E1E22]/82 to-crimson/45 animate-fadeIn" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-black/35" />
+      {/* Clean cinematic scrim — photo stays clear, text stays readable */}
+      <div className="hero-scrim pointer-events-none absolute inset-0" aria-hidden />
+      <div className="hero-vignette pointer-events-none absolute inset-0" aria-hidden />
+      <div className="hero-beam pointer-events-none absolute inset-0" aria-hidden />
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-6 pb-24 pt-44 md:justify-center md:pb-28">
-        <p
-          className="olive-label animate-fadeUp text-sm font-semibold tracking-[0.38em] text-olive uppercase opacity-0"
-          style={{ animationDelay: "80ms" }}
-        >
-          {content.eyebrow}
-        </p>
-        <h1
-          className="mt-5 max-w-3xl animate-fadeUp font-display text-5xl leading-[0.95] text-white opacity-0 md:text-7xl"
-          style={{ animationDelay: "220ms" }}
-        >
-          {content.title}
-          <span className="block italic text-[#F7F4EF]">{content.titleItalic}</span>
-        </h1>
-        <p
-          className="mt-6 max-w-xl animate-fadeUp text-base leading-relaxed text-white/80 opacity-0 md:text-lg"
-          style={{ animationDelay: "380ms" }}
-        >
-          {content.text}
-        </p>
-        <div
-          className="mt-9 flex animate-fadeUp flex-wrap gap-4 opacity-0"
-          style={{ animationDelay: "520ms" }}
-        >
-          <Link
-            href="/contact"
-            className="btn-shine group inline-flex items-center gap-2 bg-white px-6 py-3.5 text-sm font-semibold tracking-wide text-crimson-dark transition duration-300 hover:bg-[#F0EDE7]"
+        <div className="hero-copy max-w-3xl">
+          <p
+            className="olive-label animate-fadeUp text-sm font-semibold tracking-[0.38em] text-olive uppercase opacity-0"
+            style={{ animationDelay: "80ms" }}
           >
-            Contact us
-            <ArrowRight
-              size={16}
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            />
-          </Link>
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 border border-white/35 px-6 py-3.5 text-sm font-medium tracking-wide text-white transition duration-300 hover:border-olive hover:text-olive"
+            {content.eyebrow}
+          </p>
+          <h1
+            className="mt-5 animate-fadeUp font-display text-5xl leading-[0.95] text-white opacity-0 md:text-7xl"
+            style={{ animationDelay: "220ms" }}
           >
-            Explore services
-          </Link>
+            {content.title}
+            <span className="block italic text-[#F7F4EF]">{content.titleItalic}</span>
+          </h1>
+          <p
+            className="mt-6 max-w-xl animate-fadeUp text-base leading-relaxed text-white/90 opacity-0 md:text-lg"
+            style={{ animationDelay: "380ms" }}
+          >
+            {content.text}
+          </p>
+          <div
+            className="mt-9 flex animate-fadeUp flex-wrap gap-4 opacity-0"
+            style={{ animationDelay: "520ms" }}
+          >
+            <Link
+              href="/contact"
+              className="btn-shine group inline-flex items-center gap-2 bg-white px-6 py-3.5 text-sm font-semibold tracking-wide text-navy transition duration-300 hover:bg-[#F5F0E0]"
+            >
+              Contact us
+              <ArrowRight
+                size={16}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </Link>
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 border border-white/45 bg-black/20 px-6 py-3.5 text-sm font-medium tracking-wide text-white backdrop-blur-[2px] transition duration-300 hover:border-olive hover:bg-black/35 hover:text-olive"
+            >
+              Explore services
+            </Link>
+          </div>
         </div>
       </div>
 

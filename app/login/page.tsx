@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import Logo from "@/components/Logo";
+import ThemeToggle from "@/components/ThemeToggle";
 import LoginForm from "./LoginForm";
 
 export const metadata: Metadata = {
@@ -17,14 +18,17 @@ export default function LoginPage() {
         style={{ backgroundImage: "url(/images/city.jpg)" }}
       />
       <div className="absolute inset-0 bg-gradient-to-br from-ink via-ink/90 to-crimson/30" />
-      <div className="relative w-full max-w-md border border-white/10 bg-night/90 p-8 shadow-glow backdrop-blur-sm md:p-10">
+      <div className="absolute right-5 top-5 z-20 md:right-8 md:top-8">
+        <ThemeToggle variant="admin" />
+      </div>
+      <div className="relative w-full max-w-md border border-sand/10 bg-night/90 p-8 shadow-glow backdrop-blur-sm md:p-10">
         <div className="mb-8 inline-block bg-white px-2 py-1.5">
           <Logo />
         </div>
         <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
           Admin access
         </p>
-        <h1 className="mt-4 font-display text-4xl text-white">Sign in</h1>
+        <h1 className="mt-4 font-display text-4xl text-sand">Sign in</h1>
         <p className="mt-2 text-sm text-mist">
           Manage enquiries, services, and the public site from the control room.
         </p>

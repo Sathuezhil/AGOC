@@ -4,11 +4,13 @@ export default function CoverImage({
   src,
   alt,
   priority = false,
-  bounce = true,
+  bounce = false,
   float = "up",
   delay = 0,
   fit = "cover",
-  objectPosition = "center 32%",
+  /** Show the full uploaded image without CSS cropping */
+  full = false,
+  objectPosition = "center",
   sizes = "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw",
   className = "",
 }: {
@@ -19,6 +21,7 @@ export default function CoverImage({
   float?: "up" | "down";
   delay?: number;
   fit?: "cover" | "contain";
+  full?: boolean;
   objectPosition?: string;
   sizes?: string;
   className?: string;
@@ -28,6 +31,22 @@ export default function CoverImage({
     (float === "down"
       ? "animate-imageFloatAlt hover:animate-imageFloatAltFast active:animate-imageFloatAltFast group-hover:animate-imageFloatAltFast group-active:animate-imageFloatAltFast"
       : "animate-imageFloat hover:animate-imageFloatFast active:animate-imageFloatFast group-hover:animate-imageFloatFast group-active:animate-imageFloatFast");
+
+  if (full) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        width={1600}
+        height={1200}
+        priority={priority}
+        sizes={sizes}
+        unoptimized={src.startsWith("/api/media")}
+        className={`h-auto w-full object-contain ${motion || ""} ${className}`}
+        style={bounce ? { animationDelay: `${delay}ms` } : undefined}
+      />
+    );
+  }
 
   return (
     <Image

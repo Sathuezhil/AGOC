@@ -10,7 +10,7 @@ export default async function EnquiriesPage() {
       <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
         Inbox
       </p>
-      <h1 className="mt-4 font-display text-4xl text-white">Enquiries</h1>
+      <h1 className="mt-4 font-display text-4xl text-sand">Enquiries</h1>
       <p className="mt-2 text-mist">
         {fresh} new · {items.length} total. These are people who wrote in
         through the public site.

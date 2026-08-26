@@ -7,7 +7,7 @@ export default function NewServicePage() {
       <Link href="/admin/services" className="text-sm text-mist hover:text-olive">
         ← Services
       </Link>
-      <h1 className="mt-4 font-display text-4xl text-white">Add service</h1>
+      <h1 className="mt-4 font-display text-4xl text-sand">Add service</h1>
       <ServiceForm mode="create" />
     </div>
   );

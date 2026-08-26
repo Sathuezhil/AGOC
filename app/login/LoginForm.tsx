@@ -36,7 +36,7 @@ export default function LoginForm() {
   }
 
   const field =
-    "w-full border border-white/10 bg-ink/70 px-4 py-3 text-sm text-sand outline-none transition placeholder:text-mist/50 focus:border-olive";
+    "w-full border border-sand/15 bg-ink/70 px-4 py-3 text-sm text-sand outline-none transition placeholder:text-mist/50 focus:border-olive";
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">

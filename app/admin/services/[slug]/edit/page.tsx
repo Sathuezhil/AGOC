@@ -17,7 +17,7 @@ export default async function EditServicePage({
       <Link href="/admin/services" className="text-sm text-mist hover:text-olive">
         ← Services
       </Link>
-      <h1 className="mt-4 font-display text-4xl text-white">Edit {service.title}</h1>
+      <h1 className="mt-4 font-display text-4xl text-sand">Edit {service.title}</h1>
       <ServiceForm mode="edit" initial={service} />
     </div>
   );

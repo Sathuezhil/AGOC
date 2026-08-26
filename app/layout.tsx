@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
 };
 
-const themeInitScript = `(function(){try{var p=location.pathname;var t=(p==='/login'||p.indexOf('/admin')===0)?'dark':localStorage.getItem('agoc-theme');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
+const themeInitScript = `(function(){try{var t=localStorage.getItem('agoc-theme');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -57,17 +57,19 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className={`${display.variable} ${sans.variable} font-sans antialiased`}>
-        {bare ? (
-          children
-        ) : (
-          <ThemeProvider>
-            <JsonLd />
-            <Header />
-            <main>{children}</main>
-            <Footer />
-            <WhatsAppButton />
-          </ThemeProvider>
-        )}
+        <ThemeProvider>
+          {bare ? (
+            children
+          ) : (
+            <>
+              <JsonLd />
+              <Header />
+              <main>{children}</main>
+              <Footer />
+              <WhatsAppButton />
+            </>
+          )}
+        </ThemeProvider>
       </body>
     </html>
   );

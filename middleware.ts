@@ -12,9 +12,9 @@ export async function middleware(request: NextRequest) {
 
   const isAdminRoute =
     pathname.startsWith("/admin") || pathname.startsWith("/api/admin");
-  const isLogin = pathname === "/login";
 
-  if (!isAdminRoute && !isLogin) {
+  // /login always shows the sign-in form — no auto-redirect to the dashboard.
+  if (!isAdminRoute) {
     return response;
   }
 
@@ -22,22 +22,23 @@ export async function middleware(request: NextRequest) {
     request.cookies.get(SESSION_COOKIE)?.value,
   );
 
-  if (isAdminRoute && !session) {
+  if (!session) {
     if (pathname.startsWith("/api/")) {
-      return NextResponse.json({ ok: false, error: "Unauthorized." }, { status: 401 });
+      return NextResponse.json(
+        { ok: false, error: "Unauthorized." },
+        { status: 401 },
+      );
     }
     const login = new URL("/login", request.url);
     login.searchParams.set("from", pathname);
     return NextResponse.redirect(login);
   }
 
-  if (isLogin && session) {
-    return NextResponse.redirect(new URL("/admin", request.url));
-  }
-
   return response;
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|images/|logo.png|icon|api/media).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|images/|logo.png|icon|api/media).*)",
+  ],
 };

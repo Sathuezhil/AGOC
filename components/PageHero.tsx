@@ -12,15 +12,17 @@ export default function PageHero({
   return (
     <section className="relative overflow-hidden bg-night pt-40 pb-20 md:pt-48">
       <div
-        className="absolute inset-0 scale-105 opacity-40 animate-kenburns"
+        className="absolute inset-0 scale-105 opacity-55 animate-kenburns"
         style={{
           backgroundImage: "url(/images/city.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#121214] via-[#1E1E22]/88 to-crimson/40" />
+      <div className="hero-scrim pointer-events-none absolute inset-0" aria-hidden />
+      <div className="hero-vignette pointer-events-none absolute inset-0 opacity-80" aria-hidden />
       <div className="relative mx-auto max-w-6xl px-6">
+        <div className="hero-copy max-w-3xl">
         <p
           className="olive-label animate-fadeUp text-sm font-semibold tracking-[0.32em] text-olive uppercase opacity-0"
           style={{ animationDelay: "80ms" }}
@@ -55,6 +57,7 @@ export default function PageHero({
           >
             View services
           </Link>
+        </div>
         </div>
       </div>
     </section>

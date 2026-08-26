@@ -27,12 +27,13 @@ export default function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-40">
       <div
-        className={`border-b bg-white transition-all duration-500 ${
+        className={`site-topbar border-b bg-white/95 backdrop-blur-md transition-all duration-500 ${
           scrolled
-            ? "border-black/10 shadow-lg shadow-black/10"
+            ? "border-black/10 shadow-[0_10px_30px_rgba(7,21,37,0.08)]"
             : "border-black/5"
         }`}
       >
+        <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent opacity-90" />
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-2.5 md:px-6">
           <Link
             href="/"
@@ -49,10 +50,10 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`group relative text-[0.8rem] tracking-[0.14em] uppercase transition duration-300 ${
+                  className={`group relative text-[1rem] tracking-[0.16em] uppercase transition duration-300 ${
                     active
                       ? "text-crimson"
-                      : "text-black/70 hover:text-black"
+                      : "text-navy/70 hover:text-navy"
                   }`}
                 >
                   {link.label}
@@ -70,14 +71,14 @@ export default function Header() {
             <ThemeToggle />
             <Link
               href="/contact"
-              className="btn-shine hidden items-center gap-2 bg-crimson px-4 py-2.5 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-crimson-dark hover:shadow-lg lg:inline-flex"
+              className="btn-shine hidden items-center gap-2 rounded-lg bg-crimson px-4 py-2.5 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-crimson-dark hover:shadow-lg lg:inline-flex"
             >
               <Phone size={15} />
               Get Protection
             </Link>
             <button
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center bg-crimson text-white transition duration-300 hover:bg-crimson-dark lg:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-crimson text-white transition duration-300 hover:bg-crimson-dark lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               onClick={() => setOpen((v) => !v)}
             >
@@ -88,20 +89,20 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="animate-fadeUp border-b border-black/10 bg-white px-5 py-6 lg:hidden">
+        <div className="site-topbar animate-fadeUp border-b border-black/10 bg-white px-5 py-6 lg:hidden">
           <nav className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="border-b border-black/10 pb-3 text-lg tracking-wide text-black transition hover:text-crimson"
+                className="border-b border-black/10 pb-3 text-lg tracking-wide text-navy transition hover:text-crimson"
               >
                 {link.label}
               </Link>
             ))}
             <Link
               href="/contact"
-              className="mt-2 bg-crimson px-4 py-3 text-center text-sm font-medium tracking-wide text-white"
+              className="mt-2 rounded-lg bg-crimson px-4 py-3 text-center text-sm font-medium tracking-wide text-white"
             >
               Get Protection
             </Link>

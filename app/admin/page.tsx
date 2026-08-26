@@ -1,22 +1,83 @@
 import Link from "next/link";
-import { FileText, ImageIcon, Inbox, Shield, ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  FileText,
+  ImageIcon,
+  Inbox,
+  Shield,
+  BadgeCheck,
+  Users,
+} from "lucide-react";
 import { listEnquiries } from "@/lib/enquiries";
 import { getServices } from "@/lib/services";
+import { getContent } from "@/lib/content";
 
 export default async function AdminHomePage() {
-  const [enquiries, services] = await Promise.all([
+  const [enquiries, services, content] = await Promise.all([
     listEnquiries(),
     getServices(),
+    getContent(),
   ]);
   const fresh = enquiries.filter((item) => item.status === "new").length;
   const live = services.filter((item) => !item.hidden).length;
-  const hidden = services.length - live;
+  const teamCount = content.about.team.length;
 
   const cards = [
-    { label: "New enquiries", value: String(fresh), href: "/admin/enquiries" },
-    { label: "All enquiries", value: String(enquiries.length), href: "/admin/enquiries" },
-    { label: "Live services", value: String(live), href: "/admin/services" },
-    { label: "Hidden services", value: String(hidden), href: "/admin/services" },
+    {
+      label: "New enquiries",
+      value: String(fresh),
+      href: "/admin/enquiries",
+      accent: "crimson",
+      icon: Inbox,
+    },
+    {
+      label: "All enquiries",
+      value: String(enquiries.length),
+      href: "/admin/enquiries",
+      accent: "olive",
+      icon: BadgeCheck,
+    },
+    {
+      label: "Live services",
+      value: String(live),
+      href: "/admin/services",
+      accent: "olive",
+      icon: Shield,
+    },
+    {
+      label: "Team members",
+      value: String(teamCount),
+      href: "/admin/team",
+      accent: "olive",
+      icon: Users,
+    },
+  ] as const;
+
+  const shortcuts = [
+    {
+      href: "/admin/services/new",
+      title: "Add service",
+      text: "Create a new service page for the public site.",
+      icon: Shield,
+    },
+    {
+      href: "/admin/team",
+      title: "Team",
+      text: "Manage founder and team members on the About page.",
+      icon: Users,
+    },
+    {
+      href: "/admin/content",
+      title: "Texts",
+      text: "Edit hero, home, about, and contact copy.",
+      icon: FileText,
+    },
+    {
+      href: "/admin/media",
+      title: "Images",
+      text: "Upload and pick photos used across the site.",
+      icon: ImageIcon,
+    },
   ];
 
   return (
@@ -24,63 +85,85 @@ export default async function AdminHomePage() {
       <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
         Overview
       </p>
-      <h1 className="mt-4 font-display text-4xl text-white">Dashboard</h1>
+      <h1 className="mt-4 font-display text-4xl text-sand md:text-5xl">
+        Dashboard
+      </h1>
       <p className="mt-2 max-w-2xl text-mist">
         Manage the public website from here — enquiries, services, texts, and
         images.
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {cards.map((card) => (
-          <Link
-            key={card.label}
-            href={card.href}
-            className="border border-white/10 bg-night p-5 transition hover:border-olive/40"
-          >
-            <p className="text-xs tracking-[0.18em] text-mist uppercase">
-              {card.label}
-            </p>
-            <p className="mt-3 font-display text-4xl text-white">{card.value}</p>
-          </Link>
-        ))}
+        {cards.map((card) => {
+          const Icon = card.icon;
+          return (
+            <Link
+              key={card.label}
+              href={card.href}
+              className="admin-card group relative overflow-hidden border border-sand/10 bg-night/80 p-5 transition duration-300 hover:-translate-y-0.5 hover:border-olive/40"
+            >
+              <div
+                className={`absolute inset-x-0 top-0 h-0.5 ${
+                  card.accent === "crimson"
+                    ? "bg-crimson"
+                    : card.accent === "olive"
+                      ? "bg-olive"
+                      : "bg-mist/50"
+                }`}
+              />
+              <div className="flex items-start justify-between gap-3">
+                <p className="text-xs tracking-[0.18em] text-mist uppercase">
+                  {card.label}
+                </p>
+                <Icon
+                  size={16}
+                  className={
+                    card.accent === "crimson"
+                      ? "text-crimson-soft"
+                      : "text-olive"
+                  }
+                />
+              </div>
+              <p className="mt-3 font-display text-4xl text-sand transition group-hover:text-olive">
+                {card.value}
+              </p>
+            </Link>
+          );
+        })}
       </div>
 
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
-        <Link
-          href="/admin/services"
-          className="border border-white/10 bg-night p-6 transition hover:border-olive/40"
-        >
-          <Shield className="text-olive" size={20} />
-          <h2 className="mt-3 font-display text-2xl text-white">Services</h2>
-          <p className="mt-2 text-sm text-mist">Add, edit, delete, and hide service pages.</p>
-        </Link>
-        <Link
-          href="/admin/content"
-          className="border border-white/10 bg-night p-6 transition hover:border-olive/40"
-        >
-          <FileText className="text-olive" size={20} />
-          <h2 className="mt-3 font-display text-2xl text-white">Texts</h2>
-          <p className="mt-2 text-sm text-mist">Edit hero, home, about, and contact copy.</p>
-        </Link>
-        <Link
-          href="/admin/media"
-          className="border border-white/10 bg-night p-6 transition hover:border-olive/40"
-        >
-          <ImageIcon className="text-olive" size={20} />
-          <h2 className="mt-3 font-display text-2xl text-white">Images</h2>
-          <p className="mt-2 text-sm text-mist">Upload and pick photos used across the site.</p>
-        </Link>
+      <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {shortcuts.map((item) => {
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="admin-card group border border-sand/10 bg-night/80 p-6 transition duration-300 hover:-translate-y-0.5 hover:border-olive/40"
+            >
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-olive/25 bg-olive/10 text-olive transition group-hover:border-olive/50 group-hover:bg-olive/20">
+                <Icon size={18} />
+              </span>
+              <h2 className="mt-4 font-display text-2xl text-sand">{item.title}</h2>
+              <p className="mt-2 text-sm text-mist">{item.text}</p>
+              <span className="mt-4 inline-flex items-center gap-1 text-xs tracking-wide text-olive uppercase opacity-0 transition group-hover:opacity-100">
+                Open
+                <ArrowRight size={12} />
+              </span>
+            </Link>
+          );
+        })}
       </div>
 
-      <section className="mt-10 border border-white/10 bg-night p-6">
-        <div className="flex items-center justify-between">
-          <h2 className="inline-flex items-center gap-2 font-display text-2xl text-white">
+      <section className="admin-card mt-10 border border-sand/10 bg-night/80 p-6">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="inline-flex items-center gap-2 font-display text-2xl text-sand">
             <Inbox size={18} className="text-olive" />
             Latest enquiries
           </h2>
           <Link
             href="/admin/enquiries"
-            className="inline-flex items-center gap-1 text-xs tracking-wide text-olive uppercase"
+            className="inline-flex items-center gap-1 text-xs tracking-wide text-olive uppercase transition hover:text-crimson"
           >
             Open
             <ArrowRight size={12} />
@@ -95,12 +178,25 @@ export default async function AdminHomePage() {
           {enquiries.slice(0, 5).map((item) => (
             <li
               key={item.id}
-              className="border-b border-white/10 pb-3 text-sm last:border-0"
+              className="flex flex-wrap items-center justify-between gap-2 border-b border-sand/10 pb-3 text-sm last:border-0"
             >
-              <p className="text-white">{item.name}</p>
-              <p className="text-mist">
-                {item.service} · {new Date(item.createdAt).toLocaleString()}
-              </p>
+              <div>
+                <p className="text-sand">{item.name}</p>
+                <p className="text-mist">
+                  {item.service} · {new Date(item.createdAt).toLocaleString()}
+                </p>
+              </div>
+              <span
+                className={`rounded-full px-2.5 py-1 text-[0.65rem] tracking-wide uppercase ${
+                  item.status === "new"
+                    ? "bg-crimson/15 text-crimson-soft"
+                    : item.status === "done"
+                      ? "bg-olive/15 text-olive"
+                      : "bg-sand/10 text-mist"
+                }`}
+              >
+                {item.status}
+              </span>
             </li>
           ))}
         </ul>

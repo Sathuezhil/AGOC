@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { site } from "@/lib/site";
+import { revalidatePath } from "next/cache";
+import { mailConfigured, sendEnquiryEmail } from "@/lib/mail";
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,26 +34,35 @@ export async function POST(request: NextRequest) {
 
     const { addEnquiry } = await import("@/lib/enquiries");
     await addEnquiry({ name, email, phone, service, message });
+    revalidatePath("/admin/enquiries");
+    revalidatePath("/admin");
 
-    const key = process.env.RESEND_API_KEY;
-    if (key) {
-      await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${key}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: process.env.RESEND_FROM ?? "AGOC Website <onboarding@resend.dev>",
-          to: [site.email],
-          subject: `New enquiry · ${service}`,
-          text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nService: ${service}\n\n${message}`,
-        }),
-      });
+    let emailed = false;
+    let mailError: string | undefined;
+
+    if (mailConfigured()) {
+      try {
+        await sendEnquiryEmail({ name, email, phone, service, message });
+        emailed = true;
+      } catch (err) {
+        console.error("[contact] enquiry saved but email failed:", err);
+        mailError =
+          err instanceof Error ? err.message : "Email delivery failed.";
+      }
+    } else {
+      console.warn(
+        "[contact] enquiry saved; email skipped (set SMTP_* or RESEND_API_KEY).",
+      );
+      mailError = "Email is not configured on the server.";
     }
 
-    return NextResponse.json({ ok: true });
-  } catch {
+    return NextResponse.json({
+      ok: true,
+      emailed,
+      ...(mailError && !emailed ? { mailWarning: mailError } : {}),
+    });
+  } catch (err) {
+    console.error("[contact] failed:", err);
     return NextResponse.json(
       { ok: false, error: "Unable to send your request right now." },
       { status: 500 },

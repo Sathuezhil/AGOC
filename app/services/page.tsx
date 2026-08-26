@@ -26,29 +26,32 @@ export default async function ServicesPage() {
         text={content.servicesPage.text}
       />
 
-      <section className="mx-auto max-w-6xl space-y-16 px-6 py-24">
+      <section className="mx-auto max-w-6xl space-y-12 px-4 py-14 sm:space-y-16 sm:px-6 sm:py-24">
         {services.map((service, i) => (
           <Reveal key={service.slug}>
             <article
-              className={`grid items-center gap-10 lg:grid-cols-2 ${
+              className={`grid items-center gap-6 sm:gap-10 lg:grid-cols-2 ${
                 i % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""
               }`}
             >
-              <div className="group relative aspect-[16/10] overflow-hidden md:aspect-[5/3]">
+              <div className="service-image-float media-frame relative overflow-hidden rounded-xl border border-sand/15 bg-night shadow-[0_14px_30px_rgba(0,0,0,0.22)]">
                 <CoverImage
                   src={service.image}
                   alt={service.title}
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  float={i % 2 === 0 ? "up" : "down"}
-                  delay={i * 160}
-                  objectPosition={service.focus ?? "center 32%"}
+                  bounce={false}
+                  objectPosition="center"
+                  className="service-image-media"
                 />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10 opacity-80" />
+                <div className="service-image-shine pointer-events-none absolute inset-0" />
+                <div className="service-image-outline pointer-events-none absolute inset-0" />
               </div>
               <div>
                 <p className="olive-label text-sm tracking-[0.22em] text-olive uppercase">
                   {String(i + 1).padStart(2, "0")}
                 </p>
-                <h2 className="mt-2 font-display text-4xl text-sand">
+                <h2 className="mt-2 font-display text-3xl text-sand sm:text-4xl">
                   {service.title}
                 </h2>
                 <p className="mt-4 leading-relaxed text-mist">{service.summary}</p>

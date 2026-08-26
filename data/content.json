@@ -10,6 +10,9 @@
       "+971 4 337 9951"
     ],
     "whatsapp": "97148924995",
+    "facebook": "https://www.facebook.com/AgocPrivateGuardingServices",
+    "instagram": "https://www.instagram.com/agocgroups/",
+    "tiktok": "https://www.tiktok.com/@agocsecurity",
     "address": "Office 315, Building Al Mulla 1, Al Muteena, Dubai, UAE",
     "hours": [
       {
@@ -193,10 +196,12 @@
     "membersTitle": "Team Members",
     "team": [
       {
-        "name": "Founder",
+        "name": "Abdul Moeez Awan",
         "role": "Founder & Managing Director",
-        "bio": "Built AGOC on licensed teams, clear reporting, and quiet professionalism across Dubai and the UAE.",
-        "image": "/images/briefing.jpg",
+        "education": "BSc in Human Resources Management",
+        "bio": "I am proud to lead AGOC with a clear focus on people, professionalism, and trust. Our teams are trained to protect what matters most to our clients — with discipline, care, and integrity every day. I remain committed to building lasting partnerships across Dubai and the UAE through reliable service and honest standards.",
+        "closing": "Leading with Integrity. Serving with Excellence. Growing Through Trust.",
+        "image": "",
         "kind": "founder",
         "founder": true
       },
