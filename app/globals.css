@@ -1350,6 +1350,155 @@ html[data-theme="dark"] .include-card:hover {
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
 }
 
+/* Clients logo marquee — single track + card wave */
+@keyframes clientsMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes clientsCardWave {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    border-color: rgba(11, 29, 54, 0.08);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.045);
+    border-color: rgba(201, 162, 39, 0.55);
+    box-shadow:
+      0 18px 34px rgba(0, 0, 0, 0.28),
+      0 0 0 1px rgba(201, 162, 39, 0.35),
+      0 0 24px rgba(201, 162, 39, 0.22);
+  }
+}
+
+@keyframes clientsShine {
+  0% { transform: translateX(-140%) skewX(-18deg); opacity: 0; }
+  12% { opacity: 0.85; }
+  35%, 100% { transform: translateX(170%) skewX(-18deg); opacity: 0; }
+}
+
+@keyframes clientsAmbient {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.8; }
+}
+
+.clients-marquee {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(201, 162, 39, 0.16), transparent 60%),
+    radial-gradient(ellipse 45% 40% at 0% 100%, rgba(45, 155, 69, 0.1), transparent 55%),
+    linear-gradient(180deg, #0b1d36 0%, #071525 100%);
+  border-color: rgba(201, 162, 39, 0.18);
+}
+
+html[data-theme="light"] .clients-marquee {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(201, 162, 39, 0.18), transparent 60%),
+    radial-gradient(ellipse 45% 40% at 100% 100%, rgba(45, 155, 69, 0.08), transparent 55%),
+    linear-gradient(180deg, #123056 0%, #0b1d36 55%, #071525 100%);
+  border-color: rgba(11, 29, 54, 0.2);
+}
+
+html[data-theme="light"] .clients-marquee .text-sand,
+html[data-theme="light"] .clients-marquee h2 {
+  color: #ffffff !important;
+}
+
+html[data-theme="light"] .clients-marquee .text-mist {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme="light"] .clients-marquee .text-olive,
+html[data-theme="light"] .clients-marquee .olive-label {
+  color: #e0c35a !important;
+}
+
+.clients-marquee-glow {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 15%, rgba(201, 162, 39, 0.16), transparent 72%),
+    radial-gradient(ellipse 35% 40% at 20% 85%, rgba(45, 155, 69, 0.1), transparent 70%),
+    radial-gradient(ellipse 35% 40% at 80% 85%, rgba(201, 162, 39, 0.1), transparent 70%);
+  animation: clientsAmbient 8s ease-in-out infinite;
+}
+
+.clients-marquee-mask {
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  padding-block: 0.9rem;
+}
+
+.clients-marquee-track {
+  animation: clientsMarquee 30s linear infinite;
+  will-change: transform;
+}
+
+.clients-marquee:hover .clients-marquee-track {
+  animation-play-state: paused;
+}
+
+.clients-marquee-item {
+  border: 1px solid rgba(11, 29, 54, 0.08);
+  animation: clientsCardWave 2.8s ease-in-out infinite;
+  will-change: transform, box-shadow;
+  transition: filter 0.3s ease;
+}
+
+.clients-marquee-item:nth-child(7n + 1) { animation-delay: 0s; }
+.clients-marquee-item:nth-child(7n + 2) { animation-delay: 0.35s; }
+.clients-marquee-item:nth-child(7n + 3) { animation-delay: 0.7s; }
+.clients-marquee-item:nth-child(7n + 4) { animation-delay: 1.05s; }
+.clients-marquee-item:nth-child(7n + 5) { animation-delay: 1.4s; }
+.clients-marquee-item:nth-child(7n + 6) { animation-delay: 1.75s; }
+.clients-marquee-item:nth-child(7n + 7) { animation-delay: 2.1s; }
+
+.clients-marquee:hover .clients-marquee-item {
+  animation-play-state: paused;
+}
+
+.clients-marquee-item:hover {
+  filter: brightness(1.04);
+  z-index: 2;
+}
+
+.clients-marquee-shine {
+  background: linear-gradient(105deg, transparent 36%, rgba(255, 255, 255, 0.9) 50%, transparent 64%);
+  animation: clientsShine 3.8s ease-in-out infinite;
+}
+
+.clients-marquee-item:nth-child(7n + 1) .clients-marquee-shine { animation-delay: 0s; }
+.clients-marquee-item:nth-child(7n + 2) .clients-marquee-shine { animation-delay: 0.45s; }
+.clients-marquee-item:nth-child(7n + 3) .clients-marquee-shine { animation-delay: 0.9s; }
+.clients-marquee-item:nth-child(7n + 4) .clients-marquee-shine { animation-delay: 1.35s; }
+.clients-marquee-item:nth-child(7n + 5) .clients-marquee-shine { animation-delay: 1.8s; }
+.clients-marquee-item:nth-child(7n + 6) .clients-marquee-shine { animation-delay: 2.25s; }
+.clients-marquee-item:nth-child(7n + 7) .clients-marquee-shine { animation-delay: 2.7s; }
+
+.clients-marquee-item img {
+  transition: transform 0.35s ease;
+}
+
+.clients-marquee-item:hover img {
+  transform: scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clients-marquee-glow,
+  .clients-marquee-shine,
+  .clients-marquee-item {
+    animation: none !important;
+  }
+
+  .clients-marquee-track {
+    animation: none !important;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    justify-content: center;
+    padding-inline: 1.5rem;
+  }
+}
+
 /* Center a single leftover card on the last row */
 @media (min-width: 640px) {
   .include-grid > :last-child:nth-child(odd) {

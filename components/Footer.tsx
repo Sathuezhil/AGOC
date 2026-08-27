@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Clock, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import Logo from "./Logo";
 import Reveal from "./Reveal";
-import { navLinks } from "@/lib/site";
+import { navLinks, site as siteDefaults } from "@/lib/site";
 import { getContent, phoneLink } from "@/lib/content";
 import { getVisibleServices } from "@/lib/services";
 
@@ -26,6 +26,9 @@ export default async function Footer() {
     getVisibleServices(),
   ]);
   const { site } = content;
+  const { lat, lng, zoom } = siteDefaults.map;
+  const mapSrc = `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&hl=en&output=embed`;
+  const mapLink = `https://www.google.com/maps?q=${lat},${lng}&z=${zoom}`;
 
   const socials = [
     {
@@ -134,10 +137,32 @@ export default async function Footer() {
             <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase">
               Contact
             </h3>
-            <p className="flex gap-3">
-              <MapPin size={16} className="mt-0.5 shrink-0 text-crimson" />
-              {site.address}
-            </p>
+            <div className="flex flex-col gap-3">
+              <p className="flex gap-3">
+                <MapPin size={16} className="mt-0.5 shrink-0 text-crimson" />
+                <span>{site.address}</span>
+              </p>
+              <a
+                href={mapLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-map group relative block overflow-hidden rounded-lg border border-sand/15"
+                aria-label="Open office location in Google Maps"
+                title="Open in Google Maps"
+              >
+                <iframe
+                  title="AGOC Security office map"
+                  src={mapSrc}
+                  className="pointer-events-none h-28 w-full grayscale-[20%] transition duration-500 group-hover:grayscale-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  tabIndex={-1}
+                />
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-2.5 py-2 text-[10px] tracking-wide text-white uppercase">
+                  View on map
+                </span>
+              </a>
+            </div>
             <a
               href={`mailto:${site.email}`}
               className="footer-contact flex gap-3"

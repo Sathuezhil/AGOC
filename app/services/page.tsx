@@ -24,9 +24,14 @@ export default async function ServicesPage() {
         eyebrow={content.servicesPage.eyebrow}
         title={content.servicesPage.title}
         text={content.servicesPage.text}
+        secondaryHref="#services-list"
+        secondaryLabel="View services"
       />
 
-      <section className="mx-auto max-w-6xl space-y-12 px-4 py-14 sm:space-y-16 sm:px-6 sm:py-24">
+      <section
+        id="services-list"
+        className="scroll-mt-28 mx-auto max-w-6xl space-y-12 px-4 py-14 sm:space-y-16 sm:px-6 sm:py-24"
+      >
         {services.map((service, i) => (
           <Reveal key={service.slug}>
             <article

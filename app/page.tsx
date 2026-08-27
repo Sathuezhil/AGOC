@@ -13,6 +13,8 @@ import Reveal from "@/components/Reveal";
 import ContactForm from "@/components/ContactForm";
 import CoverImage from "@/components/CoverImage";
 import Card3D from "@/components/Card3D";
+import ClientMarquee from "@/components/ClientMarquee";
+import { getClientLogos } from "@/lib/clients";
 import { getContent } from "@/lib/content";
 import { getServices, getVisibleServices } from "@/lib/services";
 
@@ -31,6 +33,7 @@ export default async function HomePage({
   searchParams?: Promise<{ service?: string }>;
 }) {
   const params = (await searchParams) ?? {};
+  const clientLogos = getClientLogos();
   const [content, services, allServices] = await Promise.all([
     getContent(),
     getVisibleServices(),
@@ -273,6 +276,8 @@ export default async function HomePage({
           </Reveal>
         </div>
       </section>
+
+      <ClientMarquee logos={clientLogos} />
 
       <section id="enquire" className="scroll-mt-28 bg-night py-14 sm:py-20 md:py-24">
         <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
