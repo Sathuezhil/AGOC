@@ -147,7 +147,7 @@ export default function ImageCropModal({
               step={0.05}
               value={zoom}
               onChange={(e) => setZoom(Number(e.target.value))}
-              className="w-full accent-[#4D7436]"
+              className="w-full accent-[#2D9B45]"
             />
           </label>
 

@@ -62,7 +62,7 @@ body {
   color: #071525;
 }
 
-/* Olive CTAs — white text + rounded corners */
+/* Green CTAs — white text + rounded corners */
 .bg-crimson,
 a.bg-crimson,
 button.bg-crimson,
@@ -1014,13 +1014,13 @@ html[data-theme="light"] textarea::placeholder {
 html[data-theme="light"] .btn-shine.bg-crimson,
 html[data-theme="light"] a.btn-shine.bg-crimson,
 html[data-theme="light"] button.btn-shine.bg-crimson {
-  box-shadow: 0 10px 24px rgba(77, 116, 54, 0.28);
+  box-shadow: 0 10px 24px rgba(45, 155, 69, 0.28);
   color: #ffffff !important;
 }
 
 html[data-theme="light"] .btn-shine.bg-crimson:hover,
 html[data-theme="light"] a.btn-shine.bg-crimson:hover {
-  box-shadow: 0 14px 30px rgba(77, 116, 54, 0.36);
+  box-shadow: 0 14px 30px rgba(45, 155, 69, 0.36);
 }
 
 html[data-theme="light"] header .site-topbar,

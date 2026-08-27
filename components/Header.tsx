@@ -34,11 +34,11 @@ export default function Header() {
         }`}
       >
         <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent opacity-90" />
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-2.5 md:px-6">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-0.5 md:px-6">
           <Link
             href="/"
             aria-label="AGOC Security home"
-            className="shrink-0 transition-transform duration-300 hover:scale-[1.02]"
+            className="flex shrink-0 items-center transition-transform duration-300 hover:scale-[1.02]"
           >
             <Logo />
           </Link>

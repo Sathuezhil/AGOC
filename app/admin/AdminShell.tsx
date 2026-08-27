@@ -69,7 +69,7 @@ export default function AdminShell({
                 href={link.href}
                 className={`group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm tracking-wide transition duration-300 ${
                   active
-                    ? "bg-crimson/15 text-sand shadow-[inset_3px_0_0_0_#4D7436]"
+                    ? "bg-crimson/15 text-sand shadow-[inset_3px_0_0_0_#2D9B45]"
                     : "text-mist hover:bg-sand/[0.04] hover:text-sand"
                 }`}
               >

@@ -7,7 +7,7 @@ export default function Logo({ className = "" }: { className?: string }) {
       alt="AGOC — A Power That Saves You"
       width={420}
       height={120}
-      className={`h-14 w-auto object-contain object-left ${className}`}
+      className={`h-[5rem] w-auto object-contain object-left ${className}`}
       priority
       unoptimized
     />

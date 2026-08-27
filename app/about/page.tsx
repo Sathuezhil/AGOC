@@ -15,9 +15,11 @@ export const metadata: Metadata = {
 export default async function AboutPage() {
   const { about } = await getContent();
   const founder = about.team.find((member) => teamKind(member) === "founder");
-  const coordinator = about.team.find((member) => teamKind(member) === "coordinator");
+  const coordinator = about.team.find(
+    (member) => teamKind(member) === "coordinator",
+  );
   const members = about.team.filter((member) => teamKind(member) === "member");
-  const teamMembers = [coordinator, ...members].filter(Boolean) as typeof about.team;
+  const hasPeople = Boolean(founder || coordinator || members.length);
 
   return (
     <>
@@ -55,7 +57,7 @@ export default async function AboutPage() {
         image={about.missionImage}
       />
 
-      {about.team.length > 0 && (
+      {hasPeople && (
         <section className="bg-ink py-24">
           <div className="mx-auto max-w-6xl px-6">
             <Reveal>
@@ -77,7 +79,7 @@ export default async function AboutPage() {
                   <div className="mx-auto max-w-3xl">
                     <Card3D intensity={6}>
                       <article className="border border-sand/10 bg-night px-8 py-12 text-center md:px-14 md:py-14">
-                        <h3 className="font-display text-4xl text-sand md:text-5xl">
+                        <h3 className="font-display text-4xl uppercase text-sand md:text-5xl">
                           {founder.name}
                         </h3>
                         <p className="mt-3 text-xs font-semibold tracking-[0.22em] text-mist uppercase">
@@ -105,7 +107,44 @@ export default async function AboutPage() {
               </Reveal>
             )}
 
-            {teamMembers.length > 0 && (
+            {coordinator && (
+              <Reveal delay={100}>
+                <div className="mt-16">
+                  <h3 className="mb-6 text-center font-display text-3xl text-sand">
+                    Coordinator’s Message
+                  </h3>
+                  <div className="mx-auto max-w-3xl">
+                    <Card3D intensity={6}>
+                      <article className="border border-sand/10 bg-night px-8 py-12 text-center md:px-14 md:py-14">
+                        <h3 className="font-display text-4xl uppercase text-sand md:text-5xl">
+                          {coordinator.name}
+                        </h3>
+                        <p className="mt-3 text-xs font-semibold tracking-[0.22em] text-mist uppercase">
+                          {coordinator.role}
+                        </p>
+                        {coordinator.education ? (
+                          <p className="mt-2 text-sm text-olive">
+                            {coordinator.education}
+                          </p>
+                        ) : null}
+                        {coordinator.bio ? (
+                          <p className="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-mist md:text-base">
+                            “{coordinator.bio}”
+                          </p>
+                        ) : null}
+                        {coordinator.closing ? (
+                          <p className="mx-auto mt-8 max-w-xl text-sm font-semibold leading-relaxed text-sand md:text-base">
+                            {coordinator.closing}
+                          </p>
+                        ) : null}
+                      </article>
+                    </Card3D>
+                  </div>
+                </div>
+              </Reveal>
+            )}
+
+            {members.length > 0 && (
               <div className="mt-16">
                 <Reveal>
                   <h3 className="font-display text-3xl text-sand md:text-4xl">
@@ -113,24 +152,24 @@ export default async function AboutPage() {
                   </h3>
                 </Reveal>
                 <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {teamMembers.map((member, i) => (
+                  {members.map((member, i) => (
                     <Reveal key={`${member.name}-${i}`} delay={i * 90}>
                       <Card3D>
                         <article className="group flex h-full flex-col border border-sand/10 bg-night p-6 transition-colors duration-500 hover:border-olive/40 md:p-7">
                           <p className="text-[0.65rem] tracking-[0.2em] text-crimson uppercase">
-                            {teamKind(member) === "coordinator"
-                              ? "Coordinator"
-                              : "Team member"}
+                            Team member
                           </p>
-                          <h3 className="mt-3 font-display text-2xl text-sand">
+                          <h3 className="mt-3 font-display text-2xl uppercase text-sand">
                             {member.name}
                           </h3>
                           <p className="mt-1 text-xs tracking-[0.18em] text-olive uppercase">
                             {member.role}
                           </p>
-                          <p className="mt-4 flex-1 text-sm leading-relaxed text-mist">
-                            {member.bio}
-                          </p>
+                          {member.bio ? (
+                            <p className="mt-4 flex-1 text-sm leading-relaxed text-mist">
+                              “{member.bio}”
+                            </p>
+                          ) : null}
                         </article>
                       </Card3D>
                     </Reveal>

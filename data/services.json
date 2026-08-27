@@ -191,5 +191,253 @@
       "Discreet coverage for private and VIP settings",
       "Uniformed presence with clear reporting"
     ]
+  },
+  {
+    "slug": "personal-security",
+    "title": "Personal Security Service",
+    "short": "Close protection for individuals, families, and VIP clients.",
+    "summary": "Personal security officers who provide discreet close protection for individuals, families, and VIP clients — at home, on the move, and at private or public engagements across Dubai and the UAE.",
+    "image": "/images/private-security.jpg",
+    "focus": "top",
+    "gallery": [
+      "/images/security-guards.png",
+      "/images/briefing.jpg",
+      "/images/surveillance.jpg"
+    ],
+    "points": [
+      "Licensed close-protection and personal security officers",
+      "Coverage for homes, travel, events, and daily routines",
+      "Discreet presence tailored to the client’s profile",
+      "Route planning, advance checks, and incident response",
+      "Named officers with clear reporting to the client"
+    ]
+  },
+  {
+    "slug": "residential-cleaning",
+    "title": "Residential Cleaning",
+    "short": "Spotless homes for villas, apartments, and private residences.",
+    "summary": "Professional cleaning services for villas, apartments, and private residences to maintain a spotless and comfortable home.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Villas, apartments, and private residences",
+      "Regular or one-time home cleaning",
+      "Kitchens, bathrooms, living areas, and floors",
+      "Trained, supervised, uniformed teams",
+      "Schedules that work around your household"
+    ]
+  },
+  {
+    "slug": "apartment-villa-cleaning",
+    "title": "Apartment & Villa Cleaning",
+    "short": "Cleaning tailored to apartment and villa layouts.",
+    "summary": "Regular or one-time cleaning tailored specifically to the layouts and needs of apartments, villas, and family homes.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Apartment and villa layout-aware cleaning",
+      "Regular or one-time visits",
+      "Family-home and compound-ready teams",
+      "Checklists matched to each property type",
+      "Quiet, respectful service for occupied homes"
+    ]
+  },
+  {
+    "slug": "commercial-cleaning",
+    "title": "Commercial Cleaning",
+    "short": "Reliable cleaning for shops, showrooms, and businesses.",
+    "summary": "Reliable cleaning solutions for retail shops, showrooms, restaurants, and commercial establishments.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Retail, showroom, and restaurant cleaning",
+      "After-hours and off-peak schedules",
+      "Front-of-house and back-of-house areas",
+      "Hygienic standards for customer spaces",
+      "Supervised teams with consistent results"
+    ]
+  },
+  {
+    "slug": "corporate-office-cleaning",
+    "title": "Corporate Office Cleaning",
+    "short": "Daily or custom office cleaning for productive workplaces.",
+    "summary": "Daily, weekly, or customized office cleaning services to ensure a clean and productive workplace.",
+    "image": "/images/office.jpg",
+    "gallery": [
+      "/images/building-cleaning.jpg",
+      "/images/city.jpg",
+      "/images/briefing.jpg"
+    ],
+    "points": [
+      "Daily, weekly, or custom office programmes",
+      "Desks, meeting rooms, pantries, and washrooms",
+      "Minimal disruption during business hours",
+      "Supply restocking and waste handling",
+      "Reporting suited to facility managers"
+    ]
+  },
+  {
+    "slug": "vacation-rental-airbnb",
+    "title": "Vacation Rental & Airbnb",
+    "short": "Fast turnover cleans for holiday homes and short stays.",
+    "summary": "Fast and efficient turnover cleaning services for holiday homes and short-term rental properties.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Guest-ready turnover between bookings",
+      "Bed linen, bathrooms, kitchens, and living areas",
+      "Flexible same-day or next-day windows",
+      "Checklists aligned with host standards",
+      "Suitable for holiday homes and Airbnb units"
+    ]
+  },
+  {
+    "slug": "move-in-move-out",
+    "title": "Move-In / Move-Out",
+    "short": "Detailed cleans before move-in or after move-out.",
+    "summary": "Detailed cleaning services for tenants, landlords, and property owners before moving in or after moving out.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Full move-in and move-out cleans",
+      "Cupboards, appliances, bathrooms, and floors",
+      "Ideal for tenants, landlords, and owners",
+      "Deposit-ready presentation standards",
+      "One-off deep clean before handover"
+    ]
+  },
+  {
+    "slug": "post-construction-cleaning",
+    "title": "Post-Construction Cleaning",
+    "short": "Dust and debris removal after build or renovation.",
+    "summary": "Thorough removal of dust, debris, and construction residues to prepare newly built or renovated properties for occupancy.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Post-build and post-renovation cleans",
+      "Dust, debris, and residue removal",
+      "Glass, floors, fittings, and surfaces",
+      "Ready-for-occupancy finish",
+      "Site-safe methods and protective care"
+    ]
+  },
+  {
+    "slug": "sofa-mattress-cleaning",
+    "title": "Sofa & Mattress Cleaning",
+    "short": "Professional cleaning for sofas, mattresses, and upholstery.",
+    "summary": "Professional cleaning and sanitization of sofas, mattresses, chairs, and upholstered furniture.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Sofas, mattresses, chairs, and upholstery",
+      "Stain treatment and deep fabric cleaning",
+      "Sanitization for a fresher home",
+      "Suitable for homes, offices, and rentals",
+      "Careful drying and fabric-safe products"
+    ]
+  },
+  {
+    "slug": "kitchen-bath-sanitization",
+    "title": "Kitchen & Bath Sanitization",
+    "short": "Deep disinfection for kitchens, baths, and high-touch areas.",
+    "summary": "Deep disinfection and sanitization of kitchens, bathrooms, and high-touch areas to ensure hygiene.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Kitchens, bathrooms, and high-touch zones",
+      "Deep disinfection and sanitization",
+      "Hygiene-focused product selection",
+      "Ideal for homes, offices, and hospitality",
+      "Scheduled or one-off sanitization visits"
+    ]
+  },
+  {
+    "slug": "pet-care",
+    "title": "Pet Care Services",
+    "short": "Trusted pet care and feeding while you travel.",
+    "summary": "Trustworthy pet care and feeding services while clients are traveling or out of the country.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "In-home pet feeding and basic care",
+      "Visits while you travel or are away",
+      "Reliable, screened caregivers",
+      "Updates and check-ins as agreed",
+      "Support tailored to your pet’s routine"
+    ]
+  },
+  {
+    "slug": "ironing-laundry",
+    "title": "Ironing & Laundry",
+    "short": "Professional ironing and laundry for busy households.",
+    "summary": "Professional ironing and basic laundry support tailored for busy households.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Ironing for everyday and formal wear",
+      "Basic laundry support for households",
+      "Careful handling of delicate items",
+      "Flexible collection or on-site options",
+      "Schedules that suit busy families"
+    ]
+  },
+  {
+    "slug": "disinfection-sanitization",
+    "title": "Disinfection & Sanitization",
+    "short": "Specialized sanitization for healthier indoor spaces.",
+    "summary": "Specialized sanitization services designed to maintain a healthy and highly hygienic environment.",
+    "image": "/images/building-cleaning.jpg",
+    "gallery": [
+      "/images/office.jpg",
+      "/images/city.jpg",
+      "/images/hero2.jpg"
+    ],
+    "points": [
+      "Specialized disinfection programmes",
+      "Homes, offices, and commercial sites",
+      "High-touch surface focus",
+      "Hygiene standards for healthier spaces",
+      "One-off or recurring sanitization plans"
+    ]
   }
 ]
