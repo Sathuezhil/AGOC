@@ -30,6 +30,100 @@ function emptyPerson(key: string, kind: TeamKind): TeamRow {
   };
 }
 
+function PersonForm({
+  member,
+  title,
+  messageLabel,
+  onUpdate,
+  onRemove,
+}: {
+  member: TeamRow;
+  title: string;
+  messageLabel: string;
+  onUpdate: (key: string, patch: Partial<TeamMember>) => void;
+  onRemove: (key: string) => void;
+}) {
+  return (
+    <article className="admin-card border border-sand/10 bg-night/80 p-5 md:p-6">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm font-medium tracking-wide text-sand">
+          {title}
+          {member.name ? ` · ${member.name}` : ""}
+        </p>
+        <button
+          type="button"
+          onClick={() => onRemove(member._key)}
+          className="inline-flex items-center gap-1.5 px-2 py-1.5 text-xs tracking-wide text-crimson uppercase hover:text-crimson-soft"
+        >
+          <Trash2 size={13} />
+          Remove
+        </button>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <label className="block">
+          <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
+            Name
+          </span>
+          <input
+            required
+            className={field}
+            value={member.name}
+            onChange={(e) => onUpdate(member._key, { name: e.target.value })}
+          />
+        </label>
+        <label className="block">
+          <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
+            Position / role
+          </span>
+          <input
+            required
+            className={field}
+            value={member.role}
+            onChange={(e) => onUpdate(member._key, { role: e.target.value })}
+          />
+        </label>
+        <label className="block sm:col-span-2">
+          <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
+            Education
+          </span>
+          <input
+            className={field}
+            placeholder="e.g. BSc in Human Resources Management"
+            value={member.education ?? ""}
+            onChange={(e) =>
+              onUpdate(member._key, { education: e.target.value })
+            }
+          />
+        </label>
+        <label className="block sm:col-span-2">
+          <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
+            {messageLabel}
+          </span>
+          <textarea
+            rows={4}
+            className={field}
+            value={member.bio}
+            onChange={(e) => onUpdate(member._key, { bio: e.target.value })}
+          />
+        </label>
+        <label className="block sm:col-span-2">
+          <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
+            Closing line
+          </span>
+          <input
+            className={field}
+            placeholder="Leading with Integrity..."
+            value={member.closing ?? ""}
+            onChange={(e) =>
+              onUpdate(member._key, { closing: e.target.value })
+            }
+          />
+        </label>
+      </div>
+    </article>
+  );
+}
+
 export default function TeamManager({
   initialTeam,
   initialMembersTitle,
@@ -140,96 +234,6 @@ export default function TeamManager({
     }
   }
 
-  function PersonForm({
-    member,
-    title,
-    messageLabel,
-  }: {
-    member: TeamRow;
-    title: string;
-    messageLabel: string;
-  }) {
-    return (
-      <article className="admin-card border border-sand/10 bg-night/80 p-5 md:p-6">
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm font-medium tracking-wide text-sand">
-            {title}
-            {member.name ? ` · ${member.name}` : ""}
-          </p>
-          <button
-            type="button"
-            onClick={() => setPendingRemoveKey(member._key)}
-            className="inline-flex items-center gap-1.5 px-2 py-1.5 text-xs tracking-wide text-crimson uppercase hover:text-crimson-soft"
-          >
-            <Trash2 size={13} />
-            Remove
-          </button>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <label className="block">
-            <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
-              Name
-            </span>
-            <input
-              required
-              className={field}
-              value={member.name}
-              onChange={(e) => updateByKey(member._key, { name: e.target.value })}
-            />
-          </label>
-          <label className="block">
-            <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
-              Position / role
-            </span>
-            <input
-              required
-              className={field}
-              value={member.role}
-              onChange={(e) => updateByKey(member._key, { role: e.target.value })}
-            />
-          </label>
-          <label className="block sm:col-span-2">
-            <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
-              Education
-            </span>
-            <input
-              className={field}
-              placeholder="e.g. BSc in Human Resources Management"
-              value={member.education ?? ""}
-              onChange={(e) =>
-                updateByKey(member._key, { education: e.target.value })
-              }
-            />
-          </label>
-          <label className="block sm:col-span-2">
-            <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
-              {messageLabel}
-            </span>
-            <textarea
-              rows={4}
-              className={field}
-              value={member.bio}
-              onChange={(e) => updateByKey(member._key, { bio: e.target.value })}
-            />
-          </label>
-          <label className="block sm:col-span-2">
-            <span className="mb-1.5 block text-xs tracking-[0.16em] text-mist uppercase">
-              Closing line
-            </span>
-            <input
-              className={field}
-              placeholder="Leading with Integrity..."
-              value={member.closing ?? ""}
-              onChange={(e) =>
-                updateByKey(member._key, { closing: e.target.value })
-              }
-            />
-          </label>
-        </div>
-      </article>
-    );
-  }
-
   const pending = team.find((m) => m._key === pendingRemoveKey);
 
   return (
@@ -303,6 +307,8 @@ export default function TeamManager({
             member={founder}
             title="Founder"
             messageLabel="Founder message (first person)"
+            onUpdate={updateByKey}
+            onRemove={setPendingRemoveKey}
           />
         ) : (
           <div className="admin-card border border-dashed border-sand/20 bg-night/40 p-8 text-center text-sm text-mist">
@@ -336,6 +342,8 @@ export default function TeamManager({
             member={coordinator}
             title="Coordinator"
             messageLabel="Coordinator message"
+            onUpdate={updateByKey}
+            onRemove={setPendingRemoveKey}
           />
         ) : (
           <div className="admin-card border border-dashed border-sand/20 bg-night/40 p-8 text-center text-sm text-mist">

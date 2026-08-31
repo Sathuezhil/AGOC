@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import JsonLd from "@/components/JsonLd";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { getContent } from "@/lib/content";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -50,6 +51,7 @@ export default async function RootLayout({
   const pathname = (await headers()).get("x-pathname") ?? "";
   const bare =
     pathname === "/login" || pathname.startsWith("/admin");
+  const { site: contentSite } = await getContent();
 
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
@@ -63,7 +65,10 @@ export default async function RootLayout({
           ) : (
             <>
               <JsonLd />
-              <Header />
+              <Header
+                logoSrc={contentSite.logo}
+                profilePdf={contentSite.companyProfilePdf}
+              />
               <main>{children}</main>
               <Footer />
               <WhatsAppButton />

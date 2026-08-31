@@ -1,4 +1,4 @@
-import { site as fallbackSite } from "./site";
+import { site as fallbackSite, defaultLogo } from "./site";
 
 export type TextPair = { title: string; text: string };
 export type Slide = { src: string; alt: string };
@@ -35,6 +35,8 @@ export type SiteContent = {
     address: string;
     hours: { days: string; time: string }[];
     footerBlurb: string;
+    logo: string;
+    companyProfilePdf: string;
   };
   hero: {
     eyebrow: string;
@@ -120,6 +122,8 @@ export const DEFAULT_CONTENT: SiteContent = {
     hours: fallbackSite.hours.map((row) => ({ ...row })),
     footerBlurb:
       "Certified security teams protecting people, property, and peace of mind across Dubai and the UAE.",
+    logo: defaultLogo,
+    companyProfilePdf: fallbackSite.companyProfilePdf,
   },
   hero: {
     eyebrow: "Dubai · Licensed · Verified staff",
@@ -288,7 +292,9 @@ export const DEFAULT_CONTENT: SiteContent = {
       {
         name: "Coordinator",
         role: "Operations Coordinator",
-        bio: "I coordinate rosters, site briefings, and rapid response so every post stays covered — and our officers always know the plan before they start their shift.",
+        bio: "As Administrative Coordinator, I keep AGOC’s day-to-day operations clear and on track — from rosters and site briefings to client follow-ups and internal coordination. I work closely with supervisors and field teams so every post is covered, every message is answered, and every client feels the same standard of care from the office as they do on the ground.",
+        closing:
+          "Behind every smooth shift is careful coordination. That is what I stand for at AGOC.",
         image: "/images/security-guards.png",
         kind: "coordinator",
       },
@@ -356,7 +362,14 @@ function mergeContent(stored: SiteContent): SiteContent {
   return {
     ...DEFAULT_CONTENT,
     ...stored,
-    site: { ...DEFAULT_CONTENT.site, ...stored.site },
+    site: {
+      ...DEFAULT_CONTENT.site,
+      ...stored.site,
+      logo: stored.site?.logo?.trim() || DEFAULT_CONTENT.site.logo,
+      companyProfilePdf:
+        stored.site?.companyProfilePdf?.trim() ||
+        DEFAULT_CONTENT.site.companyProfilePdf,
+    },
     hero: { ...DEFAULT_CONTENT.hero, ...stored.hero },
     home: { ...DEFAULT_CONTENT.home, ...stored.home },
     about: {
@@ -391,6 +404,22 @@ export async function saveContent(content: SiteContent) {
     await contentCollection()
   ).updateOne({ _id: "site" }, { $set: next }, { upsert: true });
   return next;
+}
+
+export async function updateSiteLogo(logo: string) {
+  const content = await getContent();
+  return saveContent({
+    ...content,
+    site: { ...content.site, logo: logo.trim() },
+  });
+}
+
+export async function updateSiteProfilePdf(companyProfilePdf: string) {
+  const content = await getContent();
+  return saveContent({
+    ...content,
+    site: { ...content.site, companyProfilePdf: companyProfilePdf.trim() },
+  });
 }
 
 export function phoneLink(phone: string) {

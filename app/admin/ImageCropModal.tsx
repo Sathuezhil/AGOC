@@ -5,7 +5,7 @@ import Cropper, { type Area } from "react-easy-crop";
 import "react-easy-crop/react-easy-crop.css";
 import { getCroppedFile } from "@/lib/cropImage";
 
-const ASPECTS: { label: string; value: number | undefined }[] = [
+const DEFAULT_ASPECTS: { label: string; value: number | undefined }[] = [
   { label: "Free", value: undefined },
   { label: "16:10", value: 16 / 10 },
   { label: "16:9", value: 16 / 9 },
@@ -14,12 +14,22 @@ const ASPECTS: { label: string; value: number | undefined }[] = [
   { label: "4:5", value: 4 / 5 },
 ];
 
+const LOGO_ASPECTS: { label: string; value: number | undefined }[] = [
+  { label: "Free", value: undefined },
+  { label: "3:1", value: 3 },
+  { label: "2:1", value: 2 },
+  { label: "16:9", value: 16 / 9 },
+  { label: "5:2", value: 5 / 2 },
+];
+
 export default function ImageCropModal({
   imageSrc,
   fileName = "image.jpg",
   originalFile,
   onCancel,
   onConfirm,
+  mode = "default",
+  inline = false,
 }: {
   imageSrc: string;
   fileName?: string;
@@ -27,7 +37,11 @@ export default function ImageCropModal({
   originalFile?: File | null;
   onCancel: () => void;
   onConfirm: (file: File) => void | Promise<void>;
+  mode?: "default" | "logo";
+  /** Render inside the page instead of a fullscreen overlay */
+  inline?: boolean;
 }) {
+  const aspects = mode === "logo" ? LOGO_ASPECTS : DEFAULT_ASPECTS;
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [aspect, setAspect] = useState<number | undefined>(undefined);
@@ -87,16 +101,26 @@ export default function ImageCropModal({
     }
   }
 
-  return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 p-4">
-      <div className="flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-lg border border-sand/15 bg-night shadow-2xl">
-        <div className="flex items-center justify-between border-b border-sand/10 px-5 py-4">
-          <div>
-            <p className="font-display text-2xl text-sand">Crop image</p>
-            <p className="mt-0.5 text-xs text-mist">
-              Free = full photo. Use 16:10 only for service card thumbnails.
-            </p>
-          </div>
+  const shell = (
+    <div
+      className={
+        inline
+          ? "flex w-full flex-col overflow-hidden rounded-lg border border-sand/15 bg-night/90"
+          : "flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-lg border border-sand/15 bg-night shadow-2xl"
+      }
+    >
+      <div className="flex items-center justify-between border-b border-sand/10 px-5 py-4">
+        <div>
+          <p className="font-display text-2xl text-sand">
+            {mode === "logo" ? "Crop logo" : "Crop image"}
+          </p>
+          <p className="mt-0.5 text-xs text-mist">
+            {mode === "logo"
+              ? "Frame the full logo — icon, AGOC, tagline, and company name. Free works best for wide logos."
+              : "Free = full photo. Use 16:10 only for service card thumbnails."}
+          </p>
+        </div>
+        {!inline && (
           <button
             type="button"
             onClick={onCancel}
@@ -105,82 +129,94 @@ export default function ImageCropModal({
           >
             Cancel
           </button>
+        )}
+      </div>
+
+      <div
+        className={`relative w-full bg-black ${
+          mode === "logo" ? "h-[min(42vh,360px)] min-h-[240px]" : "h-[48vh] min-h-[260px]"
+        }`}
+      >
+        <Cropper
+          image={imageSrc}
+          crop={crop}
+          zoom={zoom}
+          aspect={aspect}
+          onCropChange={setCrop}
+          onZoomChange={setZoom}
+          onCropComplete={onCropComplete}
+          showGrid
+        />
+      </div>
+
+      <div className="space-y-4 border-t border-sand/10 px-5 py-4">
+        <div className="flex flex-wrap gap-2">
+          {aspects.map((item) => (
+            <button
+              key={item.label}
+              type="button"
+              onClick={() => setAspect(item.value)}
+              className={`rounded-md px-3 py-1.5 text-xs tracking-wide uppercase transition ${
+                aspect === item.value
+                  ? "bg-crimson text-white"
+                  : "border border-sand/15 text-mist hover:border-olive/50 hover:text-sand"
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
 
-        <div className="relative h-[48vh] min-h-[260px] w-full bg-black">
-          <Cropper
-            image={imageSrc}
-            crop={crop}
-            zoom={zoom}
-            aspect={aspect}
-            onCropChange={setCrop}
-            onZoomChange={setZoom}
-            onCropComplete={onCropComplete}
-            showGrid
+        <label className="flex items-center gap-3 text-sm text-mist">
+          <span className="w-12 shrink-0 tracking-wide uppercase">Zoom</span>
+          <input
+            type="range"
+            min={1}
+            max={3}
+            step={0.05}
+            value={zoom}
+            onChange={(e) => setZoom(Number(e.target.value))}
+            className="w-full accent-[#2D9B45]"
           />
-        </div>
+        </label>
 
-        <div className="space-y-4 border-t border-sand/10 px-5 py-4">
-          <div className="flex flex-wrap gap-2">
-            {ASPECTS.map((item) => (
-              <button
-                key={item.label}
-                type="button"
-                onClick={() => setAspect(item.value)}
-                className={`rounded-md px-3 py-1.5 text-xs tracking-wide uppercase transition ${
-                  aspect === item.value
-                    ? "bg-crimson text-white"
-                    : "border border-sand/15 text-mist hover:border-olive/50 hover:text-sand"
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
+        {error && <p className="text-sm text-crimson-soft">{error}</p>}
 
-          <label className="flex items-center gap-3 text-sm text-mist">
-            <span className="w-12 shrink-0 tracking-wide uppercase">Zoom</span>
-            <input
-              type="range"
-              min={1}
-              max={3}
-              step={0.05}
-              value={zoom}
-              onChange={(e) => setZoom(Number(e.target.value))}
-              className="w-full accent-[#2D9B45]"
-            />
-          </label>
-
-          {error && <p className="text-sm text-crimson-soft">{error}</p>}
-
-          <div className="flex flex-wrap justify-end gap-3">
-            <button
-              type="button"
-              onClick={onCancel}
-              disabled={busy}
-              className="rounded-lg border border-sand/15 px-4 py-2.5 text-sm text-mist hover:text-sand disabled:opacity-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={useFull}
-              disabled={busy}
-              className="rounded-lg border border-olive/40 px-4 py-2.5 text-sm tracking-wide text-olive uppercase hover:bg-olive/10 disabled:opacity-50"
-            >
-              {busy ? "Saving…" : "Use full image"}
-            </button>
-            <button
-              type="button"
-              onClick={apply}
-              disabled={busy || !croppedAreaPixels}
-              className="btn-shine rounded-lg bg-crimson px-5 py-2.5 text-sm font-medium tracking-wide text-white uppercase hover:bg-crimson-dark disabled:opacity-60"
-            >
-              {busy ? "Saving…" : "Apply crop"}
-            </button>
-          </div>
+        <div className="flex flex-wrap justify-end gap-3">
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={busy}
+            className="rounded-lg border border-sand/15 px-4 py-2.5 text-sm text-mist hover:text-sand disabled:opacity-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={useFull}
+            disabled={busy}
+            className="rounded-lg border border-olive/40 px-4 py-2.5 text-sm tracking-wide text-olive uppercase hover:bg-olive/10 disabled:opacity-50"
+          >
+            {busy ? "Saving…" : "Use full image"}
+          </button>
+          <button
+            type="button"
+            onClick={apply}
+            disabled={busy || !croppedAreaPixels}
+            className="btn-shine rounded-lg bg-crimson px-5 py-2.5 text-sm font-medium tracking-wide text-white uppercase hover:bg-crimson-dark disabled:opacity-60"
+          >
+            {busy ? "Saving…" : "Apply crop"}
+          </button>
         </div>
       </div>
+    </div>
+  );
+
+  if (inline) return shell;
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 p-4">
+      {shell}
     </div>
   );
 }

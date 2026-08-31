@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Clock, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
-import Logo from "./Logo";
+import ThemeBrandLogo from "./ThemeBrandLogo";
 import Reveal from "./Reveal";
-import { navLinks, site as siteDefaults } from "@/lib/site";
+import { brandLogo, brandLogoLight, navLinks, site as siteDefaults } from "@/lib/site";
 import { getContent, phoneLink } from "@/lib/content";
 import { getVisibleServices } from "@/lib/services";
 
@@ -53,9 +53,12 @@ export default async function Footer() {
       <div className="site-footer-inner mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 lg:grid-cols-4">
         <Reveal>
           <div className="space-y-5">
-            <div className="inline-block bg-white px-2 py-1.5">
-              <Logo />
-            </div>
+            <ThemeBrandLogo
+              darkSrc={brandLogo}
+              lightSrc={brandLogoLight}
+              compact
+              className="h-auto w-full max-w-[18rem] sm:max-w-[20rem]"
+            />
             <p className="max-w-xs text-sm leading-relaxed text-mist">
               {site.legalName}. {site.footerBlurb}
             </p>

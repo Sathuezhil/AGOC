@@ -9,10 +9,12 @@ export default function ImagePicker({
   label,
   value,
   onChange,
+  variant = "default",
 }: {
   label: string;
   value: string;
   onChange: (src: string) => void;
+  variant?: "default" | "logo";
 }) {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<MediaFile[]>([]);
@@ -71,14 +73,24 @@ export default function ImagePicker({
     setOpen(false);
   }
 
+  const isLogo = variant === "logo";
+
   return (
     <div>
       <p className="mb-1.5 text-xs tracking-[0.16em] text-mist uppercase">{label}</p>
       <div className="flex items-center gap-3">
-        <div className="relative h-16 w-24 overflow-hidden rounded-md border border-sand/10 bg-night">
+        <div
+          className={`relative overflow-hidden rounded-md border border-sand/10 bg-white ${
+            isLogo ? "h-20 w-full max-w-[220px]" : "h-16 w-24 bg-night"
+          }`}
+        >
           {value ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={value} alt="" className="h-full w-full object-cover" />
+            <img
+              src={value}
+              alt=""
+              className={`h-full w-full ${isLogo ? "object-contain p-1" : "object-cover"}`}
+            />
           ) : (
             <span className="flex h-full items-center justify-center text-[10px] text-mist">
               None
@@ -185,6 +197,7 @@ export default function ImagePicker({
           imageSrc={cropSrc}
           fileName={cropName}
           originalFile={originalFile}
+          mode={isLogo ? "logo" : "default"}
           onCancel={clearCrop}
           onConfirm={upload}
         />

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import Logo from "@/components/Logo";
+import ThemeBrandLogo from "@/components/ThemeBrandLogo";
 import ThemeToggle from "@/components/ThemeToggle";
+import { brandLogo, brandLogoLight } from "@/lib/site";
 import LoginForm from "./LoginForm";
 
 export const metadata: Metadata = {
@@ -22,10 +23,15 @@ export default function LoginPage() {
         <ThemeToggle variant="admin" />
       </div>
       <div className="relative w-full max-w-md border border-sand/10 bg-night/90 p-8 shadow-glow backdrop-blur-sm md:p-10">
-        <div className="mb-8 inline-block bg-white px-2 py-1.5">
-          <Logo />
+        <div className="mb-5 flex justify-center">
+          <ThemeBrandLogo
+            darkSrc={brandLogo}
+            lightSrc={brandLogoLight}
+            compact
+            className="mx-auto h-auto w-full max-w-[8rem]"
+          />
         </div>
-        <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
+        <p className="olive-label text-center text-sm font-semibold tracking-[0.3em] text-olive uppercase">
           Admin access
         </p>
         <h1 className="mt-4 font-display text-4xl text-sand">Sign in</h1>

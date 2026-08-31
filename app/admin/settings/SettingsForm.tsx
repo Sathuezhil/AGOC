@@ -2,14 +2,30 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { KeyRound, ShieldCheck } from "lucide-react";
+import { FileText, ImageIcon, KeyRound, ShieldCheck } from "lucide-react";
+import LogoCropPanel from "./LogoCropPanel";
+import ProfilePdfPanel from "./ProfilePdfPanel";
 
 const field =
   "w-full border border-sand/10 bg-ink px-3 py-2.5 text-sm text-sand outline-none focus:border-olive";
 
-export default function SettingsForm({ email }: { email: string }) {
+export default function SettingsForm({
+  email,
+  logo,
+  companyProfilePdf,
+}: {
+  email: string;
+  logo: string;
+  companyProfilePdf: string;
+}) {
   const router = useRouter();
   const [adminEmail, setAdminEmail] = useState(email);
+  const [logoSrc, setLogoSrc] = useState(logo);
+  const [profilePdf, setProfilePdf] = useState(companyProfilePdf);
+  const [logoStatus, setLogoStatus] = useState<"idle" | "saving" | "ok" | "error">(
+    "idle",
+  );
+  const [logoMessage, setLogoMessage] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,6 +33,37 @@ export default function SettingsForm({ email }: { email: string }) {
     "idle",
   );
   const [message, setMessage] = useState("");
+
+  async function saveLogo(event: FormEvent) {
+    event.preventDefault();
+    setLogoStatus("saving");
+    setLogoMessage("");
+
+    try {
+      const response = await fetch("/api/admin/settings/logo", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ logo: logoSrc }),
+      });
+      const data = (await response.json()) as {
+        ok?: boolean;
+        error?: string;
+        logo?: string;
+      };
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || "Could not save logo.");
+      }
+
+      setLogoStatus("ok");
+      setLogoMessage("Logo updated on the website and admin panel.");
+      if (data.logo) setLogoSrc(data.logo);
+      router.refresh();
+    } catch (err) {
+      setLogoStatus("error");
+      setLogoMessage(err instanceof Error ? err.message : "Could not save.");
+    }
+  }
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -72,6 +119,65 @@ export default function SettingsForm({ email }: { email: string }) {
             </p>
           </div>
         </div>
+      </section>
+
+      <form
+        onSubmit={saveLogo}
+        className="admin-card space-y-5 border border-sand/10 bg-night/80 p-6"
+      >
+        <div className="flex items-start gap-3">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-olive/25 bg-olive/10 text-olive">
+            <ImageIcon size={18} />
+          </span>
+          <div>
+            <h2 className="font-display text-2xl text-sand">Site logo</h2>
+            <p className="mt-1 text-sm text-mist">
+              Shown in the header, footer, login page, and admin sidebar. Pick
+              from the media library or upload a new image.
+            </p>
+          </div>
+        </div>
+
+        <LogoCropPanel value={logoSrc} onChange={setLogoSrc} />
+
+        <div className="flex flex-wrap items-center gap-4 pt-1">
+          <button
+            type="submit"
+            disabled={logoStatus === "saving"}
+            className="btn-shine bg-crimson px-6 py-3 text-sm tracking-wide text-white uppercase hover:bg-crimson-dark disabled:opacity-70"
+          >
+            {logoStatus === "saving" ? "Saving…" : "Save logo"}
+          </button>
+          {logoStatus === "ok" && (
+            <p className="text-sm text-olive">{logoMessage}</p>
+          )}
+          {logoStatus === "error" && (
+            <p className="text-sm text-crimson-soft">{logoMessage}</p>
+          )}
+        </div>
+      </form>
+
+      <section className="admin-card space-y-5 border border-sand/10 bg-night/80 p-6">
+        <div className="flex items-start gap-3">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-olive/25 bg-olive/10 text-olive">
+            <FileText size={18} />
+          </span>
+          <div>
+            <h2 className="font-display text-2xl text-sand">Our Profile PDF</h2>
+            <p className="mt-1 text-sm text-mist">
+              The file downloaded when visitors click <span className="text-sand">Our Profile</span>{" "}
+              in the website header. Upload a new PDF to replace it.
+            </p>
+          </div>
+        </div>
+
+        <ProfilePdfPanel
+          value={profilePdf}
+          onChange={(src) => {
+            setProfilePdf(src);
+            router.refresh();
+          }}
+        />
       </section>
 
       <form

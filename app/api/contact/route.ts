@@ -51,9 +51,9 @@ export async function POST(request: NextRequest) {
       }
     } else {
       console.warn(
-        "[contact] enquiry saved; email skipped (set SMTP_* or RESEND_API_KEY).",
+        "[contact] enquiry saved; email skipped (set SMTP_USER + SMTP_PASS for Outlook).",
       );
-      mailError = "Email is not configured on the server.";
+      mailError = "Outlook email is not configured on the server.";
     }
 
     return NextResponse.json({

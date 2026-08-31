@@ -56,16 +56,32 @@ function mailTo() {
   );
 }
 
+/** Hostinger / custom domain mail (e.g. info@agoc.ae). */
+function smtpHost() {
+  return process.env.SMTP_HOST?.trim() || "smtp.hostinger.com";
+}
+
 function smtpConfigured() {
   return Boolean(
-    process.env.SMTP_HOST?.trim() &&
-      process.env.SMTP_USER?.trim() &&
-      process.env.SMTP_PASS?.trim(),
+    process.env.SMTP_USER?.trim() && process.env.SMTP_PASS?.trim(),
   );
 }
 
+function isOutlookSmtp(host: string) {
+  const h = host.toLowerCase();
+  return (
+    h.includes("office365.com") ||
+    h.includes("outlook.com") ||
+    h.includes("live.com")
+  );
+}
+
+function isHostingerSmtp(host: string) {
+  return host.toLowerCase().includes("hostinger.com");
+}
+
 async function sendViaSmtp(input: EnquiryMailInput) {
-  const host = process.env.SMTP_HOST!.trim();
+  const host = smtpHost();
   const port = Number(process.env.SMTP_PORT || "587");
   const user = process.env.SMTP_USER!.trim();
   const pass = process.env.SMTP_PASS!.trim();
@@ -81,6 +97,10 @@ async function sendViaSmtp(input: EnquiryMailInput) {
     port,
     secure,
     auth: { user, pass },
+    ...(isOutlookSmtp(host) && !secure
+      ? { requireTLS: true, tls: { minVersion: "TLSv1.2" } }
+      : {}),
+    ...(isHostingerSmtp(host) && !secure ? { requireTLS: true } : {}),
   });
 
   const { text, html } = buildBodies(input);
@@ -130,17 +150,17 @@ export function mailConfigured() {
   return smtpConfigured() || Boolean(process.env.RESEND_API_KEY?.trim());
 }
 
-/** Sends enquiry alert to info@agocsecurity.ae (or MAIL_TO). */
+/** Sends enquiry alert via Outlook SMTP to info@agoc.ae (or MAIL_TO). */
 export async function sendEnquiryEmail(input: EnquiryMailInput) {
   if (smtpConfigured()) {
     await sendViaSmtp(input);
-    return { provider: "smtp" as const };
+    return { provider: "outlook-smtp" as const };
   }
   if (process.env.RESEND_API_KEY?.trim()) {
     await sendViaResend(input);
     return { provider: "resend" as const };
   }
   throw new Error(
-    "Email is not configured. Set SMTP_* or RESEND_API_KEY in .env.local.",
+    "Email is not configured. Set SMTP_USER and SMTP_PASS (Outlook) in .env.local.",
   );
 }

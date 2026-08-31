@@ -443,6 +443,22 @@ html[data-theme="light"] .card-3d::after {
   z-index: 1;
 }
 
+.theme-brand-logo {
+  display: block;
+}
+
+.theme-brand-logo-light {
+  display: none;
+}
+
+html[data-theme="light"] .theme-brand-logo-dark {
+  display: none;
+}
+
+html[data-theme="light"] .theme-brand-logo-light {
+  display: block;
+}
+
 .footer-heading {
   position: relative;
   display: inline-block;
@@ -763,6 +779,81 @@ html[data-theme="light"] .admin-shell {
   .admin-card:hover {
     transform: none !important;
   }
+
+  .admin-control-room-label-text {
+    animation: none !important;
+  }
+}
+
+/* Admin sidebar — Control room label */
+@keyframes adminControlRoomShine {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.admin-control-room-label {
+  position: relative;
+  letter-spacing: 0.28em;
+}
+
+.admin-control-room-label::before,
+.admin-control-room-label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 1.75rem;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 162, 39, 0.75),
+    transparent
+  );
+}
+
+.admin-control-room-label::before {
+  left: 0.25rem;
+}
+
+.admin-control-room-label::after {
+  right: 0.25rem;
+}
+
+.admin-control-room-label-text {
+  display: inline-block;
+  background: linear-gradient(
+    105deg,
+    #a6851f 0%,
+    #e0c35a 25%,
+    #ffffff 50%,
+    #e0c35a 75%,
+    #a6851f 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: adminControlRoomShine 4.5s linear infinite;
+  text-shadow: 0 0 18px rgba(201, 162, 39, 0.15);
+}
+
+html[data-theme="light"] .admin-control-room-label-text {
+  background: linear-gradient(
+    105deg,
+    #8a7018 0%,
+    #c9a227 30%,
+    #0b1d36 50%,
+    #c9a227 70%,
+    #8a7018 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 /* WhatsApp floating button */

@@ -14,6 +14,8 @@ import {
   Users,
 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import ThemeBrandLogo from "@/components/ThemeBrandLogo";
+import { brandLogo, brandLogoLight } from "@/lib/site";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -49,11 +51,22 @@ export default function AdminShell({
       </div>
 
       <aside className="admin-sidebar fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-sand/10 bg-night/95 backdrop-blur-md lg:flex lg:flex-col">
-        <div className="relative overflow-hidden border-b border-sand/10 px-6 py-6">
+        <div className="relative border-b border-sand/10 px-4 py-3">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-olive/70 to-transparent" />
-          <p className="text-xs tracking-[0.22em] text-olive uppercase">AGOC</p>
-          <p className="mt-1 font-display text-2xl text-sand">Control room</p>
-          <p className="mt-1 text-xs text-mist">Website ops desk</p>
+          <Link
+            href="/admin"
+            className="mx-auto flex max-w-[16rem] items-center justify-center rounded-lg px-3 py-2.5"
+          >
+            <ThemeBrandLogo
+              darkSrc={brandLogo}
+              lightSrc={brandLogoLight}
+              compact
+              className="w-full"
+            />
+          </Link>
+          <p className="admin-control-room-label mt-2.5 text-center text-xs font-semibold uppercase">
+            <span className="admin-control-room-label-text">Control room</span>
+          </p>
         </div>
 
         <nav className="flex-1 space-y-1.5 px-3 py-5">
@@ -88,16 +101,8 @@ export default function AdminShell({
           })}
         </nav>
 
-        <div className="border-t border-sand/10 px-5 pt-5 pb-14">
-          <p className="truncate text-xs text-mist">{email}</p>
-          <button
-            type="button"
-            onClick={logout}
-            className="mt-3 inline-flex items-center gap-2 rounded-md border border-sand/20 bg-ink/55 px-3 py-2 text-sm text-sand transition hover:border-crimson/45 hover:text-crimson"
-          >
-            <LogOut size={14} />
-            Sign out
-          </button>
+        <div className="border-t border-sand/10 px-5 py-4">
+          <p className="truncate text-center text-xs text-mist">{email}</p>
         </div>
       </aside>
 
@@ -133,8 +138,9 @@ export default function AdminShell({
             <button
               type="button"
               onClick={logout}
-              className="rounded-md border border-sand/20 bg-ink/40 px-2.5 py-1.5 text-xs tracking-wide text-sand uppercase transition hover:border-crimson/45 hover:text-crimson lg:hidden"
+              className="inline-flex items-center gap-1.5 rounded-md border border-sand/20 bg-ink/40 px-2.5 py-1.5 text-xs tracking-wide text-sand uppercase transition hover:border-crimson/45 hover:text-crimson"
             >
+              <LogOut size={12} />
               Sign out
             </button>
           </div>
