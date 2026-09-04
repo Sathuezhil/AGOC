@@ -17,8 +17,7 @@ export const seoKeywords = [
   "Al Muteena security company",
 ] as const;
 
-export const defaultTitle =
-  "AGOC Security Dubai | Private Guards & Protection UAE";
+export const defaultTitle = "AGOC Security Dubai";
 
 export const defaultDescription =
   "AGOC Security — licensed private guards, CCTV control, facility and housekeeping services in Dubai and across the UAE. Trusted protection from Al Muteena, Dubai.";
@@ -54,20 +53,20 @@ export function pageMetadata({
         "x-default": url,
       },
     },
-    openGraph: {
-      title: `${title} | AGOC Security`,
-      description,
-      url,
-      siteName: site.name,
-      locale: "en_AE",
-      alternateLocale: ["ar_AE"],
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${title} | AGOC Security`,
-      description,
-    },
+  openGraph: {
+    title: `${title} | AGOC Security Dubai`,
+    description,
+    url,
+    siteName: site.name,
+    locale: "en_AE",
+    alternateLocale: ["ar_AE"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | AGOC Security Dubai`,
+    description,
+  },
     robots: noIndex
       ? { index: false, follow: false }
       : { index: true, follow: true },

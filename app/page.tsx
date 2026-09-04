@@ -29,18 +29,23 @@ import { listOffers } from "@/lib/offers";
 import { defaultDescription, pageMetadata } from "@/lib/seo";
 import { getServices, getVisibleServices } from "@/lib/services";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Private Guards & Security Company",
-  description: defaultDescription,
-  path: "/",
-  keywords: [
-    "AGOC security Dubai",
-    "security company Dubai",
-    "private guards UAE",
-    "licensed security guards Dubai",
-    "CCTV control Dubai",
-  ],
-});
+export const metadata: Metadata = {
+  ...pageMetadata({
+    title: "AGOC Security Dubai",
+    description: defaultDescription,
+    path: "/",
+    keywords: [
+      "AGOC security Dubai",
+      "security company Dubai",
+      "private guards UAE",
+      "licensed security guards Dubai",
+      "CCTV control Dubai",
+    ],
+  }),
+  title: {
+    absolute: "AGOC Security Dubai",
+  },
+};
 
 const pillarIcons = [ShieldCheck, Eye, Clock3];
 const featureIcons = [ShieldCheck, Eye, Sparkles];

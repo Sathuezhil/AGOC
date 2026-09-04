@@ -167,14 +167,7 @@ export default async function Footer({
                 <MapPin size={16} className="mt-0.5 shrink-0 text-crimson" />
                 <span>{site.address}</span>
               </p>
-              <a
-                href={mapLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-map group relative block overflow-hidden rounded-lg border border-sand/15"
-                aria-label={dict.footer.openMapAria}
-                title={dict.footer.openMapAria}
-              >
+              <div className="footer-map group relative overflow-hidden rounded-lg border border-sand/15">
                 <iframe
                   title="AGOC Security office map"
                   src={mapSrc}
@@ -183,10 +176,19 @@ export default async function Footer({
                   referrerPolicy="no-referrer-when-downgrade"
                   tabIndex={-1}
                 />
-                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-2.5 py-2 text-[10px] tracking-wide text-white uppercase rtl:tracking-normal rtl:normal-case">
-                  {dict.footer.viewOnMap}
-                </span>
-              </a>
+                <a
+                  href={mapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute inset-0 z-10"
+                  aria-label={dict.footer.openMapAria}
+                  title={dict.footer.openMapAria}
+                >
+                  <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-2.5 py-2 text-[10px] tracking-wide text-white uppercase rtl:tracking-normal rtl:normal-case">
+                    {dict.footer.viewOnMap}
+                  </span>
+                </a>
+              </div>
             </div>
             <a
               href={`mailto:${site.email}`}

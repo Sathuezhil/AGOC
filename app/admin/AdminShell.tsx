@@ -19,6 +19,7 @@ import {
 import ThemeToggle from "@/components/ThemeToggle";
 import ThemeBrandLogo from "@/components/ThemeBrandLogo";
 import { brandLogo, brandLogoLight } from "@/lib/site";
+import AdminNotifications from "./AdminNotifications";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -132,6 +133,7 @@ export default function AdminShell({
           </div>
 
           <div className="ml-auto flex items-center gap-3 sm:gap-4">
+            <AdminNotifications />
             <ThemeToggle variant="admin" />
             <Link
               href="/"

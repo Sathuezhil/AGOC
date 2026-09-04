@@ -17,7 +17,15 @@ export async function PATCH(
   if (error) return error;
 
   const { id } = await params;
-  const body = (await request.json()) as { status?: EnquiryStatus };
+  let body: { status?: EnquiryStatus } = {};
+  try {
+    body = (await request.json()) as { status?: EnquiryStatus };
+  } catch {
+    return NextResponse.json(
+      { ok: false, error: "Invalid request body." },
+      { status: 400 },
+    );
+  }
   if (!body.status || !STATUSES.includes(body.status)) {
     return NextResponse.json({ ok: false, error: "Invalid status." }, { status: 400 });
   }

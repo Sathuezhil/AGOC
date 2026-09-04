@@ -21,6 +21,28 @@ export default function EnquiryTable({ items }: { items: Enquiry[] }) {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [serviceFilter, setServiceFilter] = useState("all");
+  /** Keep dropdown on the chosen value while PATCH + refresh run. */
+  const [statusOverrides, setStatusOverrides] = useState<
+    Record<string, EnquiryStatus>
+  >({});
+
+  useEffect(() => {
+    setStatusOverrides((prev) => {
+      let changed = false;
+      const next = { ...prev };
+      for (const item of items) {
+        if (next[item.id] && next[item.id] === item.status) {
+          delete next[item.id];
+          changed = true;
+        }
+      }
+      return changed ? next : prev;
+    });
+  }, [items]);
+
+  function statusOf(item: Enquiry): EnquiryStatus {
+    return statusOverrides[item.id] ?? item.status;
+  }
 
   const services = useMemo(() => {
     const set = new Set<string>();
@@ -34,7 +56,8 @@ export default function EnquiryTable({ items }: { items: Enquiry[] }) {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return items.filter((item) => {
-      if (statusFilter !== "all" && item.status !== statusFilter) return false;
+      const status = statusOf(item);
+      if (statusFilter !== "all" && status !== statusFilter) return false;
       if (serviceFilter !== "all" && item.service !== serviceFilter) return false;
       if (!q) return true;
       const hay = [
@@ -43,13 +66,13 @@ export default function EnquiryTable({ items }: { items: Enquiry[] }) {
         item.phone,
         item.service,
         item.message,
-        item.status,
+        status,
       ]
         .join(" ")
         .toLowerCase();
       return hay.includes(q);
     });
-  }, [items, query, statusFilter, serviceFilter]);
+  }, [items, query, statusFilter, serviceFilter, statusOverrides]);
 
   const hasActiveFilters =
     query.trim() !== "" || statusFilter !== "all" || serviceFilter !== "all";
@@ -78,14 +101,34 @@ export default function EnquiryTable({ items }: { items: Enquiry[] }) {
   }, [replyTarget, sending]);
 
   async function setStatus(id: string, status: EnquiryStatus) {
+    const previous =
+      statusOverrides[id] ?? items.find((item) => item.id === id)?.status;
     setBusy(id);
-    await fetch(`/api/admin/enquiries/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
-    router.refresh();
-    setBusy(null);
+    setStatusOverrides((prev) => ({ ...prev, [id]: status }));
+    try {
+      const res = await fetch(`/api/admin/enquiries/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+      const data = (await res.json().catch(() => null)) as {
+        ok?: boolean;
+        error?: string;
+      } | null;
+      if (!res.ok || !data?.ok) {
+        throw new Error(data?.error || "Could not update status.");
+      }
+      router.refresh();
+    } catch {
+      setStatusOverrides((prev) => {
+        const next = { ...prev };
+        if (previous) next[id] = previous;
+        else delete next[id];
+        return next;
+      });
+    } finally {
+      setBusy(null);
+    }
   }
 
   async function remove() {
@@ -247,7 +290,7 @@ export default function EnquiryTable({ items }: { items: Enquiry[] }) {
                   <td className="max-w-sm px-4 py-4 text-mist">{item.message}</td>
                   <td className="px-4 py-4">
                     <select
-                      value={item.status}
+                      value={statusOf(item)}
                       disabled={busy === item.id}
                       onChange={(e) =>
                         setStatus(item.id, e.target.value as EnquiryStatus)
