@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSessionToken, sessionCookie } from "@/lib/auth";
+import { logActivity } from "@/lib/activity";
 import { authenticateAdmin } from "@/lib/users";
 import { ensureSeeded } from "@/lib/seed";
 
@@ -22,6 +23,12 @@ export async function POST(request: NextRequest) {
     const cookie = sessionCookie(token);
     const response = NextResponse.json({ ok: true });
     response.cookies.set(cookie.name, cookie.value, cookie.options);
+    await logActivity({
+      action: "auth.login",
+      actorEmail: user.email,
+      entity: "auth",
+      summary: "Signed in to admin.",
+    });
     return response;
   } catch {
     return NextResponse.json(

@@ -1,18 +1,21 @@
 import { mkdir, readdir, unlink, writeFile } from "fs/promises";
 import path from "path";
-import { profilePdfPath } from "./profile-pdf";
+import {
+  PROFILE_PDF_MAX_BYTES,
+  PROFILE_PDF_MAX_MB,
+  profilePdfPath,
+} from "./profile-pdf";
 
 const DOCUMENTS_DIR = path.join(process.cwd(), "public", "documents");
 const PROFILE_BASENAME = "company-profile.pdf";
-const MAX_BYTES = 25 * 1024 * 1024;
 
 export async function saveProfilePdf(file: File) {
   const ext = path.extname(file.name).toLowerCase();
   if (ext !== ".pdf") {
     throw new Error("Upload a PDF file only.");
   }
-  if (file.size > MAX_BYTES) {
-    throw new Error("PDF must be under 25 MB.");
+  if (file.size > PROFILE_PDF_MAX_BYTES) {
+    throw new Error(`PDF must be under ${PROFILE_PDF_MAX_MB} MB.`);
   }
 
   await mkdir(DOCUMENTS_DIR, { recursive: true });

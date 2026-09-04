@@ -5,15 +5,27 @@ import MissionVision from "@/components/MissionVision";
 import CoverImage from "@/components/CoverImage";
 import Card3D from "@/components/Card3D";
 import { getContent, teamKind } from "@/lib/content";
+import { getDictionary, localizeContent } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About Us",
+export const metadata: Metadata = pageMetadata({
+  title: "About AGOC Security Dubai",
   description:
-    "AGOC Security is a Dubai-based protection firm providing certified guards, surveillance, and tailored security across the UAE.",
-};
+    "Learn about AGOC Security in Dubai — licensed private guarding, CCTV, and facility teams protecting homes, offices, and sites across the UAE.",
+  path: "/about",
+  keywords: [
+    "AGOC Security about",
+    "security company Dubai",
+    "private guarding Dubai",
+    "Al Muteena security",
+  ],
+});
 
 export default async function AboutPage() {
-  const { about } = await getContent();
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
+  const { about } = localizeContent(await getContent(), locale);
   const founder = about.team.find((member) => teamKind(member) === "founder");
   const coordinator = about.team.find(
     (member) => teamKind(member) === "coordinator",
@@ -23,7 +35,13 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageHero eyebrow={about.eyebrow} title={about.title} text={about.text} />
+      <PageHero
+        eyebrow={about.eyebrow}
+        title={about.title}
+        text={about.text}
+        primaryLabel={dict.hero.speakWithUs}
+        secondaryLabel={dict.servicesList.viewServices}
+      />
 
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 lg:grid-cols-2">
         <Reveal>
@@ -74,7 +92,7 @@ export default async function AboutPage() {
               <Reveal delay={80}>
                 <div className="mt-12">
                   <h3 className="mb-6 text-center font-display text-3xl text-sand">
-                    Founder’s Message
+                    {dict.about.founderMessage}
                   </h3>
                   <div className="mx-auto max-w-3xl">
                     <Card3D intensity={6}>
@@ -111,7 +129,7 @@ export default async function AboutPage() {
               <Reveal delay={100}>
                 <div className="mt-16">
                   <h3 className="mb-6 text-center font-display text-3xl text-sand">
-                    Coordinator’s Message
+                    {dict.about.coordinatorMessage}
                   </h3>
                   <div className="mx-auto max-w-3xl">
                     <Card3D intensity={6}>
@@ -157,7 +175,7 @@ export default async function AboutPage() {
                       <Card3D>
                         <article className="group flex h-full flex-col border border-sand/10 bg-night p-6 transition-colors duration-500 hover:border-olive/40 md:p-7">
                           <p className="text-[0.65rem] tracking-[0.2em] text-crimson uppercase">
-                            Team member
+                            {dict.about.teamMember}
                           </p>
                           <h3 className="mt-3 font-display text-2xl uppercase text-sand">
                             {member.name}
@@ -210,7 +228,7 @@ export default async function AboutPage() {
       <section className="stay-section mx-auto max-w-6xl px-6 py-24">
         <Reveal>
           <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
-            Retention
+            {dict.about.retention}
           </p>
           <h2 className="mt-4 font-display text-4xl text-sand md:text-5xl">
             {about.stayTitle}

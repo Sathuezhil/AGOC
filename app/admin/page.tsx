@@ -1,26 +1,38 @@
 import Link from "next/link";
 import {
   ArrowRight,
+  Briefcase,
   FileText,
   ImageIcon,
   Inbox,
   Shield,
   BadgeCheck,
+  ScrollText,
+  Tag,
   Users,
 } from "lucide-react";
 import { listEnquiries } from "@/lib/enquiries";
+import { listApplications, listJobs } from "@/lib/careers";
+import { listOffers } from "@/lib/offers";
 import { getServices } from "@/lib/services";
 import { getContent } from "@/lib/content";
 
 export default async function AdminHomePage() {
-  const [enquiries, services, content] = await Promise.all([
-    listEnquiries(),
-    getServices(),
-    getContent(),
-  ]);
+  const [enquiries, services, content, jobs, applications, offers] =
+    await Promise.all([
+      listEnquiries(),
+      getServices(),
+      getContent(),
+      listJobs({ includeHidden: true }),
+      listApplications(),
+      listOffers({ includeHidden: true }),
+    ]);
   const fresh = enquiries.filter((item) => item.status === "new").length;
   const live = services.filter((item) => !item.hidden).length;
   const teamCount = content.about.team.length;
+  const newApps = applications.filter((item) => item.status === "new").length;
+  const openJobs = jobs.filter((item) => !item.hidden).length;
+  const liveOffers = offers.filter((item) => !item.hidden).length;
 
   const cards = [
     {
@@ -31,11 +43,25 @@ export default async function AdminHomePage() {
       icon: Inbox,
     },
     {
-      label: "All enquiries",
-      value: String(enquiries.length),
-      href: "/admin/enquiries",
+      label: "Career applications",
+      value: String(newApps),
+      href: "/admin/careers",
+      accent: "olive",
+      icon: Briefcase,
+    },
+    {
+      label: "Open roles",
+      value: String(openJobs),
+      href: "/admin/careers",
       accent: "olive",
       icon: BadgeCheck,
+    },
+    {
+      label: "Live offers",
+      value: String(liveOffers),
+      href: "/admin/offers",
+      accent: "olive",
+      icon: Tag,
     },
     {
       label: "Live services",
@@ -54,6 +80,24 @@ export default async function AdminHomePage() {
   ] as const;
 
   const shortcuts = [
+    {
+      href: "/admin/activity",
+      title: "Activity",
+      text: "See recent admin actions across the control room.",
+      icon: ScrollText,
+    },
+    {
+      href: "/admin/offers",
+      title: "Offers",
+      text: "Add promotions that appear on the home page.",
+      icon: Tag,
+    },
+    {
+      href: "/admin/careers",
+      title: "Careers",
+      text: "Add open roles and review job applications.",
+      icon: Briefcase,
+    },
     {
       href: "/admin/services/new",
       title: "Add service",

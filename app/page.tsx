@@ -1,4 +1,5 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+import LocaleLink from "@/components/LocaleLink";
 import {
   BadgeCheck,
   Clock3,
@@ -14,9 +15,32 @@ import ContactForm from "@/components/ContactForm";
 import CoverImage from "@/components/CoverImage";
 import Card3D from "@/components/Card3D";
 import ClientMarquee from "@/components/ClientMarquee";
+import OffersHighlight from "@/components/OffersHighlight";
 import { getClientLogos } from "@/lib/clients";
 import { getContent } from "@/lib/content";
+import {
+  getDictionary,
+  localizeContent,
+  localizeOffers,
+  localizeServices,
+} from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
+import { listOffers } from "@/lib/offers";
+import { defaultDescription, pageMetadata } from "@/lib/seo";
 import { getServices, getVisibleServices } from "@/lib/services";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Private Guards & Security Company",
+  description: defaultDescription,
+  path: "/",
+  keywords: [
+    "AGOC security Dubai",
+    "security company Dubai",
+    "private guards UAE",
+    "licensed security guards Dubai",
+    "CCTV control Dubai",
+  ],
+});
 
 const pillarIcons = [ShieldCheck, Eye, Clock3];
 const featureIcons = [ShieldCheck, Eye, Sparkles];
@@ -33,12 +57,19 @@ export default async function HomePage({
   searchParams?: Promise<{ service?: string }>;
 }) {
   const params = (await searchParams) ?? {};
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
   const clientLogos = getClientLogos();
-  const [content, services, allServices] = await Promise.all([
+  const [rawContent, rawServices, rawAllServices, rawOffers] = await Promise.all([
     getContent(),
     getVisibleServices(),
     getServices(),
+    listOffers(),
   ]);
+  const content = localizeContent(rawContent, locale);
+  const services = localizeServices(rawServices, locale);
+  const allServices = localizeServices(rawAllServices, locale);
+  const offers = localizeOffers(rawOffers, locale);
   const { home } = content;
   const selectedService = params.service?.trim() ?? "";
 
@@ -106,12 +137,12 @@ export default async function HomePage({
               </li>
             ))}
           </ul>
-          <Link
+          <LocaleLink
             href="/about"
             className="mt-8 inline-block border-b border-olive pb-1 text-sm tracking-wide text-olive transition duration-300 hover:border-crimson hover:text-crimson"
           >
-            Read our story
-          </Link>
+            {dict.home.readStory}
+          </LocaleLink>
         </Reveal>
       </section>
 
@@ -128,21 +159,21 @@ export default async function HomePage({
                 </h2>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <Link
+                <LocaleLink
                   href="#enquire"
-                  className="btn-shine inline-flex bg-crimson px-5 py-2.5 text-sm font-medium tracking-[0.14em] text-white uppercase transition duration-300 hover:bg-crimson-dark"
+                  className="btn-shine inline-flex bg-crimson px-5 py-2.5 text-sm font-medium tracking-[0.14em] text-white uppercase transition duration-300 hover:bg-crimson-dark rtl:tracking-normal rtl:normal-case"
                 >
-                  Book a service
-                </Link>
-                <Link
+                  {dict.home.bookService}
+                </LocaleLink>
+                <LocaleLink
                   href="/services"
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-sand/20 bg-transparent px-4 py-2.5 text-sm font-medium tracking-[0.12em] text-sand uppercase transition duration-300 hover:border-olive/50 hover:text-olive"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-sand/20 bg-transparent px-4 py-2.5 text-sm font-medium tracking-[0.12em] text-sand uppercase transition duration-300 hover:border-olive/50 hover:text-olive rtl:tracking-normal rtl:normal-case"
                 >
-                  All services
-                  <span aria-hidden className="text-base leading-none">
+                  {dict.home.allServices}
+                  <span aria-hidden className="text-base leading-none rtl:rotate-180">
                     →
                   </span>
-                </Link>
+                </LocaleLink>
               </div>
             </div>
           </Reveal>
@@ -152,7 +183,7 @@ export default async function HomePage({
               <Reveal key={service.slug} delay={i * 60} className="h-full">
                 <Card3D>
                   <article className="service-card group flex h-full flex-col overflow-hidden border border-sand/10 bg-coal transition-colors duration-500 ease-out hover:border-olive/50">
-                    <Link
+                    <LocaleLink
                       href={`/services/${service.slug}`}
                       className="service-image-float media-frame relative w-full shrink-0 overflow-hidden"
                     >
@@ -165,22 +196,22 @@ export default async function HomePage({
                       />
                       <div className="service-image-shine pointer-events-none absolute inset-0" />
                       <div className="service-image-outline pointer-events-none absolute inset-0" />
-                    </Link>
+                    </LocaleLink>
                     <div className="flex flex-1 flex-col p-6">
-                      <Link href={`/services/${service.slug}`}>
+                      <LocaleLink href={`/services/${service.slug}`}>
                         <h3 className="font-display text-2xl text-sand transition hover:text-olive">
                           {service.title}
                         </h3>
-                      </Link>
+                      </LocaleLink>
                       <p className="mt-2 min-h-[2.75rem] flex-1 text-sm leading-relaxed text-mist">
                         {service.short}
                       </p>
-                      <Link
-                        href={`/?service=${encodeURIComponent(service.title)}#enquire`}
-                        className="btn-shine mt-5 inline-flex w-full items-center justify-center bg-crimson px-4 py-2.5 text-xs font-medium tracking-[0.16em] text-white uppercase transition duration-300 hover:bg-crimson-dark"
+                      <LocaleLink
+                        href={`/?service=${encodeURIComponent(service.slug)}#enquire`}
+                        className="btn-shine mt-5 inline-flex w-full items-center justify-center bg-crimson px-4 py-2.5 text-xs font-medium tracking-[0.16em] text-white uppercase transition duration-300 hover:bg-crimson-dark rtl:tracking-normal rtl:normal-case"
                       >
-                        Book now
-                      </Link>
+                        {dict.home.bookNow}
+                      </LocaleLink>
                     </div>
                   </article>
                 </Card3D>
@@ -189,6 +220,15 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+
+      {offers.length > 0 ? (
+        <OffersHighlight
+          offers={offers}
+          label={dict.home.offersLabel}
+          title={dict.home.offersTitle}
+          viewServiceLabel={dict.home.viewService}
+        />
+      ) : null}
 
       <section className="mx-auto grid max-w-6xl gap-6 px-6 py-24 lg:grid-cols-3">
         {home.features.map((item, i) => {
@@ -301,6 +341,7 @@ export default async function HomePage({
               <ContactForm
                 services={allServices}
                 defaultService={selectedService}
+                dict={dict}
               />
             </div>
           </Reveal>

@@ -1,10 +1,16 @@
-import Link from "next/link";
 import { Clock, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import ThemeBrandLogo from "./ThemeBrandLogo";
 import Reveal from "./Reveal";
-import { brandLogo, brandLogoLight, navLinks, site as siteDefaults } from "@/lib/site";
+import LocaleLink from "./LocaleLink";
+import { brandLogo, brandLogoLight, site as siteDefaults } from "@/lib/site";
 import { getContent, phoneLink } from "@/lib/content";
 import { getVisibleServices } from "@/lib/services";
+import {
+  localizeContent,
+  localizeServices,
+  type Dictionary,
+  type Locale,
+} from "@/lib/i18n";
 
 function TikTokIcon({ size = 16 }: { size?: number }) {
   return (
@@ -20,15 +26,31 @@ function TikTokIcon({ size = 16 }: { size?: number }) {
   );
 }
 
-export default async function Footer() {
-  const [content, services] = await Promise.all([
+export default async function Footer({
+  locale,
+  dict,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+}) {
+  const [rawContent, rawServices] = await Promise.all([
     getContent(),
     getVisibleServices(),
   ]);
+  const content = localizeContent(rawContent, locale);
+  const services = localizeServices(rawServices, locale);
   const { site } = content;
   const { lat, lng, zoom } = siteDefaults.map;
-  const mapSrc = `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&hl=en&output=embed`;
+  const mapSrc = `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&hl=${locale}&output=embed`;
   const mapLink = `https://www.google.com/maps?q=${lat},${lng}&z=${zoom}`;
+
+  const links = [
+    { href: "/", label: dict.nav.home },
+    { href: "/about", label: dict.nav.about },
+    { href: "/services", label: dict.nav.services },
+    { href: "/careers", label: dict.nav.careers },
+    { href: "/contact", label: dict.nav.contact },
+  ];
 
   const socials = [
     {
@@ -90,26 +112,26 @@ export default async function Footer() {
 
         <Reveal delay={80}>
           <div>
-            <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase">
-              Menu
+            <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
+              {dict.footer.menu}
             </h3>
             <ul className="space-y-2.5 text-sm text-sand/80">
-              {navLinks.map((link) => (
+              {links.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="footer-link">
+                  <LocaleLink href={link.href} className="footer-link">
                     {link.label}
-                  </Link>
+                  </LocaleLink>
                 </li>
               ))}
               <li>
-                <Link href="/privacy" className="footer-link">
-                  Privacy Policy
-                </Link>
+                <LocaleLink href="/privacy" className="footer-link">
+                  {dict.footer.privacy}
+                </LocaleLink>
               </li>
               <li>
-                <Link href="/terms" className="footer-link">
-                  Terms of Service
-                </Link>
+                <LocaleLink href="/terms" className="footer-link">
+                  {dict.footer.terms}
+                </LocaleLink>
               </li>
             </ul>
           </div>
@@ -117,18 +139,18 @@ export default async function Footer() {
 
         <Reveal delay={140}>
           <div>
-            <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase">
-              Services
+            <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
+              {dict.footer.services}
             </h3>
             <ul className="space-y-2.5 text-sm text-sand/80">
               {services.slice(0, 6).map((service) => (
                 <li key={service.slug}>
-                  <Link
+                  <LocaleLink
                     href={`/services/${service.slug}`}
                     className="footer-link"
                   >
                     {service.title}
-                  </Link>
+                  </LocaleLink>
                 </li>
               ))}
             </ul>
@@ -137,8 +159,8 @@ export default async function Footer() {
 
         <Reveal delay={200}>
           <div className="space-y-4 text-sm text-sand/80">
-            <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase">
-              Contact
+            <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
+              {dict.footer.contact}
             </h3>
             <div className="flex flex-col gap-3">
               <p className="flex gap-3">
@@ -150,8 +172,8 @@ export default async function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-map group relative block overflow-hidden rounded-lg border border-sand/15"
-                aria-label="Open office location in Google Maps"
-                title="Open in Google Maps"
+                aria-label={dict.footer.openMapAria}
+                title={dict.footer.openMapAria}
               >
                 <iframe
                   title="AGOC Security office map"
@@ -161,8 +183,8 @@ export default async function Footer() {
                   referrerPolicy="no-referrer-when-downgrade"
                   tabIndex={-1}
                 />
-                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-2.5 py-2 text-[10px] tracking-wide text-white uppercase">
-                  View on map
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-2.5 py-2 text-[10px] tracking-wide text-white uppercase rtl:tracking-normal rtl:normal-case">
+                  {dict.footer.viewOnMap}
                 </span>
               </a>
             </div>
@@ -200,9 +222,9 @@ export default async function Footer() {
       <div className="site-footer-inner border-t border-sand/10">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-5 text-xs text-mist sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            © {new Date().getFullYear()} {site.name}. {dict.footer.rights}
           </p>
-          <p>Licensed security services · Dubai, United Arab Emirates</p>
+          <p>{dict.footer.licensed}</p>
         </div>
       </div>
     </footer>

@@ -1,10 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useMemo } from "react";
+import { getDictionary, getLocaleFromPathname } from "@/lib/i18n";
 import { site } from "@/lib/site";
 
 export default function WhatsAppButton() {
+  const pathname = usePathname() || "/";
+  const locale = getLocaleFromPathname(pathname);
+  const dict = useMemo(() => getDictionary(locale), [locale]);
   const href = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
-    "Hello AGOC Security, I would like to discuss a protection requirement.",
+    dict.whatsapp.message,
   )}`;
 
   return (
@@ -12,8 +20,8 @@ export default function WhatsAppButton() {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
-      className="wa-fab fixed right-5 bottom-5 z-40 flex h-14 w-14 items-center justify-center rounded-full"
+      aria-label={dict.whatsapp.aria}
+      className="wa-fab fixed end-5 bottom-5 z-40 flex h-14 w-14 items-center justify-center rounded-full"
     >
       <span className="wa-fab-ring wa-fab-ring-a" aria-hidden />
       <span className="wa-fab-ring wa-fab-ring-b" aria-hidden />

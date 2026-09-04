@@ -4,7 +4,7 @@ import { requireAdminApi } from "@/lib/admin-guard";
 import { updateSiteLogo } from "@/lib/content";
 
 export async function PUT(request: NextRequest) {
-  const { error } = await requireAdminApi();
+  const { session, error } = await requireAdminApi();
   if (error) return error;
 
   try {
@@ -22,6 +22,14 @@ export async function PUT(request: NextRequest) {
     revalidatePath("/", "layout");
     revalidatePath("/admin", "layout");
     revalidatePath("/login");
+
+    const { logActivity } = await import("@/lib/activity");
+    await logActivity({
+      action: "settings.logo",
+      actorEmail: session!.email,
+      entity: "settings",
+      summary: "Updated site logo.",
+    });
 
     return NextResponse.json({ ok: true, logo: content.site.logo });
   } catch (err) {

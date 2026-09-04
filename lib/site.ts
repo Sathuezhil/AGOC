@@ -3,7 +3,7 @@ export const site = {
   legalName: "AGOC General Security Guard Services LLC",
   tagline: "A Power That Saves You",
   description:
-    "Trusted security company in Dubai providing verified guards, surveillance, private protection, transport security, and professional building services across the UAE.",
+    "Trusted security company in Dubai providing licensed private guards, CCTV monitoring, facility management, and professional building services across the UAE. AGOC Security — Al Muteena, Dubai.",
   url: "https://www.agocsecurity.ae",
   email: "info@agoc.ae",
   phones: ["+971 4 892 4995", "+971 4 337 9951"],
@@ -41,5 +41,6 @@ export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
+  { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
 ] as const;

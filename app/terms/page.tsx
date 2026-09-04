@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import { getDictionary } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Terms of Service" };
@@ -25,13 +27,18 @@ const sections = [
   },
 ];
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
+
   return (
     <>
       <PageHero
-        eyebrow="Legal"
-        title="Terms of service"
-        text="The conditions that apply when you use this website or engage AGOC Security."
+        eyebrow={dict.terms.eyebrow}
+        title={dict.terms.title}
+        text={dict.terms.text}
+        primaryLabel={dict.hero.speakWithUs}
+        secondaryLabel={dict.servicesList.viewServices}
       />
 
       <section className="mx-auto max-w-3xl px-6 py-16 md:py-20">
@@ -77,18 +84,18 @@ export default function TermsPage() {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
+              <LocaleLink
                 href="/privacy"
-                className="inline-flex rounded-lg border border-sand/20 px-4 py-2.5 text-xs font-medium tracking-[0.12em] text-sand uppercase transition hover:border-olive/50 hover:text-olive"
+                className="inline-flex rounded-lg border border-sand/20 px-4 py-2.5 text-xs font-medium tracking-[0.12em] text-sand uppercase transition hover:border-olive/50 hover:text-olive rtl:tracking-normal rtl:normal-case"
               >
-                Privacy policy
-              </Link>
-              <Link
+                {dict.privacy.title}
+              </LocaleLink>
+              <LocaleLink
                 href="/contact"
-                className="btn-shine inline-flex rounded-lg bg-crimson px-4 py-2.5 text-xs font-medium tracking-[0.12em] text-white uppercase transition hover:bg-crimson-dark"
+                className="btn-shine inline-flex rounded-lg bg-crimson px-4 py-2.5 text-xs font-medium tracking-[0.12em] text-white uppercase transition hover:bg-crimson-dark rtl:tracking-normal rtl:normal-case"
               >
-                Contact us
-              </Link>
+                {dict.hero.contactUs}
+              </LocaleLink>
             </div>
           </article>
         </Reveal>

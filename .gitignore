@@ -21,6 +21,9 @@ npm-debug.log*
 
 /data/enquiries.json
 
+# uploaded CVs (private)
+/storage/
+
 # typescript
 next-env.d.ts
 *.tsbuildinfo

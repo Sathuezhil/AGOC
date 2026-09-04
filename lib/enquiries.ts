@@ -1,6 +1,13 @@
 import { randomUUID } from "crypto";
 
-export type EnquiryStatus = "new" | "read" | "done";
+export type EnquiryStatus = "new" | "read" | "replied" | "done";
+
+export type EnquiryReply = {
+  id: string;
+  subject: string;
+  body: string;
+  sentAt: string;
+};
 
 export type Enquiry = {
   id: string;
@@ -11,6 +18,8 @@ export type Enquiry = {
   message: string;
   status: EnquiryStatus;
   createdAt: string;
+  replies?: EnquiryReply[];
+  repliedAt?: string;
 };
 
 function stripMongo<T extends { _id?: unknown }>(doc: T): Omit<T, "_id"> {
@@ -30,8 +39,17 @@ export async function listEnquiries() {
   return docs.map((doc) => stripMongo(doc) as Enquiry);
 }
 
+export async function getEnquiry(id: string) {
+  const { enquiriesCollection } = await import("./db");
+  const { ensureSeeded } = await import("./seed");
+  await ensureSeeded();
+  const doc = await (await enquiriesCollection()).findOne({ id });
+  if (!doc) return null;
+  return stripMongo(doc) as Enquiry;
+}
+
 export async function addEnquiry(
-  input: Omit<Enquiry, "id" | "status" | "createdAt">,
+  input: Omit<Enquiry, "id" | "status" | "createdAt" | "replies" | "repliedAt">,
 ) {
   const { enquiriesCollection } = await import("./db");
   const { ensureSeeded } = await import("./seed");
@@ -40,6 +58,7 @@ export async function addEnquiry(
     id: randomUUID(),
     status: "new",
     createdAt: new Date().toISOString(),
+    replies: [],
     ...input,
   };
   await (await enquiriesCollection()).insertOne(enquiry);
@@ -62,6 +81,39 @@ export async function updateEnquiry(
   );
   if (!result) return null;
   return stripMongo(result) as Enquiry;
+}
+
+export async function addEnquiryReply(
+  id: string,
+  input: { subject: string; body: string },
+) {
+  const { enquiriesCollection } = await import("./db");
+  const { ensureSeeded } = await import("./seed");
+  await ensureSeeded();
+
+  const reply: EnquiryReply = {
+    id: randomUUID(),
+    subject: input.subject.trim(),
+    body: input.body.trim(),
+    sentAt: new Date().toISOString(),
+  };
+
+  const result = await (
+    await enquiriesCollection()
+  ).findOneAndUpdate(
+    { id },
+    {
+      $push: { replies: reply },
+      $set: {
+        status: "replied" as EnquiryStatus,
+        repliedAt: reply.sentAt,
+      },
+    },
+    { returnDocument: "after" },
+  );
+
+  if (!result) return null;
+  return { enquiry: stripMongo(result) as Enquiry, reply };
 }
 
 export async function deleteEnquiry(id: string) {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { Cairo, Cormorant_Garamond, Outfit } from "next/font/google";
 import { headers } from "next/headers";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,6 +7,9 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import JsonLd from "@/components/JsonLd";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { getContent } from "@/lib/content";
+import { getDictionary, isRtl, localizeContent } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
+import { defaultDescription, defaultTitle, seoKeywords } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -21,20 +24,57 @@ const sans = Outfit({
   variable: "--font-sans",
 });
 
+const arabic = Cairo({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-arabic",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "AGOC Security | Trusted Protection in Dubai",
-    template: "%s | AGOC Security",
+    default: defaultTitle,
+    template: "%s | AGOC Security Dubai",
   },
-  description: site.description,
+  description: defaultDescription,
+  keywords: [...seoKeywords],
+  authors: [{ name: site.legalName, url: site.url }],
+  creator: site.name,
+  publisher: site.legalName,
+  category: "Security services",
+  applicationName: site.name,
   openGraph: {
-    title: "AGOC Security | A Power That Saves You",
-    description: site.description,
+    title: defaultTitle,
+    description: defaultDescription,
     url: site.url,
     siteName: site.name,
     locale: "en_AE",
+    alternateLocale: ["ar_AE"],
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: defaultTitle,
+    description: defaultDescription,
+  },
+  alternates: {
+    canonical: site.url,
+    languages: {
+      en: "/",
+      ar: "/ar",
+      "x-default": "/",
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -48,17 +88,30 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = (await headers()).get("x-pathname") ?? "";
-  const bare =
-    pathname === "/login" || pathname.startsWith("/admin");
-  const { site: contentSite } = await getContent();
+  const pathname = (await headers()).get("x-pathname-base")
+    ?? (await headers()).get("x-pathname")
+    ?? "";
+  const bare = pathname === "/login" || pathname.startsWith("/admin");
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
+  const { site: contentSite } = localizeContent(await getContent(), locale);
+  const rtl = isRtl(locale);
 
   return (
-    <html lang="en" data-theme="dark" suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={rtl ? "rtl" : "ltr"}
+      data-theme="dark"
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className={`${display.variable} ${sans.variable} font-sans antialiased`}>
+      <body
+        className={`${display.variable} ${sans.variable} ${arabic.variable} font-sans antialiased ${
+          rtl ? "font-arabic" : ""
+        }`}
+      >
         <ThemeProvider>
           {bare ? (
             children
@@ -70,7 +123,7 @@ export default async function RootLayout({
                 profilePdf={contentSite.companyProfilePdf}
               />
               <main>{children}</main>
-              <Footer />
+              <Footer locale={locale} dict={dict} />
               <WhatsAppButton />
             </>
           )}

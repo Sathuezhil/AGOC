@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdminApi } from "@/lib/admin-guard";
+import { logActivity } from "@/lib/activity";
 import {
   getContent,
   saveContent,
@@ -49,7 +50,7 @@ export async function GET() {
 }
 
 export async function PUT(request: NextRequest) {
-  const { error } = await requireAdminApi();
+  const { session, error } = await requireAdminApi();
   if (error) return error;
   try {
     const body = (await request.json()) as {
@@ -92,6 +93,12 @@ export async function PUT(request: NextRequest) {
 
     await saveContent(next);
     revalidateSite();
+    await logActivity({
+      action: "team.update",
+      actorEmail: session!.email,
+      entity: "team",
+      summary: `Updated team (${next.about.team.length} members).`,
+    });
     return NextResponse.json({
       ok: true,
       team: next.about.team,

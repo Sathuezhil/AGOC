@@ -41,6 +41,7 @@ const config: Config = {
       fontFamily: {
         display: ["var(--font-display)", "serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        arabic: ["var(--font-arabic)", "Tahoma", "sans-serif"],
       },
       boxShadow: {
         glow: "0 0 0 1px rgba(201,162,39,0.22), 0 24px 60px rgba(0,0,0,0.5)",

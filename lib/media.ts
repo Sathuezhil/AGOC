@@ -19,6 +19,7 @@ export type MediaFile = {
   name: string;
   filename: string;
   uploaded: boolean;
+  deletedAt?: string;
 };
 
 export async function mediaBucket() {
@@ -50,23 +51,71 @@ export function mediaContentType(name: string, stored?: string) {
   return contentType(name);
 }
 
+function toMediaFile(file: GridFSFile, deleted = false): MediaFile {
+  const key = file.filename.replace(/^\/+/, "");
+  return {
+    src: mediaSrc(file.filename),
+    name: file.filename.split("/").pop() || file.filename,
+    filename: key,
+    uploaded: file.metadata?.kind === "upload",
+    ...(deleted && typeof file.metadata?.deletedAt === "string"
+      ? { deletedAt: file.metadata.deletedAt }
+      : {}),
+  };
+}
+
 export async function listMedia(): Promise<MediaFile[]> {
   const bucket = await mediaBucket();
-  const files = await bucket.find({}).sort({ filename: 1 }).toArray();
+  const files = await bucket
+    .find({ "metadata.deleted": { $ne: true } })
+    .sort({ filename: 1 })
+    .toArray();
   const seen = new Set<string>();
   const items: MediaFile[] = [];
   for (const file of files) {
     const key = file.filename.replace(/^\/+/, "");
     if (seen.has(key)) continue;
     seen.add(key);
-    items.push({
-      src: mediaSrc(file.filename),
-      name: file.filename.split("/").pop() || file.filename,
-      filename: file.filename,
-      uploaded: file.metadata?.kind === "upload",
-    });
+    items.push(toMediaFile(file));
   }
   return items;
+}
+
+export async function listDeletedMedia(): Promise<MediaFile[]> {
+  const bucket = await mediaBucket();
+  const files = await bucket
+    .find({ "metadata.deleted": true })
+    .sort({ "metadata.deletedAt": -1, filename: 1 })
+    .toArray();
+  const seen = new Set<string>();
+  const items: MediaFile[] = [];
+  for (const file of files) {
+    const key = file.filename.replace(/^\/+/, "");
+    if (seen.has(key)) continue;
+    seen.add(key);
+    items.push(toMediaFile(file, true));
+  }
+  return items;
+}
+
+async function setMediaDeleted(file: GridFSFile, deleted: boolean) {
+  const db = await getDb();
+  if (deleted) {
+    await db.collection(`${BUCKET}.files`).updateOne(
+      { _id: file._id },
+      {
+        $set: {
+          "metadata.deleted": true,
+          "metadata.deletedAt": new Date().toISOString(),
+        },
+      },
+    );
+    return;
+  }
+  await db.collection(`${BUCKET}.files`).updateOne(
+    { _id: file._id },
+    { $unset: { "metadata.deleted": "", "metadata.deletedAt": "" } },
+  );
 }
 
 export async function findMediaFile(filename: string): Promise<GridFSFile | null> {
@@ -124,6 +173,39 @@ export async function deleteMedia(src: string) {
   if (!filename) throw new Error("Invalid image path.");
   const file = await findMediaFile(filename);
   if (!file) throw new Error("Image not found.");
+  if (file.metadata?.deleted === true) {
+    throw new Error("Image is already in the recycle bin.");
+  }
+  await setMediaDeleted(file, true);
+  const db = await getDb();
+  await db.collection("media_deleted").updateOne(
+    { filename },
+    { $set: { filename, deletedAt: new Date().toISOString() } },
+    { upsert: true },
+  );
+}
+
+export async function restoreMedia(src: string) {
+  const filename = srcToFilename(src);
+  if (!filename) throw new Error("Invalid image path.");
+  const file = await findMediaFile(filename);
+  if (!file) throw new Error("Image not found.");
+  if (file.metadata?.deleted !== true) {
+    throw new Error("Image is not in the recycle bin.");
+  }
+  await setMediaDeleted(file, false);
+  const db = await getDb();
+  await db.collection("media_deleted").deleteOne({ filename });
+}
+
+export async function permanentlyDeleteMedia(src: string) {
+  const filename = srcToFilename(src);
+  if (!filename) throw new Error("Invalid image path.");
+  const file = await findMediaFile(filename);
+  if (!file) throw new Error("Image not found.");
+  if (file.metadata?.deleted !== true) {
+    throw new Error("Move the image to the recycle bin before deleting permanently.");
+  }
   const bucket = await mediaBucket();
   await bucket.delete(file._id);
   const db = await getDb();

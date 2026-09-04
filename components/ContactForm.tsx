@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import type { Dictionary } from "@/lib/i18n";
 
 const initial = {
   name: "",
@@ -13,15 +14,17 @@ const initial = {
 export default function ContactForm({
   services,
   defaultService = "",
+  dict,
 }: {
-  services: { title: string }[];
+  services: { title: string; slug?: string }[];
   defaultService?: string;
+  dict: Dictionary;
 }) {
+  const needle = defaultService.trim().toLowerCase();
   const matched =
+    services.find((s) => s.slug?.toLowerCase() === needle)?.title ||
     services.find((s) => s.title === defaultService)?.title ||
-    services.find(
-      (s) => s.title.toLowerCase() === defaultService.trim().toLowerCase(),
-    )?.title ||
+    services.find((s) => s.title.toLowerCase() === needle)?.title ||
     "";
 
   const [form, setForm] = useState({ ...initial, service: matched });
@@ -32,7 +35,9 @@ export default function ContactForm({
 
   useEffect(() => {
     if (!matched) return;
-    setForm((prev) => (prev.service === matched ? prev : { ...prev, service: matched }));
+    setForm((prev) =>
+      prev.service === matched ? prev : { ...prev, service: matched },
+    );
   }, [matched]);
 
   async function onSubmit(event: FormEvent) {
@@ -49,14 +54,14 @@ export default function ContactForm({
       const data = (await response.json()) as { ok?: boolean; error?: string };
 
       if (!response.ok || !data.ok) {
-        throw new Error(data.error || "Unable to send your request.");
+        throw new Error(data.error || dict.form.sendFailed);
       }
 
       setStatus("ok");
       setForm({ ...initial, service: matched });
     } catch (err) {
       setStatus("error");
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setError(err instanceof Error ? err.message : dict.form.somethingWrong);
     }
   }
 
@@ -69,7 +74,7 @@ export default function ContactForm({
         <input
           required
           name="name"
-          placeholder="Name"
+          placeholder={dict.form.name}
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           className={field}
@@ -78,7 +83,7 @@ export default function ContactForm({
           required
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder={dict.form.email}
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           className={field}
@@ -86,7 +91,7 @@ export default function ContactForm({
         <input
           required
           name="phone"
-          placeholder="Phone number"
+          placeholder={dict.form.phone}
           value={form.phone}
           onChange={(e) => setForm({ ...form, phone: e.target.value })}
           className={field}
@@ -98,7 +103,7 @@ export default function ContactForm({
           onChange={(e) => setForm({ ...form, service: e.target.value })}
           className={`${field} appearance-none`}
         >
-          <option value="">Select a service</option>
+          <option value="">{dict.form.selectService}</option>
           {services.map((service) => (
             <option key={service.title} value={service.title}>
               {service.title}
@@ -110,7 +115,7 @@ export default function ContactForm({
         required
         name="message"
         rows={4}
-        placeholder="Tell us about the site, hours, and what you need protected."
+        placeholder={dict.form.message}
         value={form.message}
         onChange={(e) => setForm({ ...form, message: e.target.value })}
         className={`${field} min-h-[6.5rem] resize-y`}
@@ -118,14 +123,12 @@ export default function ContactForm({
       <button
         type="submit"
         disabled={status === "sending"}
-        className="btn-shine w-full rounded-lg bg-crimson py-3.5 text-sm font-medium tracking-[0.16em] text-white uppercase transition duration-300 hover:bg-crimson-dark disabled:opacity-70"
+        className="btn-shine w-full rounded-lg bg-crimson py-3.5 text-sm font-medium tracking-[0.16em] text-white uppercase transition duration-300 hover:bg-crimson-dark disabled:opacity-70 rtl:tracking-normal rtl:normal-case"
       >
-        {status === "sending" ? "Sending…" : "Send request"}
+        {status === "sending" ? dict.form.sending : dict.form.send}
       </button>
       {status === "ok" && (
-        <p className="text-sm text-olive">
-          Thank you. Our team will contact you shortly.
-        </p>
+        <p className="text-sm text-olive">{dict.form.thankYou}</p>
       )}
       {status === "error" && <p className="text-sm text-crimson-soft">{error}</p>}
     </form>

@@ -4,8 +4,11 @@ import { requireAdminApi } from "@/lib/admin-guard";
 import { updateSiteProfilePdf } from "@/lib/content";
 import { cleanupOldProfileUploads, saveProfilePdf } from "@/lib/documents-server";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export async function POST(request: NextRequest) {
-  const { error } = await requireAdminApi();
+  const { session, error } = await requireAdminApi();
   if (error) return error;
 
   try {
@@ -23,6 +26,14 @@ export async function POST(request: NextRequest) {
     const content = await updateSiteProfilePdf(href);
 
     revalidatePath("/", "layout");
+
+    const { logActivity } = await import("@/lib/activity");
+    await logActivity({
+      action: "settings.profile_pdf",
+      actorEmail: session!.email,
+      entity: "settings",
+      summary: "Updated company profile PDF.",
+    });
 
     return NextResponse.json({
       ok: true,

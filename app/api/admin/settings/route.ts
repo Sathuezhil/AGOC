@@ -73,6 +73,15 @@ export async function PUT(request: NextRequest) {
     response.cookies.set(cookie.name, cookie.value, cookie.options);
     revalidatePath("/admin");
     revalidatePath("/admin/settings");
+    const { logActivity } = await import("@/lib/activity");
+    await logActivity({
+      action: "settings.credentials",
+      actorEmail: updated.email,
+      entity: "settings",
+      summary: newPassword
+        ? "Updated admin login credentials."
+        : "Updated admin email.",
+    });
     return response;
   } catch (err) {
     return NextResponse.json(

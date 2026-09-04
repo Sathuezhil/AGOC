@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdminApi } from "@/lib/admin-guard";
+import { logActivity } from "@/lib/activity";
 import { deleteMedia, listMedia } from "@/lib/media";
 
 export async function GET() {
@@ -10,7 +11,7 @@ export async function GET() {
 }
 
 export async function DELETE(request: Request) {
-  const { error } = await requireAdminApi();
+  const { session, error } = await requireAdminApi();
   if (error) return error;
   try {
     const body = (await request.json()) as { src?: string };
@@ -20,6 +21,13 @@ export async function DELETE(request: Request) {
     await deleteMedia(body.src);
     const { revalidateSite } = await import("@/lib/revalidate");
     revalidateSite();
+    await logActivity({
+      action: "media.trash",
+      actorEmail: session!.email,
+      entity: "media",
+      entityId: body.src,
+      summary: "Moved image to trash.",
+    });
     return NextResponse.json({ ok: true });
   } catch (err) {
     return NextResponse.json(

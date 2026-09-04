@@ -1,15 +1,19 @@
-import Link from "next/link";
+import LocaleLink from "./LocaleLink";
 
 export default function PageHero({
   eyebrow,
   title,
   text,
+  primaryHref = "/contact",
+  primaryLabel = "Speak with us",
   secondaryHref = "/services",
   secondaryLabel = "View services",
 }: {
   eyebrow: string;
   title: string;
   text: string;
+  primaryHref?: string;
+  primaryLabel?: string;
   secondaryHref?: string;
   secondaryLabel?: string;
 }) {
@@ -28,7 +32,7 @@ export default function PageHero({
       <div className="relative mx-auto max-w-6xl px-6">
         <div className="hero-copy max-w-3xl">
           <p
-            className="olive-label animate-fadeUp text-sm font-semibold tracking-[0.32em] text-olive uppercase opacity-0"
+            className="olive-label animate-fadeUp text-sm font-semibold tracking-[0.32em] text-olive uppercase opacity-0 rtl:tracking-normal rtl:normal-case"
             style={{ animationDelay: "80ms" }}
           >
             {eyebrow}
@@ -49,18 +53,18 @@ export default function PageHero({
             className="mt-8 flex animate-fadeUp flex-wrap gap-3 opacity-0"
             style={{ animationDelay: "480ms" }}
           >
-            <Link
-              href="/contact"
+            <LocaleLink
+              href={primaryHref}
               className="btn-shine bg-crimson px-6 py-3 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-crimson-dark"
             >
-              Speak with us
-            </Link>
-            <Link
+              {primaryLabel}
+            </LocaleLink>
+            <LocaleLink
               href={secondaryHref}
               className="border border-white/35 px-6 py-3 text-sm font-medium tracking-wide text-white transition duration-300 hover:border-olive hover:text-olive"
             >
               {secondaryLabel}
-            </Link>
+            </LocaleLink>
           </div>
         </div>
       </div>

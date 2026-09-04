@@ -3,14 +3,17 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
+  Briefcase,
   ExternalLink,
   FileText,
   ImageIcon,
   Inbox,
   LayoutDashboard,
   LogOut,
+  ScrollText,
   Settings,
   Shield,
+  Tag,
   Users,
 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -20,10 +23,13 @@ import { brandLogo, brandLogoLight } from "@/lib/site";
 const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/enquiries", label: "Enquiries", icon: Inbox },
+  { href: "/admin/careers", label: "Careers", icon: Briefcase },
+  { href: "/admin/offers", label: "Offers", icon: Tag },
   { href: "/admin/services", label: "Services", icon: Shield },
   { href: "/admin/team", label: "Team", icon: Users },
   { href: "/admin/content", label: "Texts", icon: FileText },
   { href: "/admin/media", label: "Images", icon: ImageIcon },
+  { href: "/admin/activity", label: "Activity", icon: ScrollText },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
@@ -51,25 +57,25 @@ export default function AdminShell({
       </div>
 
       <aside className="admin-sidebar fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-sand/10 bg-night/95 backdrop-blur-md lg:flex lg:flex-col">
-        <div className="relative border-b border-sand/10 px-4 py-3">
+        <div className="relative shrink-0 border-b border-sand/10 px-3 py-2">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-olive/70 to-transparent" />
           <Link
             href="/admin"
-            className="mx-auto flex max-w-[16rem] items-center justify-center rounded-lg px-3 py-2.5"
+            className="mx-auto flex max-w-[15.5rem] items-center justify-center rounded-lg px-1 py-1"
           >
             <ThemeBrandLogo
               darkSrc={brandLogo}
               lightSrc={brandLogoLight}
               compact
-              className="w-full"
+              className="h-auto max-h-25 w-full"
             />
           </Link>
-          <p className="admin-control-room-label mt-2.5 text-center text-xs font-semibold uppercase">
+          <p className="admin-control-room-label mt-1.5 text-center text-[10px] font-semibold uppercase">
             <span className="admin-control-room-label-text">Control room</span>
           </p>
         </div>
 
-        <nav className="flex-1 space-y-1.5 px-3 py-5">
+        <nav className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 py-3">
           {links.map((link) => {
             const active =
               link.href === "/admin"
@@ -80,20 +86,20 @@ export default function AdminShell({
               <Link
                 key={link.href}
                 href={link.href}
-                className={`group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm tracking-wide transition duration-300 ${
+                className={`group flex items-center gap-3 rounded-md px-3 py-2 text-sm tracking-wide transition duration-300 ${
                   active
                     ? "bg-crimson/15 text-sand shadow-[inset_3px_0_0_0_#2D9B45]"
                     : "text-mist hover:bg-sand/[0.04] hover:text-sand"
                 }`}
               >
                 <span
-                  className={`inline-flex h-8 w-8 items-center justify-center rounded-md border transition duration-300 ${
+                  className={`inline-flex h-7 w-7 items-center justify-center rounded-md border transition duration-300 ${
                     active
                       ? "border-crimson/40 bg-crimson/20 text-crimson-soft"
                       : "border-sand/10 bg-ink/40 text-olive group-hover:border-olive/40"
                   }`}
                 >
-                  <Icon size={15} />
+                  <Icon size={14} />
                 </span>
                 {link.label}
               </Link>
@@ -101,7 +107,7 @@ export default function AdminShell({
           })}
         </nav>
 
-        <div className="border-t border-sand/10 px-5 py-4">
+        <div className="shrink-0 border-t border-sand/10 px-5 py-3">
           <p className="truncate text-center text-xs text-mist">{email}</p>
         </div>
       </aside>

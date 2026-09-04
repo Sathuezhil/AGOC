@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdminApi } from "@/lib/admin-guard";
+import { logActivity } from "@/lib/activity";
 import { deleteMedia, saveUpload } from "@/lib/media";
 import { sameMediaSrc } from "@/lib/media-path";
 import { revalidateSite } from "@/lib/revalidate";
 
 export async function POST(request: NextRequest) {
-  const { error } = await requireAdminApi();
+  const { session, error } = await requireAdminApi();
   if (error) return error;
   try {
     const form = await request.formData();
@@ -16,7 +17,6 @@ export async function POST(request: NextRequest) {
     const replace = String(form.get("replace") || "").trim();
     const src = await saveUpload(file);
 
-    // Cropping an existing library image → replace old file (no duplicate)
     if (replace && !sameMediaSrc(replace, src)) {
       try {
         await deleteMedia(replace);
@@ -26,6 +26,13 @@ export async function POST(request: NextRequest) {
     }
 
     revalidateSite();
+    await logActivity({
+      action: replace ? "media.replace" : "media.upload",
+      actorEmail: session!.email,
+      entity: "media",
+      entityId: src,
+      summary: replace ? "Replaced / cropped an image." : `Uploaded image “${file.name}”.`,
+    });
     return NextResponse.json({ ok: true, src });
   } catch (err) {
     return NextResponse.json(

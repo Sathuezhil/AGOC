@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
+import LocaleLink from "./LocaleLink";
 import type { Slide } from "@/lib/content";
+import { getDictionary, getLocaleFromPathname } from "@/lib/i18n";
 import { sameMediaSrc } from "@/lib/media-path";
 
 type HeroContent = {
@@ -29,6 +31,9 @@ function uniqueSlides(slides: Slide[]) {
 }
 
 export default function Hero({ content }: { content: HeroContent }) {
+  const pathname = usePathname() || "/";
+  const locale = getLocaleFromPathname(pathname);
+  const dict = useMemo(() => getDictionary(locale), [locale]);
   const slides = uniqueSlides(
     content.slides.length
       ? content.slides
@@ -66,7 +71,6 @@ export default function Hero({ content }: { content: HeroContent }) {
           />
         </div>
       ))}
-      {/* Clean cinematic scrim — photo stays clear, text stays readable */}
       <div className="hero-scrim pointer-events-none absolute inset-0" aria-hidden />
       <div className="hero-vignette pointer-events-none absolute inset-0" aria-hidden />
       <div className="hero-beam pointer-events-none absolute inset-0" aria-hidden />
@@ -74,7 +78,7 @@ export default function Hero({ content }: { content: HeroContent }) {
       <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-6 pb-24 pt-44 md:justify-center md:pb-28">
         <div className="hero-copy max-w-3xl">
           <p
-            className="olive-label animate-fadeUp text-sm font-semibold tracking-[0.38em] text-olive uppercase opacity-0"
+            className="olive-label animate-fadeUp text-sm font-semibold tracking-[0.38em] text-olive uppercase opacity-0 rtl:tracking-normal rtl:normal-case"
             style={{ animationDelay: "80ms" }}
           >
             {content.eyebrow}
@@ -96,36 +100,36 @@ export default function Hero({ content }: { content: HeroContent }) {
             className="mt-9 flex animate-fadeUp flex-wrap gap-4 opacity-0"
             style={{ animationDelay: "520ms" }}
           >
-            <Link
+            <LocaleLink
               href="/contact"
               className="btn-shine group inline-flex items-center gap-2 bg-white px-6 py-3.5 text-sm font-semibold tracking-wide text-navy transition duration-300 hover:bg-[#F5F0E0]"
             >
-              Contact us
+              {dict.hero.contactUs}
               <ArrowRight
                 size={16}
-                className="transition-transform duration-300 group-hover:translate-x-1"
+                className="transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1"
               />
-            </Link>
-            <Link
+            </LocaleLink>
+            <LocaleLink
               href="/services"
               className="inline-flex items-center gap-2 border border-white/45 bg-black/20 px-6 py-3.5 text-sm font-medium tracking-wide text-white backdrop-blur-[2px] transition duration-300 hover:border-olive hover:bg-black/35 hover:text-olive"
             >
-              Explore services
-            </Link>
+              {dict.hero.exploreServices}
+            </LocaleLink>
           </div>
         </div>
       </div>
 
       <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex">
-        <span className="text-[0.62rem] tracking-[0.28em] text-white/70 uppercase">
-          Scroll
+        <span className="text-[0.62rem] tracking-[0.28em] text-white/70 uppercase rtl:tracking-normal rtl:normal-case">
+          {dict.hero.scroll}
         </span>
         <span className="h-9 w-px overflow-hidden bg-white/20">
           <span className="block h-3 w-px bg-olive animate-scroll" />
         </span>
       </div>
 
-      <div className="absolute bottom-8 left-6 z-10 flex gap-2 md:left-10">
+      <div className="absolute bottom-8 start-6 z-10 flex gap-2 md:start-10">
         {slides.map((slide, i) => (
           <button
             key={`${slide.src}-dot-${i}`}

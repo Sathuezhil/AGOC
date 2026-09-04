@@ -2,7 +2,12 @@
 
 import { useRef, useState } from "react";
 import { ExternalLink, FileText, Upload } from "lucide-react";
-import { profileDownloadName, profilePdfHref } from "@/lib/profile-pdf";
+import {
+  PROFILE_PDF_MAX_BYTES,
+  PROFILE_PDF_MAX_MB,
+  profileDownloadName,
+  profilePdfHref,
+} from "@/lib/profile-pdf";
 
 export default function ProfilePdfPanel({
   value,
@@ -21,12 +26,19 @@ export default function ProfilePdfPanel({
     setMessage("");
     setError("");
 
+    if (file.size > PROFILE_PDF_MAX_BYTES) {
+      setError(`PDF must be under ${PROFILE_PDF_MAX_MB} MB.`);
+      setBusy(false);
+      return;
+    }
+
     try {
       const form = new FormData();
       form.append("file", file);
       const response = await fetch("/api/admin/settings/profile-pdf", {
         method: "POST",
         body: form,
+        credentials: "same-origin",
       });
       const data = (await response.json()) as {
         ok?: boolean;
@@ -62,7 +74,7 @@ export default function ProfilePdfPanel({
               <p className="mt-1 truncate text-xs text-mist">{previewHref}</p>
               <p className="mt-2 text-xs text-mist">
                 Visitors download this from the <span className="text-sand">Our Profile</span>{" "}
-                button in the website header.
+                button in the website header. Max file size: {PROFILE_PDF_MAX_MB} MB.
               </p>
             </div>
           </div>

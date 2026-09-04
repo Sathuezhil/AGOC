@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAdminSession } from "@/lib/admin-guard";
 import { findMediaFile, mediaBucket, mediaContentType, srcToFilename } from "@/lib/media";
 import { ensureSeeded } from "@/lib/seed";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ key: string[] }> },
 ) {
   try {
@@ -15,6 +16,12 @@ export async function GET(
     const file = await findMediaFile(filename);
     if (!file) {
       return NextResponse.json({ ok: false, error: "Not found." }, { status: 404 });
+    }
+    if (file.metadata?.deleted === true) {
+      const session = await getAdminSession();
+      if (!session) {
+        return NextResponse.json({ ok: false, error: "Not found." }, { status: 404 });
+      }
     }
     const bucket = await mediaBucket();
     const stream = bucket.openDownloadStream(file._id);
