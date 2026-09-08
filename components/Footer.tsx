@@ -204,7 +204,7 @@ export default async function Footer({
                 className="footer-contact flex gap-3"
               >
                 <Phone size={16} className="mt-0.5 shrink-0 text-crimson" />
-                {phone}
+                <span dir="ltr">{phone}</span>
               </a>
             ))}
             <div className="flex gap-3">

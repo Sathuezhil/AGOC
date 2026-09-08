@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import {
   Briefcase,
   ExternalLink,
@@ -16,6 +17,7 @@ import {
   Tag,
   Users,
 } from "lucide-react";
+import ConfirmDialog from "@/components/ConfirmDialog";
 import ThemeToggle from "@/components/ThemeToggle";
 import ThemeBrandLogo from "@/components/ThemeBrandLogo";
 import { brandLogo, brandLogoLight } from "@/lib/site";
@@ -43,11 +45,19 @@ export default function AdminShell({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [logoutOpen, setLogoutOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
 
   async function logout() {
-    await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
-    router.refresh();
+    setLoggingOut(true);
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      setLogoutOpen(false);
+      router.push("/login");
+      router.refresh();
+    } finally {
+      setLoggingOut(false);
+    }
   }
 
   return (
@@ -145,7 +155,7 @@ export default function AdminShell({
             </Link>
             <button
               type="button"
-              onClick={logout}
+              onClick={() => setLogoutOpen(true)}
               className="inline-flex items-center gap-1.5 rounded-md border border-sand/20 bg-ink/40 px-2.5 py-1.5 text-xs tracking-wide text-sand uppercase transition hover:border-crimson/45 hover:text-crimson"
             >
               <LogOut size={12} />
@@ -156,6 +166,20 @@ export default function AdminShell({
 
         <div className="px-5 py-8 md:px-8 md:py-10">{children}</div>
       </div>
+
+      <ConfirmDialog
+        open={logoutOpen}
+        title="Sign out?"
+        message="You will need to log in again to open the control room."
+        confirmLabel="Yes, sign out"
+        cancelLabel="No, stay"
+        busyLabel="Signing out…"
+        busy={loggingOut}
+        onConfirm={() => void logout()}
+        onCancel={() => {
+          if (!loggingOut) setLogoutOpen(false);
+        }}
+      />
     </div>
   );
 }

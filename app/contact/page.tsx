@@ -107,7 +107,9 @@ export default async function ContactPage({
                       <p className="text-xs tracking-[0.16em] text-mist uppercase rtl:tracking-normal rtl:normal-case">
                         {dict.contact.phone}
                       </p>
-                      <p className="mt-1 text-sm text-sand">{phone}</p>
+                      <p className="mt-1 text-sm text-sand" dir="ltr">
+                        {phone}
+                      </p>
                     </div>
                   </a>
                 ))}

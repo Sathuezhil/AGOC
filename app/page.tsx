@@ -77,6 +77,9 @@ export default async function HomePage({
   const offers = localizeOffers(rawOffers, locale);
   const { home } = content;
   const selectedService = params.service?.trim() ?? "";
+  /** Home preview: two grid rows (3 cols × 2 on desktop). */
+  const homeServices = services.slice(0, 6);
+  const hasMoreServices = services.length > homeServices.length;
 
   return (
     <>
@@ -184,7 +187,7 @@ export default async function HomePage({
           </Reveal>
 
           <div className="mt-12 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service, i) => (
+            {homeServices.map((service, i) => (
               <Reveal key={service.slug} delay={i * 60} className="h-full">
                 <Card3D>
                   <article className="service-card group flex h-full flex-col overflow-hidden border border-sand/10 bg-coal transition-colors duration-500 ease-out hover:border-olive/50">
@@ -223,6 +226,22 @@ export default async function HomePage({
               </Reveal>
             ))}
           </div>
+
+          {hasMoreServices ? (
+            <Reveal delay={120}>
+              <div className="mt-10 flex justify-center">
+                <LocaleLink
+                  href="/services"
+                  className="inline-flex items-center gap-2 border-b border-olive pb-1 text-sm tracking-[0.14em] text-olive uppercase transition duration-300 hover:border-crimson hover:text-crimson rtl:tracking-normal rtl:normal-case"
+                >
+                  {dict.home.allServices}
+                  <span aria-hidden className="text-base leading-none rtl:rotate-180">
+                    →
+                  </span>
+                </LocaleLink>
+              </div>
+            </Reveal>
+          ) : null}
         </div>
       </section>
 

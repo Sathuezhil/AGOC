@@ -8,6 +8,7 @@ export default function ConfirmDialog({
   message,
   confirmLabel = "Yes, delete",
   cancelLabel = "No, cancel",
+  busyLabel = "Deleting…",
   busy = false,
   onConfirm,
   onCancel,
@@ -17,6 +18,7 @@ export default function ConfirmDialog({
   message: string;
   confirmLabel?: string;
   cancelLabel?: string;
+  busyLabel?: string;
   busy?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
@@ -68,7 +70,7 @@ export default function ConfirmDialog({
             onClick={onConfirm}
             className="rounded-lg bg-crimson px-5 py-2.5 text-sm font-medium tracking-wide text-white uppercase transition hover:bg-crimson-dark disabled:opacity-50"
           >
-            {busy ? "Deleting…" : confirmLabel}
+            {busy ? busyLabel : confirmLabel}
           </button>
         </div>
       </div>
