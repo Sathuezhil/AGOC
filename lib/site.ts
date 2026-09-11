@@ -6,6 +6,8 @@ export const site = {
     "Trusted security company in Dubai providing licensed private guards, CCTV monitoring, facility management, and professional building services across the UAE. AGOC Security — Al Muteena, Dubai.",
   url: "https://www.agocsecurity.ae",
   email: "info@agoc.ae",
+  /** Public display only (footer / contact). Enquiry alerts still go to `email` / MAIL_TO. */
+  emails: ["info@agoc.ae", "admin@agoc.ae"],
   phones: ["+971 4 892 4995", "+971 4 337 9951"],
   phoneLinks: ["+97148924995", "+97143379951"],
   whatsapp: "97148924995",

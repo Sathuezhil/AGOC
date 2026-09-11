@@ -90,6 +90,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|images/|logo.png|icon|api/media|api/admin/upload|api/admin/settings/profile-pdf|api/careers/apply|documents/).*)",
+    "/((?!_next/static|_next/image|favicon.ico|images/|clients/|logo.png|icon|api/media|api/admin/upload|api/admin/settings/profile-pdf|api/careers/apply|documents/).*)",
   ],
 };

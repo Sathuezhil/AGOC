@@ -2,6 +2,7 @@ import { Clock, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import ThemeBrandLogo from "./ThemeBrandLogo";
 import Reveal from "./Reveal";
 import LocaleLink from "./LocaleLink";
+import FooterMap from "./FooterMap";
 import { brandLogo, brandLogoLight, site as siteDefaults } from "@/lib/site";
 import { getContent, phoneLink } from "@/lib/content";
 import { getVisibleServices } from "@/lib/services";
@@ -43,6 +44,8 @@ export default async function Footer({
   const { lat, lng, zoom } = siteDefaults.map;
   const mapSrc = `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&hl=${locale}&output=embed`;
   const mapLink = `https://www.google.com/maps?q=${lat},${lng}&z=${zoom}`;
+  /** Public display only — enquiry alerts still use primary `site.email` / MAIL_TO. */
+  const publicEmails = ["info@agoc.ae", "admin@agoc.ae"];
 
   const links = [
     { href: "/", label: dict.nav.home },
@@ -163,40 +166,27 @@ export default async function Footer({
               {dict.footer.contact}
             </h3>
             <div className="flex flex-col gap-3">
-              <p className="flex gap-3">
+              <div className="flex gap-3">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-crimson" />
                 <span>{site.address}</span>
-              </p>
-              <div className="footer-map group relative overflow-hidden rounded-lg border border-sand/15">
-                <iframe
-                  title="AGOC Security office map"
-                  src={mapSrc}
-                  className="pointer-events-none h-28 w-full grayscale-[20%] transition duration-500 group-hover:grayscale-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  tabIndex={-1}
-                />
-                <a
-                  href={mapLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute inset-0 z-10"
-                  aria-label={dict.footer.openMapAria}
-                  title={dict.footer.openMapAria}
-                >
-                  <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-2.5 py-2 text-[10px] tracking-wide text-white uppercase rtl:tracking-normal rtl:normal-case">
-                    {dict.footer.viewOnMap}
-                  </span>
-                </a>
               </div>
+              <FooterMap
+                mapSrc={mapSrc}
+                mapLink={mapLink}
+                openMapAria={dict.footer.openMapAria}
+                viewOnMap={dict.footer.viewOnMap}
+              />
             </div>
-            <a
-              href={`mailto:${site.email}`}
-              className="footer-contact flex gap-3"
-            >
-              <Mail size={16} className="mt-0.5 shrink-0 text-crimson" />
-              {site.email}
-            </a>
+            {publicEmails.map((email) => (
+              <a
+                key={email}
+                href={`mailto:${email}`}
+                className="footer-contact flex gap-3"
+              >
+                <Mail size={16} className="mt-0.5 shrink-0 text-crimson" />
+                <span dir="ltr">{email}</span>
+              </a>
+            ))}
             {site.phones.map((phone) => (
               <a
                 key={phone}

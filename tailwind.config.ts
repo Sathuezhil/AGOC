@@ -12,11 +12,11 @@ const config: Config = {
         ink: "rgb(var(--c-ink) / <alpha-value>)",
         night: "rgb(var(--c-night) / <alpha-value>)",
         coal: "rgb(var(--c-coal) / <alpha-value>)",
-        /* CTA buttons — green */
+        /* CTA — logo-stripe vibrancy (match AGOC red/green pop) */
         crimson: {
-          DEFAULT: "#2D9B45",
-          dark: "#217A35",
-          soft: "#4CBB63",
+          DEFAULT: "#0066FF",
+          dark: "#004ECC",
+          soft: "#3399FF",
         },
         /* Labels / accents — gold */
         olive: {

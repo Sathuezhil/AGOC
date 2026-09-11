@@ -83,18 +83,23 @@ export default async function ContactPage({
                   </div>
                 </div>
 
-                <a
-                  href={`mailto:${site.email}`}
-                  className="contact-info-row flex gap-3 rounded-xl border border-sand/10 bg-ink/30 p-4 transition hover:border-olive/40"
-                >
-                  <Mail size={18} className="mt-0.5 shrink-0 text-gold" />
-                  <div>
-                    <p className="text-xs tracking-[0.16em] text-mist uppercase rtl:tracking-normal rtl:normal-case">
-                      {dict.contact.email}
-                    </p>
-                    <p className="mt-1 text-sm text-sand">{site.email}</p>
-                  </div>
-                </a>
+                {["info@agoc.ae", "admin@agoc.ae"].map((email) => (
+                  <a
+                    key={email}
+                    href={`mailto:${email}`}
+                    className="contact-info-row flex gap-3 rounded-xl border border-sand/10 bg-ink/30 p-4 transition hover:border-olive/40"
+                  >
+                    <Mail size={18} className="mt-0.5 shrink-0 text-gold" />
+                    <div>
+                      <p className="text-xs tracking-[0.16em] text-mist uppercase rtl:tracking-normal rtl:normal-case">
+                        {dict.contact.email}
+                      </p>
+                      <p className="mt-1 text-sm text-sand" dir="ltr">
+                        {email}
+                      </p>
+                    </div>
+                  </a>
+                ))}
 
                 {site.phones.map((phone) => (
                   <a
