@@ -333,7 +333,7 @@ export default function EnquiryTable({ items }: { items: Enquiry[] }) {
 
       {replyTarget && (
         <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-4 backdrop-blur-[2px]"
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-[#0B1F2A]/60 p-4 backdrop-blur-[2px]"
           role="dialog"
           aria-modal="true"
           aria-labelledby="enquiry-reply-title"

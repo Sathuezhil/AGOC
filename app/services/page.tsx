@@ -65,7 +65,7 @@ export default async function ServicesPage() {
                 i % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""
               }`}
             >
-              <div className="service-image-float media-frame relative overflow-hidden rounded-xl border border-sand/15 bg-night shadow-[0_14px_30px_rgba(0,0,0,0.22)]">
+              <div className="service-image-float media-frame relative overflow-hidden rounded-xl border border-sand/15 bg-night shadow-[0_14px_30px_rgba(11, 31, 42,0.22)]">
                 <CoverImage
                   src={service.image}
                   alt={`${service.title} — AGOC Security Dubai`}

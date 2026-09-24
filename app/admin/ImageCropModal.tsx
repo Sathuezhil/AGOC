@@ -133,7 +133,7 @@ export default function ImageCropModal({
       </div>
 
       <div
-        className={`relative w-full bg-black ${
+        className={`relative w-full bg-[#0B1F2A] ${
           mode === "logo" ? "h-[min(42vh,360px)] min-h-[240px]" : "h-[48vh] min-h-[260px]"
         }`}
       >
@@ -176,7 +176,7 @@ export default function ImageCropModal({
             step={0.05}
             value={zoom}
             onChange={(e) => setZoom(Number(e.target.value))}
-            className="w-full accent-[#0066FF]"
+            className="w-full accent-[#123B5D]"
           />
         </label>
 
@@ -215,7 +215,7 @@ export default function ImageCropModal({
   if (inline) return shell;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 p-4">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[#0B1F2A]/75 p-4">
       {shell}
     </div>
   );

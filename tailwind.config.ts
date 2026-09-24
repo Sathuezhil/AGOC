@@ -12,11 +12,11 @@ const config: Config = {
         ink: "rgb(var(--c-ink) / <alpha-value>)",
         night: "rgb(var(--c-night) / <alpha-value>)",
         coal: "rgb(var(--c-coal) / <alpha-value>)",
-        /* CTA — logo-stripe vibrancy (match AGOC red/green pop) */
+        /* CTA — primary / secondary corporate */
         crimson: {
-          DEFAULT: "#0066FF",
-          dark: "#004ECC",
-          soft: "#3399FF",
+          DEFAULT: "#123B5D",
+          dark: "#0B1F2A",
+          soft: "#1F6F78",
         },
         /* Labels / accents — gold */
         olive: {
@@ -30,11 +30,11 @@ const config: Config = {
           soft: "#E0C35A",
         },
         navy: {
-          DEFAULT: "#0B1D36",
-          deep: "#071525",
-          soft: "#163154",
+          DEFAULT: "#123B5D",
+          deep: "#0B1F2A",
+          soft: "#1F6F78",
         },
-        steel: "#A8B0BD",
+        steel: "#64748B",
         sand: "rgb(var(--c-sand) / <alpha-value>)",
         mist: "rgb(var(--c-mist) / <alpha-value>)",
       },
@@ -44,7 +44,7 @@ const config: Config = {
         arabic: ["var(--font-arabic)", "Tahoma", "sans-serif"],
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(201,162,39,0.22), 0 24px 60px rgba(0,0,0,0.5)",
+        glow: "0 0 0 1px rgba(201,162,39,0.22), 0 24px 60px rgba(11, 31, 42,0.5)",
       },
       transitionTimingFunction: {
         out: "cubic-bezier(0.22, 1, 0.36, 1)",

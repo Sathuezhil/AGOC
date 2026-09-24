@@ -20,7 +20,7 @@ export default function ThemeToggle({
       className={`shrink-0 ${
         admin
           ? "flex items-center rounded-full border border-sand/15 bg-sand/[0.04] p-0.5"
-          : "flex items-center rounded-full border border-black/10 bg-black/[0.04] p-0.5"
+          : "flex items-center rounded-full border border-[#0B1F2A]/10 bg-[#0B1F2A]/[0.04] p-0.5"
       }`}
       role="group"
       aria-label="Color theme"

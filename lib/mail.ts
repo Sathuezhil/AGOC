@@ -31,7 +31,7 @@ function buildBodies(input: EnquiryMailInput) {
   ].join("\n");
 
   const html = `
-    <div style="font-family:Arial,sans-serif;line-height:1.5;color:#1e1e22">
+    <div style="font-family:Arial,sans-serif;line-height:1.5;color:#0B1F2A">
       <h2 style="margin:0 0 12px;color:#C9A227">New website enquiry</h2>
       <p style="margin:0 0 16px">Someone submitted the contact form on agocsecurity.ae.</p>
       <table style="border-collapse:collapse;width:100%;max-width:560px">
@@ -189,7 +189,7 @@ function buildReplyBodies(input: EnquiryReplyMailInput) {
   ].join("\n");
 
   const html = `
-    <div style="font-family:Arial,sans-serif;line-height:1.55;color:#1e1e22">
+    <div style="font-family:Arial,sans-serif;line-height:1.55;color:#0B1F2A">
       <p style="margin:0 0 16px">Dear ${escapeHtml(input.toName)},</p>
       <div style="white-space:pre-wrap;margin:0 0 24px">${escapeHtml(input.body)}</div>
       <p style="margin:0;color:#666;font-size:13px">—<br/>AGOC Security<br/><a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></p>
@@ -317,7 +317,7 @@ function buildCareerBodies(input: CareerApplicationMailInput) {
   ].join("\n");
 
   const html = `
-    <div style="font-family:Arial,sans-serif;line-height:1.5;color:#1e1e22">
+    <div style="font-family:Arial,sans-serif;line-height:1.5;color:#0B1F2A">
       <h2 style="margin:0 0 12px;color:#C9A227">New career application</h2>
       <p style="margin:0 0 16px">Someone applied through the careers page on agocsecurity.ae.</p>
       <table style="border-collapse:collapse;width:100%;max-width:560px">

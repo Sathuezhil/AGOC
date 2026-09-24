@@ -1,6 +1,15 @@
 import Image from "next/image";
 import { defaultLogo } from "@/lib/site";
 
+function safeSrc(src: string) {
+  // Avoid spaces/unencoded paths breaking HTML parsing → hydration mismatch
+  try {
+    return encodeURI(decodeURI(src));
+  } catch {
+    return encodeURI(src);
+  }
+}
+
 export default function Logo({
   src = defaultLogo,
   className = "h-[5rem]",
@@ -11,10 +20,12 @@ export default function Logo({
   /** Admin-sized full logo (icon + AGOC + company line). */
   compact?: boolean;
 }) {
+  const imageSrc = safeSrc(src || defaultLogo);
+
   if (compact) {
     return (
       <Image
-        src={src || defaultLogo}
+        src={imageSrc}
         alt="AGOC — A Power That Saves You"
         width={4550}
         height={2288}
@@ -27,7 +38,7 @@ export default function Logo({
 
   return (
     <Image
-      src={src || defaultLogo}
+      src={imageSrc}
       alt="AGOC — A Power That Saves You"
       width={420}
       height={120}

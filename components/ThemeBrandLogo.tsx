@@ -12,7 +12,7 @@ export default function ThemeBrandLogo({
   compact?: boolean;
 }) {
   return (
-    <>
+    <div className="theme-brand-logo-wrap">
       <Logo
         src={darkSrc}
         compact={compact}
@@ -23,6 +23,6 @@ export default function ThemeBrandLogo({
         compact={compact}
         className={`theme-brand-logo theme-brand-logo-light ${className}`}
       />
-    </>
+    </div>
   );
 }

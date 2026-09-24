@@ -20,13 +20,17 @@ export default function MissionVision({
   ];
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-24">
+    <section className="mission-vision relative overflow-hidden py-20 md:py-28">
+      {/* Watermark — contain so logo isn’t cropped */}
       <div
-        className="service-image-float absolute inset-0 scale-105 bg-cover bg-center opacity-25"
+        className="mission-vision-bg absolute inset-0"
         style={{ backgroundImage: `url(${image})` }}
+        aria-hidden
       />
-      <div className="absolute inset-0 bg-black/65" />
-      <div className="relative mx-auto grid max-w-6xl gap-6 px-6 md:grid-cols-2">
+      {/* Soft vignette — keeps cards readable, logo still visible */}
+      <div className="mission-vision-veil pointer-events-none absolute inset-0" aria-hidden />
+
+      <div className="relative mx-auto grid max-w-6xl gap-6 px-6 md:grid-cols-2 md:gap-8">
         {items.map((item, i) => (
           <Reveal
             key={item.title}
@@ -34,8 +38,10 @@ export default function MissionVision({
             motion={i === 0 ? "left" : "right"}
           >
             <Card3D intensity={10}>
-              <article className="flex h-full flex-col items-center rounded-2xl border-[3px] border-gold bg-navy px-8 py-10 text-center text-white shadow-xl transition-shadow duration-500 hover:shadow-2xl md:px-10 md:py-12">
-                <h2 className="font-display text-3xl text-gold md:text-4xl">{item.title}</h2>
+              <article className="flex h-full flex-col items-center rounded-2xl border-[3px] border-gold bg-navy/92 px-8 py-10 text-center text-white shadow-xl backdrop-blur-[2px] transition-shadow duration-500 hover:shadow-2xl md:px-10 md:py-12">
+                <h2 className="font-display text-3xl text-gold md:text-4xl">
+                  {item.title}
+                </h2>
                 <span className="mt-4 block h-px w-12 bg-gold/70" />
                 <p className="mt-5 text-sm leading-relaxed text-white/90 md:text-base">
                   {item.text}

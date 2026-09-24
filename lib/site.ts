@@ -30,11 +30,11 @@ export const site = {
 export const defaultLogo =
   "/api/media/uploads/1787735514704-gemini_generated_image_a3gg58a3gg58a3gg_page-0001.jpg";
 
-/** Dark theme — public/footer and admin logo.png */
-export const brandLogo = "/footer and admin logo.png";
+/** Dark theme — public/footer-admin-logo.png */
+export const brandLogo = "/footer-admin-logo.png";
 
-/** Light theme — public/footer and admin logo lighttheme.png */
-export const brandLogoLight = "/footer and admin logo lighttheme.png";
+/** Light theme — public/footer-admin-logo-light.png */
+export const brandLogoLight = "/footer-admin-logo-light.png";
 
 export const footerLogo = brandLogo;
 export const adminLogo = brandLogo;

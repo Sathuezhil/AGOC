@@ -1,6 +1,5 @@
 import { Clock, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import ThemeBrandLogo from "./ThemeBrandLogo";
-import Reveal from "./Reveal";
 import LocaleLink from "./LocaleLink";
 import FooterMap from "./FooterMap";
 import { brandLogo, brandLogoLight, site as siteDefaults } from "@/lib/site";
@@ -40,12 +39,13 @@ export default async function Footer({
   ]);
   const content = localizeContent(rawContent, locale);
   const services = localizeServices(rawServices, locale);
+  const footerServices = services.slice(0, 6);
   const { site } = content;
   const { lat, lng, zoom } = siteDefaults.map;
   const mapSrc = `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&hl=${locale}&output=embed`;
   const mapLink = `https://www.google.com/maps?q=${lat},${lng}&z=${zoom}`;
-  /** Public display only — enquiry alerts still use primary `site.email` / MAIL_TO. */
   const publicEmails = ["info@agoc.ae", "admin@agoc.ae"];
+  const year = new Date().getFullYear();
 
   const links = [
     { href: "/", label: dict.nav.home },
@@ -74,151 +74,155 @@ export default async function Footer({
   ].filter((item) => Boolean(item.href?.trim()));
 
   return (
-    <footer className="site-footer border-t border-sand/10 bg-night">
+    <div
+      role="contentinfo"
+      className="site-footer border-t border-sand/10 bg-night"
+      suppressHydrationWarning
+    >
       <div className="site-footer-inner mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 lg:grid-cols-4">
-        <Reveal>
-          <div className="space-y-5">
-            <ThemeBrandLogo
-              darkSrc={brandLogo}
-              lightSrc={brandLogoLight}
-              compact
-              className="h-auto w-full max-w-[18rem] sm:max-w-[20rem]"
-            />
-            <p className="max-w-xs text-sm leading-relaxed text-mist">
-              {site.legalName}. {site.footerBlurb}
-            </p>
-            {socials.length > 0 && (
-              <div className="footer-socials flex flex-wrap items-center gap-3 pt-1">
-                {socials.map((item, i) => {
-                  const Icon = item.icon;
-                  const kind = item.label.toLowerCase();
-                  return (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={item.label}
-                      title={item.label}
-                      className={`footer-social footer-social-${kind}`}
-                      style={{ animationDelay: `${i * 0.35}s` }}
-                    >
-                      <span className="footer-social-shine" aria-hidden />
-                      <Icon size={17} />
-                    </a>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </Reveal>
-
-        <Reveal delay={80}>
-          <div>
-            <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
-              {dict.footer.menu}
-            </h3>
-            <ul className="space-y-2.5 text-sm text-sand/80">
-              {links.map((link) => (
-                <li key={link.href}>
-                  <LocaleLink href={link.href} className="footer-link">
-                    {link.label}
-                  </LocaleLink>
-                </li>
-              ))}
-              <li>
-                <LocaleLink href="/privacy" className="footer-link">
-                  {dict.footer.privacy}
-                </LocaleLink>
-              </li>
-              <li>
-                <LocaleLink href="/terms" className="footer-link">
-                  {dict.footer.terms}
-                </LocaleLink>
-              </li>
-            </ul>
-          </div>
-        </Reveal>
-
-        <Reveal delay={140}>
-          <div>
-            <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
-              {dict.footer.services}
-            </h3>
-            <ul className="space-y-2.5 text-sm text-sand/80">
-              {services.slice(0, 6).map((service) => (
-                <li key={service.slug}>
-                  <LocaleLink
-                    href={`/services/${service.slug}`}
-                    className="footer-link"
+        <div className="space-y-5">
+          <ThemeBrandLogo
+            darkSrc={brandLogo}
+            lightSrc={brandLogoLight}
+            compact
+            className="h-auto w-full max-w-[18rem] sm:max-w-[20rem]"
+          />
+          <p className="max-w-xs text-sm leading-relaxed text-mist">
+            {site.legalName}. {site.footerBlurb}
+          </p>
+          {socials.length > 0 && (
+            <div className="footer-socials flex flex-wrap items-center gap-3 pt-1">
+              {socials.map((item, i) => {
+                const Icon = item.icon;
+                const kind = item.label.toLowerCase();
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={item.label}
+                    title={item.label}
+                    className={`footer-social footer-social-${kind}`}
+                    style={{ animationDelay: `${i * 0.35}s` }}
                   >
-                    {service.title}
-                  </LocaleLink>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
+                    <span className="footer-social-shine" aria-hidden="true" />
+                    <Icon size={17} />
+                  </a>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
-        <Reveal delay={200}>
-          <div className="space-y-4 text-sm text-sand/80">
-            <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
-              {dict.footer.contact}
-            </h3>
-            <div className="flex flex-col gap-3">
-              <div className="flex gap-3">
-                <MapPin size={16} className="mt-0.5 shrink-0 text-crimson" />
-                <span>{site.address}</span>
-              </div>
-              <FooterMap
-                mapSrc={mapSrc}
-                mapLink={mapLink}
-                openMapAria={dict.footer.openMapAria}
-                viewOnMap={dict.footer.viewOnMap}
-              />
-            </div>
-            {publicEmails.map((email) => (
-              <a
-                key={email}
-                href={`mailto:${email}`}
-                className="footer-contact flex gap-3"
-              >
-                <Mail size={16} className="mt-0.5 shrink-0 text-crimson" />
-                <span dir="ltr">{email}</span>
-              </a>
+        <div>
+          <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
+            {dict.footer.menu}
+          </h3>
+          <ul className="space-y-2.5 text-sm text-sand/80">
+            {links.map((link) => (
+              <li key={link.href}>
+                <LocaleLink href={link.href} className="footer-link">
+                  {link.label}
+                </LocaleLink>
+              </li>
             ))}
-            {site.phones.map((phone) => (
-              <a
-                key={phone}
-                href={`tel:${phoneLink(phone)}`}
-                className="footer-contact flex gap-3"
-              >
-                <Phone size={16} className="mt-0.5 shrink-0 text-crimson" />
-                <span dir="ltr">{phone}</span>
-              </a>
+            <li>
+              <LocaleLink href="/privacy" className="footer-link">
+                {dict.footer.privacy}
+              </LocaleLink>
+            </li>
+            <li>
+              <LocaleLink href="/terms" className="footer-link">
+                {dict.footer.terms}
+              </LocaleLink>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
+            {dict.footer.services}
+          </h3>
+          <ul className="space-y-2.5 text-sm text-sand/80">
+            {footerServices.map((service) => (
+              <li key={service.slug}>
+                <LocaleLink
+                  href={`/services/${service.slug}`}
+                  className="footer-link"
+                >
+                  {service.title}
+                </LocaleLink>
+              </li>
             ))}
+            <li className="pt-1">
+              <LocaleLink
+                href="/services"
+                className="footer-link font-medium text-olive"
+              >
+                View services →
+              </LocaleLink>
+            </li>
+          </ul>
+        </div>
+
+        <div className="space-y-4 text-sm text-sand/80">
+          <h3 className="footer-heading mb-4 text-sm font-semibold tracking-[0.22em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
+            {dict.footer.contact}
+          </h3>
+          <div className="flex flex-col gap-3">
             <div className="flex gap-3">
-              <Clock size={16} className="mt-0.5 shrink-0 text-crimson" />
-              <div>
-                {site.hours.map((row) => (
-                  <p key={row.days}>
-                    {row.days}: {row.time}
-                  </p>
-                ))}
-              </div>
+              <MapPin size={16} className="mt-0.5 shrink-0 text-crimson" />
+              <span>{site.address}</span>
+            </div>
+            <FooterMap
+              mapSrc={mapSrc}
+              mapLink={mapLink}
+              openMapAria={dict.footer.openMapAria}
+              viewOnMap={dict.footer.viewOnMap}
+            />
+          </div>
+          {publicEmails.map((email) => (
+            <a
+              key={email}
+              href={`mailto:${email}`}
+              className="footer-contact flex gap-3"
+            >
+              <Mail size={16} className="mt-0.5 shrink-0 text-crimson" />
+              <span dir="ltr">{email}</span>
+            </a>
+          ))}
+          {site.phones.map((phone) => (
+            <a
+              key={phone}
+              href={`tel:${phoneLink(phone)}`}
+              className="footer-contact flex gap-3"
+            >
+              <Phone size={16} className="mt-0.5 shrink-0 text-crimson" />
+              <span dir="ltr">{phone}</span>
+            </a>
+          ))}
+          <div className="flex gap-3">
+            <Clock size={16} className="mt-0.5 shrink-0 text-crimson" />
+            <div>
+              {site.hours.map((row) => (
+                <p key={row.days}>
+                  {row.days}: {row.time}
+                </p>
+              ))}
             </div>
           </div>
-        </Reveal>
+        </div>
       </div>
 
       <div className="site-footer-inner border-t border-sand/10">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-5 text-xs text-mist sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {new Date().getFullYear()} {site.name}. {dict.footer.rights}
+          <p suppressHydrationWarning>
+            © {year} {site.name}. {dict.footer.rights}
           </p>
           <p>{dict.footer.licensed}</p>
         </div>
       </div>
-    </footer>
+    </div>
   );
 }

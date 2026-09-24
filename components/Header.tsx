@@ -64,7 +64,7 @@ export default function Header({
       <div
         className={`site-topbar overflow-x-clip border-b bg-white/95 backdrop-blur-md transition-all duration-500 ${
           scrolled
-            ? "border-black/10 shadow-[0_10px_30px_rgba(7,21,37,0.08)]"
+            ? "border-[#0B1F2A]/10 shadow-[0_10px_30px_rgba(11,31,42,0.08)]"
             : "border-black/5"
         }`}
       >
@@ -138,13 +138,13 @@ export default function Header({
       </div>
 
       {open && (
-        <div className="site-topbar animate-fadeUp border-b border-black/10 bg-white px-5 py-6 lg:hidden">
+        <div className="site-topbar animate-fadeUp border-b border-[#0B1F2A]/10 bg-white px-5 py-6 lg:hidden">
           <nav className="flex flex-col gap-4">
             {links.map((link) => (
               <LocaleLink
                 key={link.href}
                 href={link.href}
-                className="border-b border-black/10 pb-3 text-lg tracking-wide text-navy transition hover:text-crimson rtl:tracking-normal"
+                className="border-b border-[#0B1F2A]/10 pb-3 text-lg tracking-wide text-navy transition hover:text-crimson rtl:tracking-normal"
               >
                 {link.label}
               </LocaleLink>

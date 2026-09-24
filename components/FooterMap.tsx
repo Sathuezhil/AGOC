@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-/** Map iframe mounts after hydration to avoid SSR/DOM mismatch. */
+/**
+ * SSR: placeholder (same on server + first client paint).
+ * After mount: Google Maps iframe — avoids hydration mismatch.
+ */
 export default function FooterMap({
   mapSrc,
   mapLink,
@@ -32,10 +35,7 @@ export default function FooterMap({
           tabIndex={-1}
         />
       ) : (
-        <div
-          className="h-28 w-full bg-ink/60"
-          aria-hidden
-        />
+        <div className="h-28 w-full bg-ink/60" aria-hidden />
       )}
       <a
         href={mapLink}

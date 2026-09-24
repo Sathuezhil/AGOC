@@ -106,6 +106,7 @@ export default async function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <JsonLd />
       </head>
       <body
         className={`${display.variable} ${sans.variable} ${arabic.variable} font-sans antialiased ${
@@ -117,7 +118,6 @@ export default async function RootLayout({
             children
           ) : (
             <>
-              <JsonLd />
               <Header
                 logoSrc={contentSite.logo}
                 profilePdf={contentSite.companyProfilePdf}

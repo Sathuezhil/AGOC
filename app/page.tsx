@@ -282,7 +282,7 @@ export default async function HomePage({
               return (
                 <Reveal key={stat.label} delay={i * 110} className="h-full">
                   <Card3D intensity={8}>
-                    <article className="group flex h-full flex-col items-center rounded-sm bg-black/40 px-3 py-5 text-center shadow-md shadow-black/20 transition-colors duration-500 hover:bg-black/55 hover:shadow-xl">
+                    <article className="group flex h-full flex-col items-center rounded-sm bg-[#0B1F2A]/40 px-3 py-5 text-center shadow-md shadow-[#0B1F2A]/20 transition-colors duration-500 hover:bg-[#0B1F2A]/55 hover:shadow-xl">
                       <Icon
                         size={16}
                         className="text-olive transition duration-300 group-hover:text-crimson"
@@ -361,7 +361,7 @@ export default async function HomePage({
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <div className="contact-form-panel enquire-panel rounded-2xl border border-sand/10 bg-night/40 p-5 shadow-[0_14px_34px_rgba(0,0,0,0.18)] sm:p-6 md:p-7">
+            <div className="contact-form-panel enquire-panel rounded-2xl border border-sand/10 bg-night/40 p-5 shadow-[0_14px_34px_rgba(11, 31, 42,0.18)] sm:p-6 md:p-7">
               <ContactForm
                 services={allServices}
                 defaultService={selectedService}

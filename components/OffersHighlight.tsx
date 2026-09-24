@@ -109,7 +109,7 @@ export default function OffersHighlight({
         >
           {offers.map((offer, i) => (
             <Reveal key={offer.id} delay={i * 70}>
-              <article className="offer-card group relative flex h-auto flex-col overflow-hidden rounded-2xl border border-gold/30 bg-coal/85 p-5 shadow-[0_18px_44px_rgba(0,0,0,0.32)] transition duration-500 hover:border-gold/55 hover:shadow-[0_24px_52px_rgba(201,162,39,0.16)] sm:p-5">
+              <article className="offer-card group relative flex h-auto flex-col overflow-hidden rounded-2xl border border-gold/30 bg-coal/85 p-5 shadow-[0_18px_44px_rgba(11, 31, 42,0.32)] transition duration-500 hover:border-gold/55 hover:shadow-[0_24px_52px_rgba(201,162,39,0.16)] sm:p-5">
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/55 to-transparent" />
                 <div className="pointer-events-none absolute inset-y-0 start-0 w-[3px] bg-gradient-to-b from-gold via-crimson to-transparent opacity-80" />
 

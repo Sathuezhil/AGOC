@@ -81,7 +81,7 @@ export default function LogoCropPanel({
           </p>
           <Logo src={value} compact className="mx-auto w-full max-w-[14rem]" />
         </div>
-        <div className="rounded-lg border border-black/10 bg-white px-4 py-3 shadow-sm">
+        <div className="rounded-lg border border-[#0B1F2A]/10 bg-white px-4 py-3 shadow-sm">
           <p className="mb-3 text-[10px] font-semibold tracking-[0.2em] text-ink/50 uppercase">
             Website header
           </p>

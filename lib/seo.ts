@@ -147,7 +147,7 @@ export function organizationJsonLd() {
 }
 
 function brandLogoPath() {
-  return encodeURI("/footer and admin logo.png");
+  return "/footer-admin-logo.png";
 }
 
 export function serviceJsonLd(input: {

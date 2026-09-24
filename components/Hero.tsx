@@ -112,7 +112,7 @@ export default function Hero({ content }: { content: HeroContent }) {
             </LocaleLink>
             <LocaleLink
               href="/services"
-              className="inline-flex items-center gap-2 border border-white/45 bg-black/20 px-6 py-3.5 text-sm font-medium tracking-wide text-white backdrop-blur-[2px] transition duration-300 hover:border-olive hover:bg-black/35 hover:text-olive"
+              className="inline-flex items-center gap-2 border border-white/45 bg-[#0B1F2A]/20 px-6 py-3.5 text-sm font-medium tracking-wide text-white backdrop-blur-[2px] transition duration-300 hover:border-olive hover:bg-[#0B1F2A]/35 hover:text-olive"
             >
               {dict.hero.exploreServices}
             </LocaleLink>
