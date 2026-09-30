@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import LocaleLink from "./LocaleLink";
 import type { Slide } from "@/lib/content";
 import { getDictionary, getLocaleFromPathname } from "@/lib/i18n";
@@ -42,77 +42,84 @@ export default function Hero({ content }: { content: HeroContent }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
+    if (slides.length < 2) return;
     const id = window.setInterval(() => {
       setIndex((current) => (current + 1) % slides.length);
-    }, 7500);
+    }, 8000);
     return () => window.clearInterval(id);
-  }, [index, slides.length]);
+  }, [slides.length]);
 
   return (
-    <section className="relative min-h-[100svh] overflow-hidden">
+    <section className="hero-section relative min-h-[100svh] overflow-hidden">
       {slides.map((slide, i) => (
         <div
           key={`${slide.src}-${i}`}
-          className={`absolute inset-0 transition-opacity duration-[1400ms] ease-out ${
+          className={`absolute inset-0 transition-opacity duration-[1600ms] ease-out ${
             i === index ? "opacity-100" : "opacity-0"
           }`}
+          aria-hidden={i !== index}
         >
           <Image
-            key={`${slide.src}-${i === index ? "live" : "idle"}`}
             src={slide.src}
             alt={slide.alt}
             fill
             priority={i === 0}
             sizes="100vw"
             unoptimized={slide.src.startsWith("/api/media")}
-            className={`object-cover object-center ${
-              i === index ? "animate-kenburnsPulse" : ""
+            className={`object-cover object-[center_42%] ${
+              i === index ? "hero-slide-live" : ""
             }`}
           />
         </div>
       ))}
+
       <div className="hero-scrim pointer-events-none absolute inset-0" aria-hidden />
       <div className="hero-vignette pointer-events-none absolute inset-0" aria-hidden />
-      <div className="hero-beam pointer-events-none absolute inset-0" aria-hidden />
 
-      <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-6 pb-24 pt-44 md:justify-center md:pb-28">
-        <div className="hero-copy max-w-3xl">
+      <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-5 pb-[7.5rem] pt-28 sm:px-6 sm:pb-32 sm:pt-32 md:justify-center md:pb-28 md:pt-32">
+        <div className="hero-copy max-w-xl lg:max-w-2xl">
           <p
-            className="olive-label animate-fadeUp text-sm font-semibold tracking-[0.38em] text-olive uppercase opacity-0 rtl:tracking-normal rtl:normal-case"
-            style={{ animationDelay: "80ms" }}
+            className="olive-label animate-fadeUp text-[0.65rem] font-semibold tracking-[0.28em] text-olive uppercase opacity-0 sm:text-xs rtl:tracking-normal rtl:normal-case"
+            style={{ animationDelay: "60ms" }}
           >
             {content.eyebrow}
           </p>
+
           <h1
-            className="mt-5 animate-fadeUp font-display text-5xl leading-[0.95] text-white opacity-0 md:text-7xl"
-            style={{ animationDelay: "220ms" }}
+            className="mt-3 animate-fadeUp font-display text-[1.85rem] leading-[1.08] tracking-tight text-white opacity-0 sm:mt-5 sm:text-4xl md:text-5xl lg:text-[3.75rem]"
+            style={{ animationDelay: "160ms" }}
           >
-            {content.title}
-            <span className="block italic text-[#F7F4EF]">{content.titleItalic}</span>
+            <span className="block text-white">{content.title}</span>
+            <span className="mt-1 block font-display text-[0.9em] font-normal italic text-white">
+              {content.titleItalic}
+            </span>
           </h1>
+
           <p
-            className="mt-6 max-w-xl animate-fadeUp text-base leading-relaxed text-white/90 opacity-0 md:text-lg"
-            style={{ animationDelay: "380ms" }}
+            className="hero-lead type-body measure mt-3 max-w-[34rem] animate-fadeUp text-[0.95rem] text-white opacity-0 sm:mt-5 sm:text-[1.0625rem]"
+            style={{ animationDelay: "280ms" }}
           >
             {content.text}
           </p>
+
           <div
-            className="mt-9 flex animate-fadeUp flex-wrap gap-4 opacity-0"
-            style={{ animationDelay: "520ms" }}
+            className="hero-cta mt-6 flex w-full animate-fadeUp flex-col gap-2.5 opacity-0 sm:mt-8 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:gap-3.5"
+            style={{ animationDelay: "400ms" }}
           >
             <LocaleLink
               href="/contact"
-              className="btn-shine group inline-flex items-center gap-2 bg-white px-6 py-3.5 text-sm font-semibold tracking-wide text-navy transition duration-300 hover:bg-[#F5F0E0]"
+              className="btn-shine group inline-flex w-full items-center justify-center gap-2.5 bg-crimson px-6 py-3.5 text-sm font-semibold tracking-[0.12em] text-white uppercase transition duration-300 hover:bg-crimson-dark sm:w-auto sm:px-7 rtl:tracking-normal rtl:normal-case"
             >
-              {dict.hero.contactUs}
+              <Phone size={15} strokeWidth={2.25} />
+              {dict.header.getProtection}
               <ArrowRight
-                size={16}
-                className="transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1"
+                size={15}
+                className="transition-transform duration-300 group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
               />
             </LocaleLink>
             <LocaleLink
               href="/services"
-              className="inline-flex items-center gap-2 border border-white/45 bg-[#0B1F2A]/20 px-6 py-3.5 text-sm font-medium tracking-wide text-white backdrop-blur-[2px] transition duration-300 hover:border-olive hover:bg-[#0B1F2A]/35 hover:text-olive"
+              className="inline-flex w-full items-center justify-center gap-2 border border-white/55 bg-black/20 px-6 py-3.5 text-sm font-medium tracking-[0.1em] text-white uppercase backdrop-blur-[2px] transition duration-300 hover:border-white/85 hover:bg-black/30 sm:w-auto sm:px-7 rtl:tracking-normal rtl:normal-case"
             >
               {dict.hero.exploreServices}
             </LocaleLink>
@@ -120,27 +127,32 @@ export default function Hero({ content }: { content: HeroContent }) {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex">
-        <span className="text-[0.62rem] tracking-[0.28em] text-white/70 uppercase rtl:tracking-normal rtl:normal-case">
+      {slides.length > 1 ? (
+        <div className="absolute bottom-[5.75rem] start-5 z-10 flex items-center gap-2 sm:bottom-8 sm:start-6 md:start-10">
+          {slides.map((slide, i) => (
+            <button
+              key={`${slide.src}-dot-${i}`}
+              type="button"
+              aria-label={`Show slide ${i + 1}`}
+              aria-current={i === index}
+              onClick={() => setIndex(i)}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                i === index
+                  ? "w-7 bg-white"
+                  : "w-1.5 bg-white/35 hover:bg-white/65"
+              }`}
+            />
+          ))}
+        </div>
+      ) : null}
+
+      <div className="pointer-events-none absolute bottom-8 end-6 hidden flex-col items-center gap-2 md:flex md:end-10">
+        <span className="text-[0.58rem] tracking-[0.28em] text-white/55 uppercase rtl:tracking-normal rtl:normal-case">
           {dict.hero.scroll}
         </span>
-        <span className="h-9 w-px overflow-hidden bg-white/20">
-          <span className="block h-3 w-px bg-olive animate-scroll" />
+        <span className="h-8 w-px overflow-hidden bg-white/15">
+          <span className="block h-2.5 w-px bg-olive/90 animate-scroll" />
         </span>
-      </div>
-
-      <div className="absolute bottom-8 start-6 z-10 flex gap-2 md:start-10">
-        {slides.map((slide, i) => (
-          <button
-            key={`${slide.src}-dot-${i}`}
-            type="button"
-            aria-label={`Show slide ${i + 1}`}
-            onClick={() => setIndex(i)}
-            className={`h-2 rounded-full transition-all duration-500 ${
-              i === index ? "w-8 bg-white" : "w-2 bg-white/40 hover:bg-white/70"
-            }`}
-          />
-        ))}
       </div>
     </section>
   );

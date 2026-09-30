@@ -120,7 +120,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <p className="olive-label text-xs tracking-[0.3em] text-olive uppercase sm:text-sm rtl:tracking-normal rtl:normal-case">
                 {dict.services.service}
               </p>
-              <h1 className="mt-2 font-display text-3xl text-white sm:text-4xl md:text-5xl">
+              <h1 className="type-page mt-2 text-white">
                 {service.title}
               </h1>
             </div>
@@ -128,15 +128,15 @@ export default async function ServiceDetailPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-2 lg:gap-10 lg:py-20">
+      <section className="site-wrap grid items-center gap-section section-y lg:grid-cols-2">
         <Reveal motion="left">
           <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
             {dict.services.howWeCover}
           </p>
-          <h2 className="mt-3 font-display text-3xl text-sand sm:text-4xl">
+          <h2 className="type-section mt-3 text-sand">
             {dict.services.madeForSite}
           </h2>
-          <p className="mt-5 text-base leading-relaxed text-sand/90 sm:text-lg">
+          <p className="type-body measure mt-5 text-sand/90">
             {service.summary}
           </p>
           <LocaleLink
@@ -171,17 +171,17 @@ export default async function ServiceDetailPage({ params }: Props) {
         />
       ) : null}
 
-      <section className="bg-night py-12 sm:py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="bg-night section-y">
+        <div className="site-wrap">
           <Reveal>
             <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
               {dict.serviceDetail.included}
             </p>
-            <h2 className="mt-3 font-display text-3xl text-sand md:text-4xl">
+            <h2 className="type-section mt-3 text-sand">
               {dict.serviceDetail.whatYouGet}
             </h2>
           </Reveal>
-          <div className="include-grid mt-6 grid gap-3 sm:grid-cols-2">
+          <div className="include-grid mt-6 grid gap-cards sm:grid-cols-2">
             {service.points.map((point, i) => (
               <Reveal key={point} delay={i * 60} className="h-full">
                 <article className="include-card group relative flex h-full items-start gap-3 overflow-hidden rounded-xl border border-sand/10 bg-coal/55 p-4 transition duration-300 sm:gap-4 sm:p-5">
@@ -203,16 +203,16 @@ export default async function ServiceDetailPage({ params }: Props) {
       </section>
 
       {groundPhotos.length > 0 && (
-        <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 md:py-20">
+        <section className="site-wrap section-y">
           <Reveal>
             <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
               {dict.serviceDetail.onTheGround}
             </p>
-            <h2 className="mt-3 font-display text-3xl text-sand sm:text-4xl">
+            <h2 className="type-section mt-3 text-sand">
               {dict.serviceDetail.lookOfWork}
             </h2>
           </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-10 md:grid-cols-3">
+          <div className="mt-8 grid gap-cards sm:grid-cols-2 md:mt-10 md:grid-cols-3">
             {groundPhotos.map((src, i) => (
               <Reveal key={src} delay={i * 90} className="h-full">
                 <div className="media-frame relative overflow-hidden border border-sand/10 bg-night">
@@ -231,15 +231,15 @@ export default async function ServiceDetailPage({ params }: Props) {
       )}
 
       {others.length > 0 && (
-        <section className="bg-night py-16 md:py-20">
-          <div className="mx-auto max-w-6xl px-6">
+        <section className="bg-night section-y">
+          <div className="site-wrap">
             <Reveal>
               <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
                 <div>
                   <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
                     {dict.serviceDetail.alsoAvailable}
                   </p>
-                  <h2 className="mt-3 font-display text-4xl text-sand">
+                  <h2 className="type-section mt-3 text-sand">
                     {dict.services.otherServices}
                   </h2>
                 </div>
@@ -251,7 +251,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </LocaleLink>
               </div>
             </Reveal>
-            <div className="mt-10 grid gap-5 sm:grid-cols-3">
+            <div className="mt-10 grid gap-cards sm:grid-cols-3">
               {others.map((item, i) => (
                 <Reveal key={item.slug} delay={i * 80} className="h-full">
                   <Card3D>
@@ -268,10 +268,10 @@ export default async function ServiceDetailPage({ params }: Props) {
                         />
                       </div>
                       <div className="flex flex-1 flex-col p-5">
-                        <h3 className="font-display text-2xl text-sand">
+                        <h3 className="type-card text-sand">
                           {item.title}
                         </h3>
-                        <p className="mt-2 text-sm leading-relaxed text-mist">
+                        <p className="mt-2 type-body-sm text-mist">
                           {item.short}
                         </p>
                         <span className="mt-4 inline-flex items-center gap-1 text-sm tracking-wide text-olive">
@@ -288,13 +288,13 @@ export default async function ServiceDetailPage({ params }: Props) {
         </section>
       )}
 
-      <section className="bg-navy py-14">
-        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-6 md:flex-row md:items-center">
+      <section className="bg-navy section-y-tight">
+        <div className="site-wrap flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <div>
             <p className="text-xs font-semibold tracking-[0.3em] text-gold uppercase rtl:tracking-normal rtl:normal-case">
               {dict.services.readyToStaff}
             </p>
-            <h2 className="mt-2 font-display text-3xl text-white md:text-4xl">
+            <h2 className="type-section mt-2 text-white">
               {dict.services.tellUs}
             </h2>
           </div>

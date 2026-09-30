@@ -56,17 +56,17 @@ export default async function ContactPage({
         secondaryLabel={dict.servicesList.viewServices}
       />
 
-      <section className="mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <section className="site-wrap section-y">
         <div className="grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-10">
           <Reveal motion="left">
             <div className="contact-panel rounded-2xl border border-sand/10 bg-night/40 p-5 md:p-6">
               <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
                 {dict.contact.office}
               </p>
-              <h2 className="mt-3 font-display text-2xl text-sand md:text-3xl">
+              <h2 className="type-card mt-3 text-sand">
                 {dict.contact.visitOrCall}
               </h2>
-              <p className="mt-2 text-sm leading-relaxed text-mist">
+              <p className="mt-2 type-body-sm text-mist">
                 {dict.contact.brief}
               </p>
 
@@ -77,7 +77,7 @@ export default async function ContactPage({
                     <p className="text-xs tracking-[0.16em] text-mist uppercase rtl:tracking-normal rtl:normal-case">
                       {dict.contact.address}
                     </p>
-                    <p className="mt-1 text-sm leading-relaxed text-sand">
+                    <p className="mt-1 type-body-sm text-sand">
                       {site.address}
                     </p>
                   </div>
@@ -143,10 +143,10 @@ export default async function ContactPage({
               <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
                 {dict.contact.enquiry}
               </p>
-              <h2 className="mt-3 font-display text-2xl text-sand md:text-3xl">
+              <h2 className="type-card mt-3 text-sand">
                 {contactPage.formTitle}
               </h2>
-              <p className="mt-2 mb-5 text-sm leading-relaxed text-mist">
+              <p className="mt-2 mb-5 type-body-sm text-mist">
                 {contactPage.formText}
               </p>
               <ContactForm

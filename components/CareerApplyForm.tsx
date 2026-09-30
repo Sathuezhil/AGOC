@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { CheckCircle2 } from "lucide-react";
 import type { CareerJob } from "@/lib/careers";
 import { CV_MAX_MB } from "@/lib/cv";
 import type { Dictionary } from "@/lib/i18n";
@@ -35,9 +36,6 @@ export default function CareerApplyForm({
     );
   }, [defaultJobId]);
 
-  const field =
-    "contact-field w-full rounded-lg border border-sand/15 bg-night px-3.5 py-3 text-sm text-sand outline-none transition placeholder:text-mist/80 focus:border-gold focus:shadow-[0_0_0_3px_rgba(201,162,39,0.18)]";
-
   const cvLabel = dict.careers.cvLabel || "CV / resume (PDF, optional)";
   const cvHint = (
     dict.careers.cvHint || "Optional. PDF only, max {mb} MB."
@@ -53,7 +51,10 @@ export default function CareerApplyForm({
     setError("");
 
     if (cv) {
-      if (cv.type !== "application/pdf" && !cv.name.toLowerCase().endsWith(".pdf")) {
+      if (
+        cv.type !== "application/pdf" &&
+        !cv.name.toLowerCase().endsWith(".pdf")
+      ) {
         setError(cvPdfOnly);
         setStatus("error");
         return;
@@ -100,75 +101,107 @@ export default function CareerApplyForm({
     }
   }
 
-  return (
-    <form onSubmit={onSubmit} className="space-y-3.5">
-      <select
-        required
-        name="jobId"
-        value={form.jobId}
-        onChange={(e) => setForm({ ...form, jobId: e.target.value })}
-        className={`${field} appearance-none`}
-      >
-        <option value="">{dict.careers.selectRole}</option>
-        {jobs.map((job) => (
-          <option key={job.id} value={job.id}>
-            {job.title}
-          </option>
-        ))}
-      </select>
-      <div className="grid gap-3.5 sm:grid-cols-2">
-        <input
-          required
-          name="name"
-          placeholder={dict.form.name}
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          className={field}
-        />
-        <input
-          required
-          type="email"
-          name="email"
-          placeholder={dict.form.email}
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className={field}
-        />
-        <input
-          required
-          name="phone"
-          placeholder={dict.form.phone}
-          value={form.phone}
-          onChange={(e) => setForm({ ...form, phone: e.target.value })}
-          className={field}
-        />
-        <input
-          required
-          name="experience"
-          placeholder={dict.careers.experience}
-          value={form.experience}
-          onChange={(e) => setForm({ ...form, experience: e.target.value })}
-          className={field}
-        />
+  if (status === "ok") {
+    return (
+      <div className="form-success" role="status">
+        <CheckCircle2 size={22} className="shrink-0 text-olive" />
+        <div>
+          <p className="font-medium text-sand">{dict.careers.thankYou}</p>
+          <button
+            type="button"
+            className="mt-3 text-sm text-olive underline-offset-2 hover:underline"
+            onClick={() => setStatus("idle")}
+          >
+            {dict.careers.send}
+          </button>
+        </div>
       </div>
-      <textarea
-        required
-        name="message"
-        rows={5}
-        placeholder={dict.careers.cover}
-        value={form.message}
-        onChange={(e) => setForm({ ...form, message: e.target.value })}
-        className={`${field} min-h-[7rem] resize-y`}
-      />
+    );
+  }
 
-      <div className="rounded-lg border border-dashed border-sand/15 bg-ink/30 p-4">
+  return (
+    <form onSubmit={onSubmit} className="form-stack space-y-4" noValidate>
+      <label className="form-field-wrap">
+        <span className="form-label">{dict.careers.selectRole}</span>
+        <select
+          required
+          name="jobId"
+          value={form.jobId}
+          onChange={(e) => setForm({ ...form, jobId: e.target.value })}
+          className="form-field contact-field appearance-none"
+        >
+          <option value="">{dict.careers.selectRole}</option>
+          {jobs.map((job) => (
+            <option key={job.id} value={job.id}>
+              {job.title}
+            </option>
+          ))}
+        </select>
+      </label>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="form-field-wrap">
+          <span className="form-label">{dict.form.name}</span>
+          <input
+            required
+            name="name"
+            autoComplete="name"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            className="form-field contact-field"
+          />
+        </label>
+        <label className="form-field-wrap">
+          <span className="form-label">{dict.form.email}</span>
+          <input
+            required
+            type="email"
+            name="email"
+            autoComplete="email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            className="form-field contact-field"
+          />
+        </label>
+        <label className="form-field-wrap">
+          <span className="form-label">{dict.form.phone}</span>
+          <input
+            required
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            dir="ltr"
+            value={form.phone}
+            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            className="form-field contact-field"
+          />
+        </label>
+        <label className="form-field-wrap">
+          <span className="form-label">{dict.careers.experience}</span>
+          <input
+            required
+            name="experience"
+            value={form.experience}
+            onChange={(e) => setForm({ ...form, experience: e.target.value })}
+            className="form-field contact-field"
+          />
+        </label>
+      </div>
+      <label className="form-field-wrap">
+        <span className="form-label">{dict.careers.cover}</span>
+        <textarea
+          required
+          name="message"
+          rows={5}
+          value={form.message}
+          onChange={(e) => setForm({ ...form, message: e.target.value })}
+          className="form-field contact-field min-h-[7rem] resize-y"
+        />
+      </label>
+
+      <div className="form-file rounded-lg border border-dashed border-sand/15 bg-ink/30 p-4">
         <label className="block cursor-pointer">
-          <span className="text-xs tracking-[0.16em] text-mist uppercase rtl:tracking-normal rtl:normal-case">
-            {cvLabel}
-          </span>
-          <span className="mt-1 block text-xs text-mist/80">
-            {cvHint}
-          </span>
+          <span className="form-label">{cvLabel}</span>
+          <span className="mt-1 block text-xs text-mist/80">{cvHint}</span>
           <input
             type="file"
             accept="application/pdf,.pdf"
@@ -193,10 +226,11 @@ export default function CareerApplyForm({
       >
         {status === "sending" ? dict.form.sending : dict.careers.send}
       </button>
-      {status === "ok" && (
-        <p className="text-sm text-olive">{dict.careers.thankYou}</p>
+      {status === "error" && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
       )}
-      {status === "error" && <p className="text-sm text-crimson-soft">{error}</p>}
     </form>
   );
 }

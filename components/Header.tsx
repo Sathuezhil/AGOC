@@ -2,10 +2,10 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { FileDown, Menu, Phone, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import LanguageSwitcher from "./LanguageSwitcher";
 import LocaleLink from "./LocaleLink";
-import Logo from "./Logo";
+import ThemeBrandLogo from "./ThemeBrandLogo";
 import ThemeToggle from "./ThemeToggle";
 import {
   getDictionary,
@@ -13,13 +13,11 @@ import {
   localePath,
 } from "@/lib/i18n";
 import { profileDownloadName, profilePdfHref } from "@/lib/profile-pdf";
-import { site } from "@/lib/site";
+import { brandLogo, brandLogoLight, site } from "@/lib/site";
 
 export default function Header({
-  logoSrc,
   profilePdf = site.companyProfilePdf,
 }: {
-  logoSrc: string;
   profilePdf?: string;
 }) {
   const pathname = usePathname() || "/";
@@ -51,7 +49,6 @@ export default function Header({
     setOpen(false);
   }, [pathname]);
 
-  // Keep <html> dir/lang in sync with the URL (soft nav + refresh).
   useEffect(() => {
     const root = document.documentElement;
     root.lang = locale;
@@ -69,19 +66,20 @@ export default function Header({
         }`}
       >
         <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent opacity-90" />
-        <div className="mx-auto grid max-w-6xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-1 md:px-5 lg:gap-4 lg:px-6">
+        <div className="mx-auto grid max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-3 py-1.5 sm:px-4 md:px-5 lg:gap-3 lg:px-6">
           <LocaleLink
             href="/"
             aria-label={dict.header.homeAria}
             className="flex shrink-0 items-center transition-transform duration-300 hover:scale-[1.02]"
           >
-            <Logo
-              src={logoSrc}
-              className="h-12 max-w-[9.5rem] sm:h-14 sm:max-w-[11rem] lg:h-16 lg:max-w-[12.5rem]"
+            <ThemeBrandLogo
+              darkSrc={brandLogo}
+              lightSrc={brandLogoLight}
+              className="h-11 max-w-[8.5rem] sm:h-12 sm:max-w-[10rem] lg:h-14 lg:max-w-[11rem] xl:h-16 xl:max-w-[12.5rem]"
             />
           </LocaleLink>
 
-          <nav className="hidden min-w-0 items-center gap-3 overflow-hidden lg:flex xl:gap-5">
+          <nav className="hidden min-w-0 items-center justify-center gap-3 lg:flex xl:gap-5">
             {links.map((link) => {
               const full = localePath(link.href, locale);
               const active =
@@ -91,7 +89,7 @@ export default function Header({
                 <LocaleLink
                   key={link.href}
                   href={link.href}
-                  className={`group relative shrink-0 text-sm tracking-[0.12em] uppercase transition duration-300 xl:text-[0.95rem] xl:tracking-[0.14em] rtl:tracking-normal rtl:normal-case ${
+                  className={`group relative shrink-0 text-[0.8rem] tracking-[0.08em] uppercase transition duration-300 xl:text-sm xl:tracking-[0.1em] rtl:tracking-normal rtl:normal-case ${
                     active ? "text-crimson" : "text-navy/70 hover:text-navy"
                   }`}
                 >
@@ -112,17 +110,15 @@ export default function Header({
             <a
               href={profileHref}
               download={profileDownloadName}
-              className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg border border-navy/15 px-2.5 py-2 text-xs font-medium tracking-wide text-navy transition duration-300 hover:border-crimson/40 hover:text-crimson md:inline-flex lg:px-3 lg:py-2.5 lg:text-sm"
+              className="olive-label hidden shrink-0 whitespace-nowrap text-xs font-semibold tracking-[0.08em] text-olive uppercase transition duration-300 hover:opacity-80 lg:inline-flex xl:text-sm xl:tracking-[0.1em] rtl:tracking-normal rtl:normal-case"
             >
-              <FileDown size={14} />
-              <span className="hidden xl:inline">{dict.header.ourProfile}</span>
-              <span className="xl:hidden">{dict.header.profile}</span>
+              {dict.header.ourProfile}
             </a>
             <LocaleLink
               href="/contact"
-              className="btn-shine hidden shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg bg-crimson px-3 py-2 text-xs font-medium tracking-wide text-white transition duration-300 hover:bg-crimson-dark hover:shadow-lg md:inline-flex lg:px-4 lg:py-2.5 lg:text-sm"
+              className="btn-shine hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-lg bg-crimson px-3 py-2 text-sm font-semibold tracking-wide text-white transition duration-300 hover:bg-crimson-dark md:inline-flex xl:px-4 xl:py-2.5"
             >
-              <Phone size={14} />
+              <Phone size={15} strokeWidth={2.25} />
               {dict.header.getProtection}
             </LocaleLink>
             <button
@@ -138,13 +134,13 @@ export default function Header({
       </div>
 
       {open && (
-        <div className="site-topbar animate-fadeUp border-b border-[#0B1F2A]/10 bg-white px-5 py-6 lg:hidden">
-          <nav className="flex flex-col gap-4">
+        <div className="site-topbar animate-fadeUp border-b border-[#0B1F2A]/10 bg-white px-5 py-5 lg:hidden">
+          <nav className="flex flex-col gap-1">
             {links.map((link) => (
               <LocaleLink
                 key={link.href}
                 href={link.href}
-                className="border-b border-[#0B1F2A]/10 pb-3 text-lg tracking-wide text-navy transition hover:text-crimson rtl:tracking-normal"
+                className="border-b border-[#0B1F2A]/08 py-3 text-base tracking-wide text-navy transition hover:text-crimson rtl:tracking-normal"
               >
                 {link.label}
               </LocaleLink>
@@ -152,15 +148,15 @@ export default function Header({
             <a
               href={profileHref}
               download={profileDownloadName}
-              className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg border border-navy/15 px-4 py-3 text-center text-sm font-medium tracking-wide text-navy transition hover:border-crimson/40 hover:text-crimson"
+              className="olive-label py-3 text-sm font-semibold tracking-[0.12em] text-olive uppercase transition hover:opacity-80 rtl:tracking-normal rtl:normal-case"
             >
-              <FileDown size={15} />
               {dict.header.ourProfile}
             </a>
             <LocaleLink
               href="/contact"
-              className="mt-2 rounded-lg bg-crimson px-4 py-3 text-center text-sm font-medium tracking-wide text-white"
+              className="btn-shine mt-3 inline-flex items-center justify-center gap-2 rounded-lg bg-crimson px-4 py-3 text-center text-sm font-semibold tracking-wide text-white"
             >
+              <Phone size={15} />
               {dict.header.getProtection}
             </LocaleLink>
           </nav>

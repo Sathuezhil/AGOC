@@ -118,10 +118,7 @@ export default async function RootLayout({
             children
           ) : (
             <>
-              <Header
-                logoSrc={contentSite.logo}
-                profilePdf={contentSite.companyProfilePdf}
-              />
+              <Header profilePdf={contentSite.companyProfilePdf} />
               <main>{children}</main>
               <Footer locale={locale} dict={dict} />
               <WhatsAppButton />

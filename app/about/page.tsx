@@ -43,7 +43,7 @@ export default async function AboutPage() {
         secondaryLabel={dict.servicesList.viewServices}
       />
 
-      <section className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 lg:grid-cols-2">
+      <section className="site-wrap grid items-center gap-section section-y lg:grid-cols-2">
         <Reveal>
           <div className="service-image-float media-frame group relative overflow-hidden rounded-xl">
             <CoverImage
@@ -61,9 +61,9 @@ export default async function AboutPage() {
           <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
             {about.whoLabel}
           </p>
-          <h2 className="mt-3 font-display text-4xl text-sand">{about.whoTitle}</h2>
-          <p className="mt-5 leading-relaxed text-mist">{about.whoText1}</p>
-          <p className="mt-4 leading-relaxed text-mist">{about.whoText2}</p>
+          <h2 className="type-section mt-3 text-sand">{about.whoTitle}</h2>
+          <p className="type-body measure mt-5 text-mist">{about.whoText1}</p>
+          <p className="type-body measure mt-4 text-mist">{about.whoText2}</p>
         </Reveal>
       </section>
 
@@ -76,16 +76,16 @@ export default async function AboutPage() {
       />
 
       {hasPeople && (
-        <section className="bg-ink py-24">
-          <div className="mx-auto max-w-6xl px-6">
+        <section className="bg-ink section-y">
+          <div className="site-wrap">
             <Reveal>
               <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
                 {about.teamLabel}
               </p>
-              <h2 className="mt-4 font-display text-4xl text-sand md:text-5xl">
+              <h2 className="type-section mt-4 text-sand">
                 {about.teamTitle}
               </h2>
-              <p className="mt-3 max-w-2xl text-mist">{about.teamText}</p>
+              <p className="type-body measure mt-3 text-mist">{about.teamText}</p>
             </Reveal>
 
             {founder && (
@@ -199,22 +199,24 @@ export default async function AboutPage() {
         </section>
       )}
 
-      <section className="bg-night py-24">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="bg-night section-y">
+        <div className="site-wrap text-center">
           <Reveal>
-            <h2 className="font-display text-4xl text-sand">{about.valuesTitle}</h2>
-            <p className="mt-3 max-w-2xl text-mist">{about.valuesText}</p>
+            <h2 className="type-section text-sand">{about.valuesTitle}</h2>
+            <p className="type-body measure mx-auto mt-3 text-sand/90">
+              {about.valuesText}
+            </p>
           </Reveal>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-12 grid gap-cards md:grid-cols-3">
             {about.values.map((value, i) => (
               <Reveal key={value.title} delay={i * 80}>
                 <Card3D intensity={9}>
                   <article className="h-full border border-sand/10 p-8 transition-colors duration-500 hover:border-olive/35">
                     <p className="font-display text-xl text-olive">0{i + 1}</p>
-                    <h3 className="mt-4 font-display text-3xl text-sand">
+                    <h3 className="type-card mt-4 text-sand">
                       {value.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-mist">
+                    <p className="mt-3 type-body-sm text-sand/90">
                       {value.text}
                     </p>
                   </article>
@@ -225,16 +227,16 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="stay-section mx-auto max-w-6xl px-6 py-24">
+      <section className="stay-section site-wrap section-y">
         <Reveal>
           <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
             {dict.about.retention}
           </p>
-          <h2 className="mt-4 font-display text-4xl text-sand md:text-5xl">
+          <h2 className="type-section mt-4 text-sand">
             {about.stayTitle}
           </h2>
         </Reveal>
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
+        <div className="mt-12 grid gap-cards md:grid-cols-2">
           {about.stayItems.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <article className="stay-card group h-full rounded-xl border border-sand/10 bg-night/40 p-6 transition duration-300 md:p-7">
@@ -242,7 +244,7 @@ export default async function AboutPage() {
                 <h3 className="text-lg font-semibold tracking-wide text-sand">
                   {item.title}
                 </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-mist">
+                <p className="mt-2.5 type-body-sm text-mist">
                   {item.text}
                 </p>
               </article>

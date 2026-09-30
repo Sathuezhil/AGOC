@@ -9,16 +9,16 @@ export default function ClientMarquee({ logos }: { logos: ClientLogo[] }) {
   const track = [...base, ...base];
 
   return (
-    <section className="clients-marquee relative overflow-hidden border-y border-sand/10 py-12 sm:py-16">
+    <section className="clients-marquee relative overflow-hidden border-y border-sand/10 section-y-tight">
       <div className="pointer-events-none absolute inset-0 clients-marquee-glow" />
-      <div className="relative mx-auto max-w-6xl px-6 text-center">
+      <div className="site-wrap relative text-center">
         <p className="olive-label mx-auto text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
           Trusted by
         </p>
-        <h2 className="mt-3 font-display text-3xl text-sand sm:text-4xl">
+        <h2 className="type-section mt-3 text-sand">
           Our clients
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-mist" dir="auto">
+        <p className="type-body measure mx-auto mt-3 text-mist" dir="auto">
           Organisations across Dubai and the UAE that rely on AGOC every day.
         </p>
       </div>

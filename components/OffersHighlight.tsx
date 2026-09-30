@@ -74,7 +74,7 @@ export default function OffersHighlight({
     <section
       id={compact ? undefined : "offers"}
       className={`offers-highlight relative scroll-mt-28 overflow-hidden ${
-        compact ? "py-12 sm:py-14" : "py-20 md:py-24"
+        compact ? "section-y-tight" : "section-y"
       }`}
     >
       <div className="pointer-events-none absolute inset-0">
@@ -83,17 +83,13 @@ export default function OffersHighlight({
         <div className="offers-stripe" />
       </div>
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="site-wrap relative">
         <Reveal>
           <span className="offers-kicker inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-[11px] font-semibold tracking-[0.22em] text-gold uppercase rtl:tracking-normal rtl:normal-case">
             <span className="offers-kicker-dot h-1.5 w-1.5 rounded-full bg-gold" />
             {label}
           </span>
-          <h2
-            className={`mt-4 font-display text-sand ${
-              compact ? "text-3xl sm:text-4xl" : "text-4xl md:text-5xl"
-            }`}
-          >
+          <h2 className="type-section mt-4 text-sand">
             {title}
           </h2>
         </Reveal>
@@ -133,7 +129,7 @@ export default function OffersHighlight({
                 ) : null}
 
                 {(offer.description || offer.summary) && (
-                  <p className="mt-2 text-sm leading-relaxed text-mist">
+                  <p className="mt-2 type-body-sm text-mist">
                     {offer.description || offer.summary}
                   </p>
                 )}

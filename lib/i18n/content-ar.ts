@@ -26,9 +26,9 @@ export const CONTENT_AR: SiteContent = {
   },
   hero: {
     eyebrow: "دبي · مرخّصة · كوادر موثّقة",
-    title: "أمن رائد.",
-    titleItalic: "سلامتك واجبنا.",
-    text: "حرّاس ذوو خبرة، ومراقبة هادئة، واستجابة سريعة — للمنازل والشركات والفعاليات وكل ما لا يحتمل الانتظار.",
+    title: "أجوك سيكيورتي",
+    titleItalic: "حماية يمكنك الوثوق بها.",
+    text: "حرّاس مرخّصون، ومراقبة كاميرات، وخدمات منشآت للمنازل والشركات والفعاليات في دبي والإمارات.",
     slides: [],
   },
   home: {
@@ -75,10 +75,10 @@ export const CONTENT_AR: SiteContent = {
       },
     ],
     stats: [
-      { value: "9", label: "خطوط الخدمة", icon: "shield" },
+      { value: "مرخّصة", label: "دبي · الإمارات", icon: "map" },
       { value: "24/7", label: "تغطية العمليات", icon: "clock" },
-      { value: "UAE", label: "مرخّصة للعمل", icon: "map" },
-      { value: "100%", label: "كوادر موثّقة", icon: "check" },
+      { value: "موثّقة", label: "كوادر في كل موقع", icon: "check" },
+      { value: "عملاء", label: "في أرجاء الإمارات", icon: "shield" },
     ],
     whyLabel: "لماذا أجوك",
     whyTitle: "الناس أولاً. ثم الإجراءات. ثم التقنية.",

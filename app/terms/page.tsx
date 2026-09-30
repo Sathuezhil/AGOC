@@ -41,7 +41,7 @@ export default async function TermsPage() {
         secondaryLabel={dict.servicesList.viewServices}
       />
 
-      <section className="mx-auto max-w-3xl px-6 py-16 md:py-20">
+      <section className="mx-auto max-w-3xl px-6 section-y">
         <Reveal>
           <article className="legal-doc rounded-2xl border border-sand/10 bg-night/40 p-7 md:p-10">
             <p className="text-sm leading-relaxed text-mist md:text-base">

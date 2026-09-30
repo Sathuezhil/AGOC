@@ -56,12 +56,12 @@ export default async function ServicesPage() {
 
       <section
         id="services-list"
-        className="scroll-mt-28 mx-auto max-w-6xl space-y-12 px-4 py-14 sm:space-y-16 sm:px-6 sm:py-24"
+        className="scroll-mt-28 site-wrap section-y space-y-12 md:space-y-16"
       >
         {services.map((service, i) => (
           <Reveal key={service.slug}>
             <article
-              className={`grid items-center gap-6 sm:gap-10 lg:grid-cols-2 ${
+              className={`grid items-center gap-section lg:grid-cols-2 ${
                 i % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""
               }`}
             >
@@ -83,13 +83,13 @@ export default async function ServicesPage() {
                 <p className="olive-label text-sm tracking-[0.22em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
                   {String(i + 1).padStart(2, "0")}
                 </p>
-                <h2 className="mt-2 font-display text-3xl text-sand sm:text-4xl">
+                <h2 className="type-section mt-2 text-sand">
                   {service.title}
                 </h2>
-                <p className="mt-4 leading-relaxed text-mist">{service.summary}</p>
+                <p className="type-body measure mt-4 text-mist">{service.summary}</p>
                 <LocaleLink
                   href={`/services/${service.slug}`}
-                  className="mt-6 inline-block bg-crimson px-5 py-2.5 text-sm text-white hover:bg-crimson-dark"
+                  className="btn-shine mt-6 inline-block bg-crimson px-5 py-2.5 text-sm text-white hover:bg-crimson-dark"
                 >
                   {dict.servicesList.learnMore}
                 </LocaleLink>

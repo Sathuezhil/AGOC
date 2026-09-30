@@ -10,7 +10,7 @@ export default function CoverImage({
   fit = "cover",
   /** Show the full uploaded image without CSS cropping */
   full = false,
-  objectPosition = "center",
+  objectPosition = "center 28%",
   sizes = "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw",
   className = "",
 }: {

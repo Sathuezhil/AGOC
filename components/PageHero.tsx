@@ -18,7 +18,7 @@ export default function PageHero({
   secondaryLabel?: string;
 }) {
   return (
-    <section className="relative overflow-hidden bg-night pt-40 pb-20 md:pt-48">
+    <section className="relative overflow-hidden bg-night pt-36 pb-16 md:pt-44 md:pb-20">
       <div
         className="absolute inset-0 scale-105 opacity-55 animate-kenburns"
         style={{
@@ -29,8 +29,8 @@ export default function PageHero({
       />
       <div className="hero-scrim pointer-events-none absolute inset-0" aria-hidden />
       <div className="hero-vignette pointer-events-none absolute inset-0 opacity-80" aria-hidden />
-      <div className="relative mx-auto max-w-6xl px-6">
-        <div className="hero-copy max-w-3xl">
+      <div className="site-wrap relative">
+        <div className="hero-copy measure">
           <p
             className="olive-label animate-fadeUp text-sm font-semibold tracking-[0.32em] text-olive uppercase opacity-0 rtl:tracking-normal rtl:normal-case"
             style={{ animationDelay: "80ms" }}
@@ -38,13 +38,13 @@ export default function PageHero({
             {eyebrow}
           </p>
           <h1
-            className="mt-4 max-w-3xl animate-fadeUp font-display text-4xl leading-tight text-white opacity-0 md:text-6xl"
+            className="type-page mt-4 animate-fadeUp text-white opacity-0"
             style={{ animationDelay: "200ms" }}
           >
             {title}
           </h1>
           <p
-            className="mt-5 max-w-2xl animate-fadeUp text-base leading-relaxed text-white/80 opacity-0 md:text-lg"
+            className="type-body mt-5 animate-fadeUp text-white/85 opacity-0"
             style={{ animationDelay: "340ms" }}
           >
             {text}

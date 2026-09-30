@@ -53,12 +53,12 @@ export default async function CareersPage({
         secondaryLabel={dict.careers.openRoles}
       />
 
-      <section className="mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <section className="site-wrap section-y">
         <Reveal>
           <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
             {dict.careers.whyLabel}
           </p>
-          <h2 className="mt-3 font-display text-3xl text-sand md:text-4xl">
+          <h2 className="type-section mt-3 text-sand">
             {dict.careers.whyTitle}
           </h2>
         </Reveal>
@@ -83,14 +83,14 @@ export default async function CareersPage({
 
       <section
         id="open-roles"
-        className="scroll-mt-28 bg-night py-16 md:py-20"
+        className="scroll-mt-28 bg-night section-y"
       >
         <div className="mx-auto max-w-6xl px-6">
           <Reveal>
             <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
               {dict.careers.eyebrow}
             </p>
-            <h2 className="mt-3 font-display text-3xl text-sand md:text-4xl">
+            <h2 className="type-section mt-3 text-sand">
               {dict.careers.openRoles}
             </h2>
           </Reveal>
@@ -106,7 +106,7 @@ export default async function CareersPage({
                   <article className="rounded-2xl border border-sand/10 bg-ink/30 p-5 md:p-7">
                     <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                       <div>
-                        <h3 className="font-display text-2xl text-sand md:text-3xl">
+                        <h3 className="type-card text-sand">
                           {job.title}
                         </h3>
                         <div className="mt-3 flex flex-wrap gap-3 text-xs tracking-wide text-mist uppercase rtl:tracking-normal rtl:normal-case">
@@ -156,13 +156,13 @@ export default async function CareersPage({
         </div>
       </section>
 
-      <section id="apply" className="scroll-mt-28 mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <section id="apply" className="scroll-mt-28 site-wrap section-y">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <Reveal>
             <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
               {dict.careers.apply}
             </p>
-            <h2 className="mt-3 font-display text-3xl text-sand md:text-4xl">
+            <h2 className="type-section mt-3 text-sand">
               {dict.careers.applyTitle}
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-mist md:text-base">

@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { CheckCircle2 } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 
 const initial = {
@@ -65,61 +66,92 @@ export default function ContactForm({
     }
   }
 
-  const field =
-    "contact-field w-full rounded-lg border border-sand/15 bg-night px-3.5 py-3 text-sm text-sand outline-none transition placeholder:text-mist/80 focus:border-gold focus:shadow-[0_0_0_3px_rgba(201,162,39,0.18)]";
+  if (status === "ok") {
+    return (
+      <div className="form-success" role="status">
+        <CheckCircle2 size={22} className="shrink-0 text-olive" />
+        <div>
+          <p className="font-medium text-sand">{dict.form.thankYou}</p>
+          <button
+            type="button"
+            className="mt-3 text-sm text-olive underline-offset-2 hover:underline"
+            onClick={() => setStatus("idle")}
+          >
+            {dict.form.send}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-3.5">
-      <div className="grid gap-3.5 sm:grid-cols-2">
-        <input
-          required
-          name="name"
-          placeholder={dict.form.name}
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          className={field}
-        />
-        <input
-          required
-          type="email"
-          name="email"
-          placeholder={dict.form.email}
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className={field}
-        />
-        <input
-          required
-          name="phone"
-          placeholder={dict.form.phone}
-          value={form.phone}
-          onChange={(e) => setForm({ ...form, phone: e.target.value })}
-          className={field}
-        />
-        <select
-          required
-          name="service"
-          value={form.service}
-          onChange={(e) => setForm({ ...form, service: e.target.value })}
-          className={`${field} appearance-none`}
-        >
-          <option value="">{dict.form.selectService}</option>
-          {services.map((service) => (
-            <option key={service.title} value={service.title}>
-              {service.title}
-            </option>
-          ))}
-        </select>
+    <form onSubmit={onSubmit} className="form-stack space-y-4" noValidate>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="form-field-wrap">
+          <span className="form-label">{dict.form.name}</span>
+          <input
+            required
+            name="name"
+            autoComplete="name"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            className="form-field contact-field"
+          />
+        </label>
+        <label className="form-field-wrap">
+          <span className="form-label">{dict.form.email}</span>
+          <input
+            required
+            type="email"
+            name="email"
+            autoComplete="email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            className="form-field contact-field"
+          />
+        </label>
+        <label className="form-field-wrap">
+          <span className="form-label">{dict.form.phone}</span>
+          <input
+            required
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            dir="ltr"
+            value={form.phone}
+            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            className="form-field contact-field"
+          />
+        </label>
+        <label className="form-field-wrap">
+          <span className="form-label">{dict.form.selectService}</span>
+          <select
+            required
+            name="service"
+            value={form.service}
+            onChange={(e) => setForm({ ...form, service: e.target.value })}
+            className="form-field contact-field appearance-none"
+          >
+            <option value="">{dict.form.selectService}</option>
+            {services.map((service) => (
+              <option key={service.title} value={service.title}>
+                {service.title}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
-      <textarea
-        required
-        name="message"
-        rows={4}
-        placeholder={dict.form.message}
-        value={form.message}
-        onChange={(e) => setForm({ ...form, message: e.target.value })}
-        className={`${field} min-h-[6.5rem] resize-y`}
-      />
+      <label className="form-field-wrap">
+        <span className="form-label">{dict.form.message}</span>
+        <textarea
+          required
+          name="message"
+          rows={4}
+          value={form.message}
+          onChange={(e) => setForm({ ...form, message: e.target.value })}
+          className="form-field contact-field min-h-[6.5rem] resize-y"
+        />
+      </label>
       <button
         type="submit"
         disabled={status === "sending"}
@@ -127,10 +159,11 @@ export default function ContactForm({
       >
         {status === "sending" ? dict.form.sending : dict.form.send}
       </button>
-      {status === "ok" && (
-        <p className="text-sm text-olive">{dict.form.thankYou}</p>
+      {status === "error" && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
       )}
-      {status === "error" && <p className="text-sm text-crimson-soft">{error}</p>}
     </form>
   );
 }

@@ -4,7 +4,6 @@ import {
   BadgeCheck,
   Clock3,
   Eye,
-  MapPin,
   ShieldCheck,
   Sparkles,
   Users,
@@ -49,12 +48,6 @@ export const metadata: Metadata = {
 
 const pillarIcons = [ShieldCheck, Eye, Clock3];
 const featureIcons = [ShieldCheck, Eye, Sparkles];
-const statIcons = {
-  shield: ShieldCheck,
-  clock: Clock3,
-  map: MapPin,
-  check: BadgeCheck,
-} as const;
 
 export default async function HomePage({
   searchParams,
@@ -86,21 +79,21 @@ export default async function HomePage({
       <Hero content={content.hero} />
 
       <section className="hero-pillars border-y border-sand/10 bg-night">
-        <div className="mx-auto grid max-w-6xl gap-4 px-6 py-8 md:grid-cols-3 md:gap-5 md:py-9">
+        <div className="site-wrap grid gap-cards section-y-tight md:grid-cols-3">
           {home.pillars.map((item, i) => {
             const Icon = pillarIcons[i] ?? ShieldCheck;
             return (
               <Reveal key={item.title} delay={i * 90}>
-                <div className="pillar-card flex h-full gap-3 rounded-xl border border-sand/10 bg-coal/35 p-5">
+                <div className="pillar-card flex h-full gap-3 rounded-xl border border-sand/15 bg-white p-5">
                   <Icon
                     className="mt-0.5 shrink-0 text-olive"
                     size={20}
                   />
                   <div>
-                    <h2 className="text-[1rem] font-semibold tracking-wide text-sand">
+                    <h2 className="text-[1rem] font-semibold tracking-wide text-navy">
                       {item.title}
                     </h2>
-                    <p className="mt-1.5 text-[0.92rem] leading-relaxed text-mist">
+                    <p className="mt-1.5 type-body-sm text-steel">
                       {item.text}
                     </p>
                   </div>
@@ -111,7 +104,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 lg:grid-cols-2">
+      <section className="site-wrap grid items-center gap-section section-y lg:grid-cols-2">
         <Reveal motion="left">
           <div className="service-image-float media-frame group relative overflow-hidden rounded-xl">
             <CoverImage
@@ -122,7 +115,7 @@ export default async function HomePage({
               objectPosition="center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent" />
-            <p className="absolute bottom-6 left-6 z-[1] max-w-xs text-sm text-white">
+            <p className="absolute bottom-6 left-6 z-[1] max-w-xs type-body-sm text-white">
               {home.introCaption}
             </p>
             <div className="service-image-shine pointer-events-none absolute inset-0" />
@@ -133,13 +126,13 @@ export default async function HomePage({
           <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
             {home.introLabel}
           </p>
-          <h2 className="mt-4 font-display text-4xl text-sand md:text-5xl">
+          <h2 className="type-section mt-4 text-sand">
             {home.introTitle}
           </h2>
-          <p className="mt-5 text-base leading-relaxed text-mist">{home.introText}</p>
+          <p className="type-body measure mt-5 text-mist">{home.introText}</p>
           <ul className="mt-8 space-y-3">
             {home.reasons.map((reason) => (
-              <li key={reason} className="flex gap-3 text-sm text-sand">
+              <li key={reason} className="flex gap-3 type-body-sm text-sand">
                 <BadgeCheck className="mt-0.5 shrink-0 text-crimson" size={18} />
                 {reason}
               </li>
@@ -154,15 +147,15 @@ export default async function HomePage({
         </Reveal>
       </section>
 
-      <section className="bg-night py-24">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="bg-night section-y">
+        <div className="site-wrap">
           <Reveal>
             <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div>
                 <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
                   {home.servicesLabel}
                 </p>
-                <h2 className="mt-3 font-display text-4xl text-sand md:text-5xl">
+                <h2 className="type-section mt-3 text-sand">
                   {home.servicesTitle}
                 </h2>
               </div>
@@ -186,11 +179,11 @@ export default async function HomePage({
             </div>
           </Reveal>
 
-          <div className="mt-12 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid auto-rows-fr gap-cards sm:grid-cols-2 lg:grid-cols-3">
             {homeServices.map((service, i) => (
               <Reveal key={service.slug} delay={i * 60} className="h-full">
                 <Card3D>
-                  <article className="service-card group flex h-full flex-col overflow-hidden border border-sand/10 bg-coal transition-colors duration-500 ease-out hover:border-olive/50">
+                  <article className="service-card group flex h-full flex-col overflow-hidden border border-sand/15 bg-white transition-colors duration-500 ease-out hover:border-olive/50">
                     <LocaleLink
                       href={`/services/${service.slug}`}
                       className="service-image-float media-frame relative w-full shrink-0 overflow-hidden"
@@ -207,11 +200,11 @@ export default async function HomePage({
                     </LocaleLink>
                     <div className="flex flex-1 flex-col p-6">
                       <LocaleLink href={`/services/${service.slug}`}>
-                        <h3 className="font-display text-2xl text-sand transition hover:text-olive">
+                        <h3 className="type-card text-navy transition hover:text-olive">
                           {service.title}
                         </h3>
                       </LocaleLink>
-                      <p className="mt-2 min-h-[2.75rem] flex-1 text-sm leading-relaxed text-mist">
+                      <p className="mt-2 min-h-[2.75rem] flex-1 type-body-sm text-steel">
                         {service.short}
                       </p>
                       <LocaleLink
@@ -254,7 +247,7 @@ export default async function HomePage({
         />
       ) : null}
 
-      <section className="mx-auto grid max-w-6xl gap-6 px-6 py-24 lg:grid-cols-3">
+      <section className="site-wrap grid gap-cards section-y lg:grid-cols-3">
         {home.features.map((item, i) => {
           const Icon = featureIcons[i] ?? Sparkles;
           return (
@@ -262,10 +255,10 @@ export default async function HomePage({
               <Card3D intensity={9}>
                 <article className="h-full border border-sand/10 bg-night/40 p-8 transition-colors duration-500 hover:border-crimson/40 hover:bg-coal">
                   <Icon className="text-crimson" size={28} />
-                  <h3 className="mt-5 font-display text-3xl text-sand">
+                  <h3 className="type-card mt-5 text-sand">
                     {item.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-mist">{item.text}</p>
+                  <p className="mt-3 type-body-sm text-mist">{item.text}</p>
                 </article>
               </Card3D>
             </Reveal>
@@ -273,46 +266,29 @@ export default async function HomePage({
         })}
       </section>
 
-      <section className="relative overflow-hidden bg-navy">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,162,39,0.18),transparent_55%)]" />
-        <div className="relative mx-auto max-w-6xl px-6 py-8 md:py-10">
-          <div className="grid grid-cols-2 gap-2.5 md:grid-cols-4 md:gap-3">
-            {home.stats.map((stat, i) => {
-              const Icon = statIcons[stat.icon] ?? ShieldCheck;
-              return (
-                <Reveal key={stat.label} delay={i * 110} className="h-full">
-                  <Card3D intensity={8}>
-                    <article className="group flex h-full flex-col items-center rounded-sm bg-[#0B1F2A]/40 px-3 py-5 text-center shadow-md shadow-[#0B1F2A]/20 transition-colors duration-500 hover:bg-[#0B1F2A]/55 hover:shadow-xl">
-                      <Icon
-                        size={16}
-                        className="text-olive transition duration-300 group-hover:text-crimson"
-                      />
-                      <p className="mt-2 font-display text-3xl leading-none text-white md:text-4xl">
-                        {stat.value}
-                      </p>
-                      <span className="mt-2 block h-px w-6 bg-crimson/80 transition-all duration-500 group-hover:w-10 group-hover:bg-olive" />
-                      <p className="mt-2 text-[0.6rem] tracking-[0.18em] text-white/65 uppercase">
-                        {stat.label}
-                      </p>
-                    </article>
-                  </Card3D>
-                </Reveal>
-              );
-            })}
-          </div>
+      <section className="trust-strip border-y border-sand/10 bg-night">
+        <div className="site-wrap section-y-tight">
+          <ul className="trust-strip-row">
+            {home.stats.map((stat) => (
+              <li key={stat.label} className="trust-strip-card">
+                <span className="trust-strip-value">{stat.value}</span>
+                <span className="trust-strip-label">{stat.label}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="grid items-start gap-12 lg:grid-cols-2">
+      <section className="site-wrap section-y">
+        <div className="grid items-start gap-section lg:grid-cols-2">
           <Reveal>
             <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
               {home.whyLabel}
             </p>
-            <h2 className="mt-3 font-display text-4xl text-sand md:text-5xl">
+            <h2 className="type-section mt-3 text-sand">
               {home.whyTitle}
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-mist">{home.whyText}</p>
+            <p className="type-body measure mt-5 text-mist">{home.whyText}</p>
             <div className="mt-8 space-y-5">
               {home.whyItems.map((row) => (
                 <div
@@ -320,7 +296,7 @@ export default async function HomePage({
                   className="border-l-2 border-crimson pl-4 transition-all duration-300 hover:border-olive hover:pl-5"
                 >
                   <h3 className="text-sand">{row.title}</h3>
-                  <p className="mt-1 text-sm text-mist">{row.text}</p>
+                  <p className="mt-1 type-body-sm text-mist">{row.text}</p>
                 </div>
               ))}
             </div>
@@ -343,19 +319,19 @@ export default async function HomePage({
 
       <ClientMarquee logos={clientLogos} />
 
-      <section id="enquire" className="scroll-mt-28 bg-night py-14 sm:py-20 md:py-24">
-        <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
+      <section id="enquire" className="scroll-mt-28 bg-night section-y">
+        <div className="site-wrap grid items-center gap-section lg:grid-cols-[0.95fr_1.05fr]">
           <Reveal>
             <p className="olive-label text-sm font-semibold tracking-[0.3em] text-olive uppercase">
               {home.contactLabel}
             </p>
-            <h2 className="mt-3 font-display text-3xl text-sand sm:text-4xl md:text-[2.75rem] md:leading-tight">
+            <h2 className="type-section mt-3 text-sand">
               {home.contactTitle}
             </h2>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-mist sm:text-base">
+            <p className="type-body measure mt-4 text-mist">
               {home.contactText}
             </p>
-            <div className="mt-7 flex items-start gap-3 rounded-xl border border-sand/10 bg-coal/40 px-4 py-3.5 text-sm text-sand">
+            <div className="mt-7 flex items-start gap-3 rounded-xl border border-sand/10 bg-coal/40 px-4 py-3.5 type-body-sm text-sand">
               <Users size={18} className="mt-0.5 shrink-0 text-gold" />
               <span>{home.contactNote}</span>
             </div>

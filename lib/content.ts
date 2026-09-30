@@ -127,9 +127,9 @@ export const DEFAULT_CONTENT: SiteContent = {
   },
   hero: {
     eyebrow: "Dubai · Licensed · Verified staff",
-    title: "Leading security.",
-    titleItalic: "Your safety, our duty.",
-    text: "Experienced guards, quiet surveillance, and rapid response — for homes, businesses, events, and everything that cannot wait.",
+    title: "AGOC Security",
+    titleItalic: "Protection you can trust.",
+    text: "Licensed guards, CCTV control, and facility services for homes, businesses, and events across Dubai and the UAE.",
     slides: [
       { src: "/images/hero.jpg", alt: "Dubai skyline at dusk" },
       { src: "/images/security-guards.png", alt: "AGOC security team on duty" },
@@ -180,10 +180,10 @@ export const DEFAULT_CONTENT: SiteContent = {
       },
     ],
     stats: [
-      { value: "9", label: "Service lines", icon: "shield" },
+      { value: "Licensed", label: "Dubai · UAE", icon: "map" },
       { value: "24/7", label: "Operations cover", icon: "clock" },
-      { value: "UAE", label: "Licensed to operate", icon: "map" },
-      { value: "100%", label: "Verified staff", icon: "check" },
+      { value: "Verified", label: "Staff on every post", icon: "check" },
+      { value: "Clients", label: "Across the Emirates", icon: "shield" },
     ],
     whyLabel: "Why AGOC",
     whyTitle: "People first. Then process. Then tech.",
@@ -370,8 +370,38 @@ function mergeContent(stored: SiteContent): SiteContent {
         stored.site?.companyProfilePdf?.trim() ||
         DEFAULT_CONTENT.site.companyProfilePdf,
     },
-    hero: { ...DEFAULT_CONTENT.hero, ...stored.hero },
-    home: { ...DEFAULT_CONTENT.home, ...stored.home },
+    hero: (() => {
+      const hero = { ...DEFAULT_CONTENT.hero, ...stored.hero };
+      // Refresh stock hero copy once; keep custom CMS edits.
+      const stockTitles = new Set([
+        "Leading security.",
+        "Leading Security.",
+        "أمن رائد.",
+      ]);
+      if (!stored.hero?.title || stockTitles.has(stored.hero.title.trim())) {
+        hero.title = DEFAULT_CONTENT.hero.title;
+        hero.titleItalic = DEFAULT_CONTENT.hero.titleItalic;
+        hero.text = DEFAULT_CONTENT.hero.text;
+      }
+      if (
+        !stored.hero?.slides?.length &&
+        DEFAULT_CONTENT.hero.slides.length
+      ) {
+        hero.slides = DEFAULT_CONTENT.hero.slides;
+      }
+      return hero;
+    })(),
+    home: (() => {
+      const home = { ...DEFAULT_CONTENT.home, ...stored.home };
+      const stockStatValues = new Set(["9", "100%"]);
+      if (
+        !stored.home?.stats?.length ||
+        stored.home.stats.some((s) => stockStatValues.has(String(s.value)))
+      ) {
+        home.stats = DEFAULT_CONTENT.home.stats;
+      }
+      return home;
+    })(),
     about: {
       ...about,
       membersTitle: about.membersTitle || DEFAULT_CONTENT.about.membersTitle,

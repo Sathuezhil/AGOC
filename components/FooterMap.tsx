@@ -24,18 +24,18 @@ export default function FooterMap({
   }, []);
 
   return (
-    <div className="footer-map group relative overflow-hidden rounded-lg border border-sand/15">
+    <div className="footer-map group relative overflow-hidden rounded-md border border-sand/15">
       {ready ? (
         <iframe
           title="AGOC Security office map"
           src={mapSrc}
-          className="pointer-events-none h-28 w-full grayscale-[20%] transition duration-500 group-hover:grayscale-0"
+          className="pointer-events-none h-24 w-full grayscale-[20%] transition duration-500 group-hover:grayscale-0"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
           tabIndex={-1}
         />
       ) : (
-        <div className="h-28 w-full bg-ink/60" aria-hidden />
+        <div className="h-24 w-full bg-ink/60" aria-hidden />
       )}
       <a
         href={mapLink}
