@@ -45,7 +45,10 @@ async function seedDiskImages() {
 
   const imagesDir = path.join(root, "public", "images");
   const logoPath = path.join(root, "public", "logo.png");
-  const files = await walk(imagesDir, "images");
+  // Serverless bundles (e.g. Netlify functions) do not ship `public/`.
+  const files = await walk(imagesDir, "images").catch(
+    (): { disk: string; filename: string }[] => [],
+  );
   try {
     await stat(logoPath);
     files.push({ disk: logoPath, filename: "logo.png" });

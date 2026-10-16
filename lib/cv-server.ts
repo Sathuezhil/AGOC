@@ -1,15 +1,16 @@
-import { mkdir, unlink, writeFile } from "fs/promises";
+import { readFile, unlink } from "fs/promises";
 import path from "path";
 import { randomUUID } from "crypto";
 import { CV_MAX_BYTES, CV_MAX_MB } from "./cv";
+import { deleteStoredFile, readStoredFile, saveStoredFile } from "./file-store";
 
 export { CV_MAX_BYTES, CV_MAX_MB } from "./cv";
 
-const CV_DIR = path.join(process.cwd(), "storage", "cvs");
+/** CVs uploaded before they moved to MongoDB still live on disk here. */
+const LEGACY_CV_DIR = path.join(process.cwd(), "storage", "cvs");
 
-export function cvStoragePath(storedName: string) {
-  const safe = path.basename(storedName);
-  return path.join(CV_DIR, safe);
+function legacyCvPath(storedName: string) {
+  return path.join(LEGACY_CV_DIR, path.basename(storedName));
 }
 
 export async function saveApplicationCv(file: File) {
@@ -27,9 +28,8 @@ export async function saveApplicationCv(file: File) {
     throw new Error("That file does not look like a valid PDF.");
   }
 
-  await mkdir(CV_DIR, { recursive: true });
   const storedName = `${Date.now()}-${randomUUID()}.pdf`;
-  await writeFile(cvStoragePath(storedName), buffer);
+  await saveStoredFile("cvs", storedName, buffer, "application/pdf");
 
   const originalName = file.name.replace(/[^\w.\- ()[\]]+/g, "-").slice(0, 120);
   return {
@@ -38,7 +38,14 @@ export async function saveApplicationCv(file: File) {
   };
 }
 
+export async function readApplicationCv(storedName: string) {
+  const stored = await readStoredFile("cvs", path.basename(storedName));
+  if (stored) return stored.buffer;
+  return readFile(legacyCvPath(storedName)).catch(() => null);
+}
+
 export async function deleteApplicationCv(storedName?: string | null) {
   if (!storedName) return;
-  await unlink(cvStoragePath(storedName)).catch(() => undefined);
+  await deleteStoredFile("cvs", path.basename(storedName)).catch(() => undefined);
+  await unlink(legacyCvPath(storedName)).catch(() => undefined);
 }

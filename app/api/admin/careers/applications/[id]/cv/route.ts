@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { readFile } from "fs/promises";
 import { requireAdminApi } from "@/lib/admin-guard";
 import { getApplication } from "@/lib/careers";
-import { cvStoragePath } from "@/lib/cv-server";
+import { readApplicationCv } from "@/lib/cv-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,7 +20,8 @@ export async function GET(
   }
 
   try {
-    const buffer = await readFile(cvStoragePath(application.cvStoredName));
+    const buffer = await readApplicationCv(application.cvStoredName);
+    if (!buffer) throw new Error("missing");
     const filename = application.cvOriginalName || "cv.pdf";
     return new NextResponse(new Uint8Array(buffer), {
       headers: {

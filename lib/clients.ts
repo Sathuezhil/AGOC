@@ -49,10 +49,10 @@ function clientSrc(filename: string) {
 
 export function getClientLogos(): ClientLogo[] {
   const dir = path.join(process.cwd(), "public", "clients");
-  if (!fs.existsSync(dir)) return [];
+  // Serverless bundles do not ship `public/`; the files are still on the CDN.
+  const files = fs.existsSync(dir) ? fs.readdirSync(dir) : Object.keys(DISPLAY_NAMES);
 
-  return fs
-    .readdirSync(dir)
+  return files
     .filter((file) => IMAGE_EXT.test(file) && !file.startsWith("."))
     .sort((a, b) =>
       labelFromFile(a).localeCompare(labelFromFile(b), undefined, {

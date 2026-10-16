@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { requireAdminApi } from "@/lib/admin-guard";
 import { updateSiteProfilePdf } from "@/lib/content";
-import { cleanupOldProfileUploads, saveProfilePdf } from "@/lib/documents-server";
+import { saveProfilePdf } from "@/lib/documents-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,7 +22,6 @@ export async function POST(request: NextRequest) {
     }
 
     const href = await saveProfilePdf(file);
-    await cleanupOldProfileUploads();
     const content = await updateSiteProfilePdf(href);
 
     revalidatePath("/", "layout");
