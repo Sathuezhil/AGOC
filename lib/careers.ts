@@ -432,7 +432,7 @@ async function ensureMissingArabic() {
       .find({
         $or: [
           { titleAr: { $exists: false } },
-          { titleAr: null },
+          { titleAr: { $type: "null" } },
           { titleAr: "" },
         ],
       })
