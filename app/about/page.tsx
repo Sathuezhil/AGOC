@@ -140,7 +140,7 @@ export default async function AboutPage() {
               <p className="ops-mono text-[0.65rem] tracking-[0.2em] text-[#8593A3] uppercase rtl:tracking-normal">
                 {p.about.sitesLabel}
               </p>
-              <ul className="mt-4 grid grid-cols-2 gap-3">
+              <ul className="mt-4 grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
                 {p.about.sites.map((label, i) => {
                   const Icon = siteIcons[i] ?? Building2;
                   return (
@@ -148,7 +148,7 @@ export default async function AboutPage() {
                       <span className="ops-icon-sq">
                         <Icon size={18} />
                       </span>
-                      <span className="text-[0.92rem] font-semibold text-[#0B1F2A]">{label}</span>
+                      <span className="min-w-0 text-[0.92rem] font-semibold text-[#0B1F2A]">{label}</span>
                     </li>
                   );
                 })}

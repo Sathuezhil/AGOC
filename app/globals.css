@@ -50,6 +50,12 @@ html {
   color-scheme: dark;
 }
 
+/* `clip` (not `hidden`) so sticky scenes keep working while nothing can pan the page sideways on phones. */
+html,
+body {
+  overflow-x: clip;
+}
+
 html[data-theme="light"] {
   color-scheme: light;
 }
@@ -2863,6 +2869,13 @@ html[data-theme="light"] .offers-highlight .offers-kicker {
   font-weight: 500;
   color: #4a5b6c;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (max-width: 400px) {
+  .ops-tab {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.82rem;
+  }
 }
 
 .ops-tab.is-active {

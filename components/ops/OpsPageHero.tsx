@@ -62,10 +62,10 @@ export default async function OpsPageHero({
 
       <div
         className={`relative mx-auto max-w-6xl px-5 pb-16 pt-32 md:pb-24 md:pt-40 ${
-          centered ? "text-center" : "grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14"
+          centered ? "text-center" : "grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14"
         }`}
       >
-        <div className={centered ? "mx-auto max-w-3xl" : ""}>
+        <div className={centered ? "mx-auto max-w-3xl" : "min-w-0"}>
           {breadcrumb ? (
             <div className="ops-mono mb-5 animate-fadeUp text-[0.72rem] text-[#5B6B7C] opacity-0">
               {breadcrumb}
@@ -120,7 +120,7 @@ export default async function OpsPageHero({
         </div>
 
         {visual ? (
-          <div className="animate-fadeUp opacity-0" style={{ animationDelay: "360ms" }}>
+          <div className="min-w-0 animate-fadeUp opacity-0" style={{ animationDelay: "360ms" }}>
             {visual}
           </div>
         ) : null}

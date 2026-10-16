@@ -62,7 +62,7 @@ export default function OpsDashboard({ copy }: { copy: HomeOps["demo"] }) {
             </OpsTag>
           </div>
 
-          <div className="grid min-h-[30rem] md:grid-cols-[13.5rem_minmax(0,1fr)_minmax(0,1.05fr)]">
+          <div className="grid min-h-[30rem] grid-cols-1 md:grid-cols-[13.5rem_minmax(0,1fr)_minmax(0,1.05fr)]">
             <aside className="hidden flex-col border-e border-[#0B1F2A]/[0.07] bg-[#F7F8FA] p-4 md:flex">
               <p className="ops-mono mb-2 px-2 text-[0.62rem] tracking-[0.2em] text-[#8593A3] uppercase rtl:tracking-normal">
                 AGOC Ops
@@ -169,8 +169,8 @@ export default function OpsDashboard({ copy }: { copy: HomeOps["demo"] }) {
           </div>
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-3">
-          <div className="ops-tabs" role="tablist">
+        <div className="mt-6 flex items-center justify-center gap-2 sm:gap-3">
+          <div className="ops-tabs min-w-0" role="tablist">
             {copy.tabs.map((t, i) => (
               <button
                 key={t.id}
@@ -199,7 +199,7 @@ export default function OpsDashboard({ copy }: { copy: HomeOps["demo"] }) {
             type="button"
             onClick={() => setPaused((p) => !p)}
             aria-label={paused ? copy.play : copy.pause}
-            className="ops-round-btn"
+            className="ops-round-btn shrink-0"
           >
             {paused ? <Play size={16} /> : <Pause size={16} />}
           </button>

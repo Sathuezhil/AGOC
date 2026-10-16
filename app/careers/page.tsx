@@ -69,7 +69,7 @@ export default async function CareersPage({
         <div className="mx-auto max-w-6xl px-5">
           <OpsSectionHead label={dict.careers.whyLabel} title={dict.careers.whyTitle} text={p.careers.whyText} />
           <div
-            className={`mt-12 grid gap-5 sm:grid-cols-2 ${
+            className={`mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 ${
               dict.careers.whyItems.length >= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
             }`}
           >
@@ -102,7 +102,7 @@ export default async function CareersPage({
               <p className="ops-job mt-12 text-center text-[1rem] text-white/70">{dict.careers.noRoles}</p>
             </Reveal>
           ) : (
-            <div className="mt-12 grid gap-5 lg:grid-cols-2">
+            <div className="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-2">
               {jobs.map((job, i) => (
                 <Reveal key={job.id} delay={(i % 2) * 90} className="h-full">
                   <article className="ops-job h-full">
@@ -172,7 +172,7 @@ export default async function CareersPage({
       </section>
 
       <section id="apply" className="ops-light scroll-mt-28 py-20 md:py-28">
-        <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <Reveal className="lg:sticky lg:top-32">
             <div>
               <OpsSectionHead label={dict.careers.apply} title={dict.careers.applyTitle} text={dict.careers.applyText} />
