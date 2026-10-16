@@ -5557,13 +5557,43 @@ html[data-motion] [data-rise]:not([data-in]) {
   background-clip: text;
 }
 
+@property --foot-spin {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 .ops-foot-mark-fill {
   color: transparent;
-  background: linear-gradient(90deg, #0066ff, #6fb6ff 45%, #e0c35a);
+  background:
+    radial-gradient(90px circle at var(--sx, 50%) var(--sy, -999px), rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 70%),
+    conic-gradient(
+      from var(--foot-spin) at var(--sx, 50%) var(--sy, -999px),
+      #0066ff,
+      #6fb6ff,
+      #e0c35a,
+      #ff7a59,
+      #a855f7,
+      #0066ff
+    );
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-mask-image: radial-gradient(240px circle at var(--sx, 50%) var(--sy, -999px), #000 0%, transparent 72%);
-  mask-image: radial-gradient(240px circle at var(--sx, 50%) var(--sy, -999px), #000 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(280px circle at var(--sx, 50%) var(--sy, -999px), #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 75%);
+  mask-image: radial-gradient(280px circle at var(--sx, 50%) var(--sy, -999px), #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 75%);
+  filter: drop-shadow(0 0 18px rgba(111, 182, 255, 0.35));
+  animation: footSpin 6s linear infinite;
+}
+
+@keyframes footSpin {
+  to {
+    --foot-spin: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ops-foot-mark-fill {
+    animation: none;
+  }
 }
 
 html[data-motion] .ops-foot-mark[data-rise]:not([data-in]) {
