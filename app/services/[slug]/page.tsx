@@ -26,15 +26,12 @@ import { sameMediaSrc, uniqueMediaSrcs } from "@/lib/media-path";
 import { listOffersForService } from "@/lib/offers";
 import { getPagesOps, splitAccent } from "@/lib/pages-ops";
 import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
-import { getService, getServices, getVisibleServices } from "@/lib/services";
+import { getService, getVisibleServices } from "@/lib/services";
 import { site } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export async function generateStaticParams() {
-  const items = await getServices();
-  return items.map((service) => ({ slug: service.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;

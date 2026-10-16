@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 import { getVisibleServices } from "@/lib/services";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const paths: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[0]["changeFrequency"] }[] = [
     { path: "", priority: 1, changeFrequency: "weekly" },
@@ -13,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/terms", priority: 0.3, changeFrequency: "yearly" },
   ];
   const now = new Date();
-  const live = await getVisibleServices();
+  const live = await getVisibleServices().catch(() => []);
 
   const enPages = paths.map(({ path, priority, changeFrequency }) => ({
     url: `${site.url}${path}`,
