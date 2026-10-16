@@ -4741,6 +4741,32 @@ html[data-intro] main *::after {
   will-change: transform, opacity;
 }
 
+.ops-chip-card.ops-chip-card-grid {
+  position: relative;
+  width: auto;
+  min-width: 0;
+  gap: 0.5rem;
+  padding: 0.55rem 0.6rem;
+  border-radius: 0.85rem;
+}
+
+.ops-chip-card-grid .ops-chip-card-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.5rem;
+}
+
+.ops-chip-card-grid .ops-chip-card-title {
+  overflow: visible;
+  white-space: normal;
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.ops-chip-card-grid .ops-chip-card-meta {
+  font-size: 0.62rem;
+}
+
 .ops-chip-card-icon {
   display: flex;
   flex-shrink: 0;
