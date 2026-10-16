@@ -5590,6 +5590,46 @@ html[data-motion] [data-rise]:not([data-in]) {
   }
 }
 
+/* Touch screens have no hover, so the shine sweeps across the word on its own. */
+@property --foot-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+@media (hover: none) {
+  .ops-foot-mark-fill {
+    background:
+      radial-gradient(60px circle at var(--foot-x) 45%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 70%),
+      conic-gradient(
+        from var(--foot-spin) at var(--foot-x) 45%,
+        #0066ff,
+        #6fb6ff,
+        #e0c35a,
+        #ff7a59,
+        #a855f7,
+        #0066ff
+      );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-mask-image: radial-gradient(150px circle at var(--foot-x) 45%, #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 75%);
+    mask-image: radial-gradient(150px circle at var(--foot-x) 45%, #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 75%);
+    filter: none;
+    animation:
+      footSpin 6s linear infinite,
+      footSweep 4.5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes footSweep {
+  from {
+    --foot-x: 4%;
+  }
+  to {
+    --foot-x: 96%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ops-foot-mark-fill {
     animation: none;
