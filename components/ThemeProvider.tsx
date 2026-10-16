@@ -25,10 +25,22 @@ function applyTheme(theme: Theme) {
   document.documentElement.setAttribute("data-theme", theme);
 }
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+export function ThemeProvider({
+  children,
+  locked,
+}: {
+  children: ReactNode;
+  /** Force one theme and ignore the visitor's saved choice. */
+  locked?: Theme;
+}) {
+  const [theme, setThemeState] = useState<Theme>(locked ?? "dark");
 
   useEffect(() => {
+    if (locked) {
+      setThemeState(locked);
+      applyTheme(locked);
+      return;
+    }
     const stored = window.localStorage.getItem(STORAGE_KEY) as Theme | null;
     const next =
       stored === "light" || stored === "dark"
@@ -37,7 +49,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
           "dark";
     setThemeState(next);
     applyTheme(next);
-  }, []);
+  }, [locked]);
 
   const setTheme = useCallback((next: Theme) => {
     setThemeState(next);

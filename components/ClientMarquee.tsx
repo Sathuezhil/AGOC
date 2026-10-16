@@ -1,52 +1,51 @@
 import Image from "next/image";
 import type { ClientLogo } from "@/lib/clients";
 
-export default function ClientMarquee({ logos }: { logos: ClientLogo[] }) {
+type Copy = { label: string; title: string; accent: string; text: string };
+
+function Row({ logos, reverse }: { logos: ClientLogo[]; reverse?: boolean }) {
+  const base = logos.length < 6 ? [...logos, ...logos, ...logos] : logos;
+  const track = [...base, ...base];
+  return (
+    <div className="ops-logos-mask" dir="ltr">
+      <div className={`ops-logos-row ${reverse ? "ops-logos-row-rev" : ""}`}>
+        {track.map((logo, i) => (
+          <div key={`${logo.src}-${i}`} className="ops-logo-tile" title={logo.name} aria-hidden={i >= base.length}>
+            <Image
+              src={logo.src}
+              alt={i >= base.length ? "" : logo.name}
+              width={168}
+              height={68}
+              className="max-h-11 w-auto max-w-full object-contain sm:max-h-12"
+              unoptimized
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function ClientMarquee({ logos, copy }: { logos: ClientLogo[]; copy: Copy }) {
   if (!logos.length) return null;
 
-  const base =
-    logos.length < 6 ? [...logos, ...logos, ...logos] : [...logos, ...logos];
-  const track = [...base, ...base];
+  const half = Math.ceil(logos.length / 2);
+  const first = logos.length >= 8 ? logos.slice(0, half) : logos;
+  const second = logos.length >= 8 ? logos.slice(half) : [...logos].reverse();
 
   return (
-    <section className="clients-marquee relative overflow-hidden border-y border-sand/10 section-y-tight">
-      <div className="pointer-events-none absolute inset-0 clients-marquee-glow" />
-      <div className="site-wrap relative text-center">
-        <p className="olive-label mx-auto text-sm font-semibold tracking-[0.3em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
-          Trusted by
-        </p>
-        <h2 className="type-section mt-3 text-sand">
-          Our clients
+    <section className="ops-light relative overflow-hidden py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-5 text-center">
+        <p className="ops-eyebrow">{copy.label}</p>
+        <h2 className="ops-h2 mx-auto mt-4 max-w-3xl">
+          {copy.title} <span className="ops-accent">{copy.accent}</span>
         </h2>
-        <p className="type-body measure mx-auto mt-3 text-mist" dir="auto">
-          Organisations across Dubai and the UAE that rely on AGOC every day.
-        </p>
+        <p className="mx-auto mt-5 max-w-2xl text-[1.05rem] leading-relaxed text-[#3E4F61]">{copy.text}</p>
       </div>
 
-      {/* Force LTR so the scroll animation stays visible in Arabic (RTL) pages */}
-      <div
-        className="clients-marquee-mask relative mt-9 overflow-hidden sm:mt-11"
-        dir="ltr"
-      >
-        <div className="clients-marquee-track flex w-max items-center gap-4 sm:gap-6">
-          {track.map((logo, i) => (
-            <div
-              key={`${logo.src}-${i}`}
-              className="clients-marquee-item group relative flex h-[4.75rem] w-[10rem] shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white px-4 py-3 sm:h-[5.25rem] sm:w-[11.5rem]"
-              title={logo.name}
-            >
-              <span className="clients-marquee-shine pointer-events-none absolute inset-0" />
-              <Image
-                src={logo.src}
-                alt={logo.name}
-                width={168}
-                height={68}
-                className="relative z-[1] max-h-12 w-auto max-w-full object-contain transition duration-500 group-hover:scale-105 sm:max-h-[3.4rem]"
-                unoptimized
-              />
-            </div>
-          ))}
-        </div>
+      <div className="mt-12 space-y-4 sm:mt-14 sm:space-y-5">
+        <Row logos={first} />
+        <Row logos={second} reverse />
       </div>
     </section>
   );

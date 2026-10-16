@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import JsonLd from "@/components/JsonLd";
+import IntroCurtain, { introInitScript } from "@/components/motion/IntroCurtain";
+import MotionEngine from "@/components/motion/MotionEngine";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { getContent } from "@/lib/content";
 import { getDictionary, isRtl, localizeContent } from "@/lib/i18n";
@@ -105,7 +107,11 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {bare ? (
+          <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        ) : (
+          <script dangerouslySetInnerHTML={{ __html: introInitScript }} />
+        )}
         <JsonLd />
       </head>
       <body
@@ -113,11 +119,13 @@ export default async function RootLayout({
           rtl ? "font-arabic" : ""
         }`}
       >
-        <ThemeProvider>
+        <ThemeProvider locked={bare ? undefined : "dark"}>
           {bare ? (
             children
           ) : (
             <>
+              <IntroCurtain tagline={rtl ? "خدمات أمنية · دبي" : "Security Services · Dubai"} />
+              <MotionEngine />
               <Header profilePdf={contentSite.companyProfilePdf} />
               <main>{children}</main>
               <Footer locale={locale} dict={dict} />

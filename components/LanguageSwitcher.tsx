@@ -22,9 +22,9 @@ export default function LanguageSwitcher({
       href={href}
       hrefLang={nextLocale}
       aria-label={locale === "ar" ? "Switch to English" : "التبديل إلى العربية"}
-      className={`inline-flex items-center justify-center rounded-lg border border-navy/15 font-medium tracking-wide text-navy transition duration-300 hover:border-crimson/40 hover:text-crimson ${
+      className={`inline-flex items-center justify-center rounded-lg border border-navy/15 font-semibold tracking-wide text-navy transition duration-300 hover:border-crimson/40 hover:text-crimson ${
         compact
-          ? "h-10 min-w-10 px-2 text-xs"
+          ? "h-10 min-w-10 px-2.5 text-[0.8rem] xl:text-sm"
           : "px-2.5 py-2 text-xs lg:px-3 lg:py-2.5 lg:text-sm"
       }`}
       onClick={(event) => {

@@ -26,6 +26,15 @@ export type Dictionary = {
     openMapAria: string;
     rights: string;
     licensed: string;
+    ctaTitle: string;
+    ctaAccent: string;
+    ctaText: string;
+    ctaPrimary: string;
+    live: string;
+    follow: string;
+    hours: string;
+    dubaiTime: string;
+    backToTop: string;
   };
   form: {
     name: string;
@@ -172,6 +181,15 @@ const en: Dictionary = {
     openMapAria: "Open office location in Google Maps",
     rights: "All rights reserved.",
     licensed: "Licensed security services · Dubai, United Arab Emirates",
+    ctaTitle: "Ready before",
+    ctaAccent: "your next shift starts.",
+    ctaText: "Tell us the site and the hours. We will come back with a clear security plan for your property in Dubai.",
+    ctaPrimary: "Get a security quote",
+    live: "Operations line · open 24/7",
+    follow: "Follow AGOC",
+    hours: "Office hours",
+    dubaiTime: "Dubai",
+    backToTop: "Back to top",
   },
   form: {
     name: "Name",
@@ -217,7 +235,7 @@ const en: Dictionary = {
     coordinator: "Coordinator",
     teamMember: "Team member",
     retention: "Retention",
-    founderMessage: "Founder's Message",
+    founderMessage: "A Message from Our Director",
     coordinatorMessage: "Coordinator's Message",
   },
   contact: {
@@ -333,6 +351,15 @@ const ar: Dictionary = {
     openMapAria: "فتح موقع المكتب في خرائط Google",
     rights: "جميع الحقوق محفوظة.",
     licensed: "خدمات أمنية مرخّصة · دبي، الإمارات العربية المتحدة",
+    ctaTitle: "جاهزون قبل",
+    ctaAccent: "بدء ورديتك القادمة.",
+    ctaText: "أخبرنا بالموقع والساعات، وسنعود إليك بخطة أمنية واضحة لعقارك في دبي.",
+    ctaPrimary: "اطلب عرض أمن",
+    live: "خط العمليات · متاح 24/7",
+    follow: "تابع AGOC",
+    hours: "ساعات العمل",
+    dubaiTime: "دبي",
+    backToTop: "العودة للأعلى",
   },
   form: {
     name: "الاسم",
@@ -378,7 +405,7 @@ const ar: Dictionary = {
     coordinator: "المنسّق",
     teamMember: "عضو الفريق",
     retention: "الاستمرارية",
-    founderMessage: "رسالة المؤسس",
+    founderMessage: "رسالة من مديرنا",
     coordinatorMessage: "رسالة المنسّق",
   },
   contact: {

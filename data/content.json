@@ -198,11 +198,11 @@
     "team": [
       {
         "name": "Abdul Moeez Awan",
-        "role": "Founder & Managing Director",
-        "education": "BSc in Human Resources Management",
-        "bio": "I am proud to lead AGOC with a clear focus on people, professionalism, and trust. Our teams are trained to protect what matters most to our clients — with discipline, care, and integrity every day. I remain committed to building lasting partnerships across Dubai and the UAE through reliable service and honest standards.",
-        "closing": "Leading with Integrity. Serving with Excellence. Growing Through Trust.",
-        "image": "",
+        "role": "Director",
+        "education": "B.S. in Human Resources Management",
+        "bio": "Welcome to our platform. Having led manpower supply operations since 2019, I understand that the strength of any service lies in its people.\n\nWhether you require robust security personnel, discreet private close protection, polished concierge representation, cleaning teams or meticulous housekeeping services.\n\nBacked by my background in Human Resources Management, we prioritize rigorous vetting, continuous training, and tailored service to ensure your safety, comfort, and peace of mind. We look forward to being your trusted partner in excellence.",
+        "closing": "",
+        "image": "/images/team/abdul-moeez-awan.jpg",
         "kind": "founder",
         "founder": true
       },

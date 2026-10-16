@@ -5,15 +5,18 @@ import { useEffect, useMemo, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import LanguageSwitcher from "./LanguageSwitcher";
 import LocaleLink from "./LocaleLink";
-import ThemeBrandLogo from "./ThemeBrandLogo";
-import ThemeToggle from "./ThemeToggle";
 import {
   getDictionary,
   getLocaleFromPathname,
   localePath,
 } from "@/lib/i18n";
 import { profileDownloadName, profilePdfHref } from "@/lib/profile-pdf";
-import { brandLogo, brandLogoLight, site } from "@/lib/site";
+import { site } from "@/lib/site";
+
+const TOP_TEXT =
+  "text-[0.8rem] font-semibold tracking-[0.08em] uppercase xl:text-sm xl:tracking-[0.1em] rtl:tracking-normal rtl:normal-case";
+const MENU_TEXT =
+  "text-sm font-semibold tracking-[0.1em] uppercase rtl:tracking-normal rtl:normal-case";
 
 export default function Header({
   profilePdf = site.companyProfilePdf,
@@ -57,7 +60,7 @@ export default function Header({
   }, [locale]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40">
+    <header className="site-header fixed inset-x-0 top-0 z-40" data-open={open ? "1" : undefined}>
       <div
         className={`site-topbar overflow-x-clip border-b bg-white/95 backdrop-blur-md transition-all duration-500 ${
           scrolled
@@ -66,20 +69,8 @@ export default function Header({
         }`}
       >
         <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent opacity-90" />
-        <div className="mx-auto grid max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-3 py-1.5 sm:px-4 md:px-5 lg:gap-3 lg:px-6">
-          <LocaleLink
-            href="/"
-            aria-label={dict.header.homeAria}
-            className="flex shrink-0 items-center transition-transform duration-300 hover:scale-[1.02]"
-          >
-            <ThemeBrandLogo
-              darkSrc={brandLogo}
-              lightSrc={brandLogoLight}
-              className="h-11 max-w-[8.5rem] sm:h-12 sm:max-w-[10rem] lg:h-14 lg:max-w-[11rem] xl:h-16 xl:max-w-[12.5rem]"
-            />
-          </LocaleLink>
-
-          <nav className="hidden min-w-0 items-center justify-center gap-3 lg:flex xl:gap-5">
+        <div className="mx-auto grid min-h-[3.75rem] max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-3 py-2 sm:px-4 md:px-5 lg:gap-3 lg:px-6">
+          <nav className="hidden min-w-0 items-center justify-start gap-4 lg:flex xl:gap-7">
             {links.map((link) => {
               const full = localePath(link.href, locale);
               const active =
@@ -89,7 +80,7 @@ export default function Header({
                 <LocaleLink
                   key={link.href}
                   href={link.href}
-                  className={`group relative shrink-0 text-[0.8rem] tracking-[0.08em] uppercase transition duration-300 xl:text-sm xl:tracking-[0.1em] rtl:tracking-normal rtl:normal-case ${
+                  className={`group relative shrink-0 ${TOP_TEXT} transition duration-300 ${
                     active ? "text-crimson" : "text-navy/70 hover:text-navy"
                   }`}
                 >
@@ -106,17 +97,16 @@ export default function Header({
 
           <div className="flex shrink-0 items-center justify-end gap-1.5 sm:gap-2">
             <LanguageSwitcher compact />
-            <ThemeToggle compact />
             <a
               href={profileHref}
               download={profileDownloadName}
-              className="olive-label hidden shrink-0 whitespace-nowrap text-xs font-semibold tracking-[0.08em] text-olive uppercase transition duration-300 hover:opacity-80 lg:inline-flex xl:text-sm xl:tracking-[0.1em] rtl:tracking-normal rtl:normal-case"
+              className={`olive-label !hidden shrink-0 whitespace-nowrap ${TOP_TEXT} text-olive transition duration-300 hover:opacity-80 lg:!inline-flex`}
             >
               {dict.header.ourProfile}
             </a>
             <LocaleLink
               href="/contact"
-              className="btn-shine hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-lg bg-crimson px-3 py-2 text-sm font-semibold tracking-wide text-white transition duration-300 hover:bg-crimson-dark md:inline-flex xl:px-4 xl:py-2.5"
+              className={`btn-shine hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-lg bg-crimson px-3 py-2 ${TOP_TEXT} text-white transition duration-300 hover:bg-crimson-dark md:inline-flex xl:px-4 xl:py-2.5`}
             >
               <Phone size={15} strokeWidth={2.25} />
               {dict.header.getProtection}
@@ -140,7 +130,7 @@ export default function Header({
               <LocaleLink
                 key={link.href}
                 href={link.href}
-                className="border-b border-[#0B1F2A]/08 py-3 text-base tracking-wide text-navy transition hover:text-crimson rtl:tracking-normal"
+                className={`border-b border-[#0B1F2A]/08 py-3 ${MENU_TEXT} text-navy transition hover:text-crimson`}
               >
                 {link.label}
               </LocaleLink>
@@ -148,13 +138,13 @@ export default function Header({
             <a
               href={profileHref}
               download={profileDownloadName}
-              className="olive-label py-3 text-sm font-semibold tracking-[0.12em] text-olive uppercase transition hover:opacity-80 rtl:tracking-normal rtl:normal-case"
+              className={`olive-label mt-3 py-3 ${MENU_TEXT} text-olive transition hover:opacity-80`}
             >
               {dict.header.ourProfile}
             </a>
             <LocaleLink
               href="/contact"
-              className="btn-shine mt-3 inline-flex items-center justify-center gap-2 rounded-lg bg-crimson px-4 py-3 text-center text-sm font-semibold tracking-wide text-white"
+              className={`btn-shine mt-3 inline-flex items-center justify-center gap-2 rounded-lg bg-crimson px-4 py-3 text-center ${MENU_TEXT} text-white`}
             >
               <Phone size={15} />
               {dict.header.getProtection}

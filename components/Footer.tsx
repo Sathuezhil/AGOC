@@ -1,8 +1,19 @@
-import { Clock, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
-import ThemeBrandLogo from "./ThemeBrandLogo";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Clock,
+  Download,
+  Facebook,
+  Instagram,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
+import Logo from "./Logo";
 import LocaleLink from "./LocaleLink";
 import FooterMap from "./FooterMap";
-import { brandLogo, brandLogoLight, site as siteDefaults } from "@/lib/site";
+import { BackToTop, DubaiClock } from "./FooterExtras";
+import { brandLogo, site as siteDefaults } from "@/lib/site";
 import { getContent, phoneLink } from "@/lib/content";
 import { getVisibleServices } from "@/lib/services";
 import {
@@ -40,7 +51,7 @@ export default async function Footer({
   ]);
   const content = localizeContent(rawContent, locale);
   const services = localizeServices(rawServices, locale);
-  const footerServices = services.slice(0, 5);
+  const footerServices = services.slice(0, 6);
   const { site } = content;
   const { lat, lng, zoom } = siteDefaults.map;
   const mapSrc = `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&hl=${locale}&output=embed`;
@@ -48,6 +59,7 @@ export default async function Footer({
   const profileHref = profilePdfHref(site.companyProfilePdf);
   const publicEmails = ["info@agoc.ae", "admin@agoc.ae"];
   const year = new Date().getFullYear();
+  const mainPhone = site.phones[0];
 
   const links = [
     { href: "/", label: dict.nav.home },
@@ -64,154 +76,191 @@ export default async function Footer({
   ].filter((item) => Boolean(item.href?.trim()));
 
   return (
-    <div
-      role="contentinfo"
-      className="site-footer border-t border-sand/10 bg-night"
-      suppressHydrationWarning
-    >
-      <div className="site-footer-inner site-wrap grid gap-8 section-y-tight sm:gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-        <div className="space-y-3.5">
-          <ThemeBrandLogo
-            darkSrc={brandLogo}
-            lightSrc={brandLogoLight}
-            compact
-            className="h-auto w-full max-w-[15rem]"
-          />
-          <p className="max-w-[16rem] type-body-sm text-mist">
-            {site.tagline}
-          </p>
-          {socials.length > 0 && (
-            <div className="footer-socials flex flex-wrap items-center gap-2 pt-0.5">
-              {socials.map((item, i) => {
-                const Icon = item.icon;
-                const kind = item.label.toLowerCase();
-                return (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={item.label}
-                    title={item.label}
-                    className={`footer-social footer-social-${kind}`}
-                    style={{ animationDelay: `${i * 0.2}s` }}
-                  >
-                    <Icon size={15} />
-                  </a>
-                );
-              })}
-            </div>
-          )}
-          <a
-            href={profileHref}
-            download={profileDownloadName}
-            className="footer-link inline-flex text-sm text-olive"
-          >
-            {dict.header.ourProfile}
-          </a>
-        </div>
+    <div role="contentinfo" className="ops-foot" data-spot suppressHydrationWarning>
+      <div className="ops-foot-glow" aria-hidden />
 
-        <div>
-          <h3 className="footer-heading mb-3 text-xs font-semibold tracking-[0.2em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
-            {dict.footer.menu}
-          </h3>
-          <ul className="space-y-1.5 text-sm text-sand/80">
-            {links.map((link) => (
-              <li key={link.href}>
-                <LocaleLink href={link.href} className="footer-link">
-                  {link.label}
-                </LocaleLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="footer-heading mb-3 text-xs font-semibold tracking-[0.2em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
-            {dict.footer.services}
-          </h3>
-          <ul className="space-y-1.5 text-sm text-sand/80">
-            {footerServices.map((service) => (
-              <li key={service.slug}>
-                <LocaleLink
-                  href={`/services/${service.slug}`}
-                  className="footer-link"
-                >
-                  {service.title}
-                </LocaleLink>
-              </li>
-            ))}
-            <li className="pt-0.5">
-              <LocaleLink
-                href="/services"
-                className="footer-link font-medium text-olive"
-              >
-                {dict.home.allServices} →
-              </LocaleLink>
-            </li>
-          </ul>
-        </div>
-
-        <div className="space-y-2.5 text-sm text-sand/80">
-          <h3 className="footer-heading mb-3 text-xs font-semibold tracking-[0.2em] text-olive uppercase rtl:tracking-normal rtl:normal-case">
-            {dict.footer.contact}
-          </h3>
-          <div className="flex gap-2.5">
-            <MapPin size={15} className="mt-0.5 shrink-0 text-crimson" />
-            <span className="leading-snug">{site.address}</span>
+      <div className="relative mx-auto max-w-6xl px-5">
+        <div className="ops-foot-cta" data-rise>
+          <div className="max-w-2xl">
+            <span className="ops-foot-live">
+              <i aria-hidden />
+              {dict.footer.live}
+            </span>
+            <h2 className="ops-foot-title">
+              {dict.footer.ctaTitle}{" "}
+              <span className="ops-accent-dark">{dict.footer.ctaAccent}</span>
+            </h2>
+            <p className="mt-4 max-w-xl text-[1rem] leading-relaxed text-white/65">
+              {dict.footer.ctaText}
+            </p>
           </div>
-          <FooterMap
-            mapSrc={mapSrc}
-            mapLink={mapLink}
-            openMapAria={dict.footer.openMapAria}
-            viewOnMap={dict.footer.viewOnMap}
-          />
-          {publicEmails.map((email) => (
-            <a
-              key={email}
-              href={`mailto:${email}`}
-              className="footer-contact flex gap-2.5"
-            >
-              <Mail size={15} className="mt-0.5 shrink-0 text-crimson" />
-              <span dir="ltr">{email}</span>
+          <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+            <LocaleLink href="/contact" className="ops-btn ops-btn-primary">
+              {dict.footer.ctaPrimary}
+              <ArrowRight size={17} className="rtl:rotate-180" />
+            </LocaleLink>
+            {mainPhone ? (
+              <a href={`tel:${phoneLink(mainPhone)}`} className="ops-btn ops-btn-glass">
+                <Phone size={16} />
+                <span dir="ltr">{mainPhone}</span>
+              </a>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="ops-foot-grid">
+          <div className="ops-foot-brand" data-rise style={{ "--d": "0ms" } as React.CSSProperties}>
+            <div className="w-[12rem] sm:w-[13.5rem]">
+              <Logo src={brandLogo} compact className="h-auto" />
+            </div>
+            <p className="mt-4 max-w-[17rem] text-[0.92rem] leading-relaxed text-white/55">
+              {site.tagline}
+            </p>
+
+            {socials.length > 0 && (
+              <div className="mt-6">
+                <p className="ops-foot-label">{dict.footer.follow}</p>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  {socials.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <a
+                        key={item.label}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={item.label}
+                        title={item.label}
+                        className={`ops-foot-social ops-foot-social-${item.label.toLowerCase()}`}
+                        data-mag="0.35"
+                      >
+                        <Icon size={16} />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            <a href={profileHref} download={profileDownloadName} className="ops-foot-profile">
+              <span className="ops-foot-profile-icon">
+                <Download size={15} />
+              </span>
+              <span>
+                <b>{dict.header.ourProfile}</b>
+                <small>PDF</small>
+              </span>
             </a>
-          ))}
-          {site.phones.map((phone) => (
-            <a
-              key={phone}
-              href={`tel:${phoneLink(phone)}`}
-              className="footer-contact flex gap-2.5"
-            >
-              <Phone size={15} className="mt-0.5 shrink-0 text-crimson" />
-              <span dir="ltr">{phone}</span>
-            </a>
-          ))}
-          <div className="flex gap-2.5">
-            <Clock size={15} className="mt-0.5 shrink-0 text-crimson" />
-            <div className="space-y-0.5 leading-snug">
-              {site.hours.map((row) => (
-                <p key={row.days}>
-                  {row.days}: {row.time}
-                </p>
+          </div>
+
+          <nav data-rise style={{ "--d": "80ms" } as React.CSSProperties} aria-label={dict.footer.menu}>
+            <p className="ops-foot-label">{dict.footer.menu}</p>
+            <ul className="ops-foot-list">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <LocaleLink href={link.href} className="ops-foot-link">
+                    <span>{link.label}</span>
+                    <ArrowUpRight size={14} aria-hidden className="rtl:-scale-x-100" />
+                  </LocaleLink>
+                </li>
               ))}
+            </ul>
+          </nav>
+
+          <div data-rise style={{ "--d": "160ms" } as React.CSSProperties}>
+            <p className="ops-foot-label">{dict.footer.services}</p>
+            <ul className="ops-foot-list">
+              {footerServices.map((service) => (
+                <li key={service.slug}>
+                  <LocaleLink href={`/services/${service.slug}`} className="ops-foot-link">
+                    <span>{service.title}</span>
+                    <ArrowUpRight size={14} aria-hidden className="rtl:-scale-x-100" />
+                  </LocaleLink>
+                </li>
+              ))}
+            </ul>
+            <LocaleLink href="/services" className="ops-foot-more">
+              {dict.home.allServices}
+              <ArrowRight size={14} className="rtl:rotate-180" />
+            </LocaleLink>
+          </div>
+
+          <div data-rise style={{ "--d": "240ms" } as React.CSSProperties}>
+            <p className="ops-foot-label">{dict.footer.contact}</p>
+            <div className="ops-foot-card">
+              <div className="flex gap-3">
+                <MapPin size={16} className="mt-0.5 shrink-0 text-[#e0c35a]" />
+                <span className="text-[0.9rem] leading-snug text-white/80">{site.address}</span>
+              </div>
+              <div className="mt-3">
+                <FooterMap
+                  mapSrc={mapSrc}
+                  mapLink={mapLink}
+                  openMapAria={dict.footer.openMapAria}
+                  viewOnMap={dict.footer.viewOnMap}
+                />
+              </div>
+            </div>
+
+            <ul className="mt-4 space-y-1">
+              {publicEmails.map((email) => (
+                <li key={email}>
+                  <a href={`mailto:${email}`} className="ops-foot-contact">
+                    <Mail size={15} />
+                    <span dir="ltr">{email}</span>
+                  </a>
+                </li>
+              ))}
+              {site.phones.map((phone) => (
+                <li key={phone}>
+                  <a href={`tel:${phoneLink(phone)}`} className="ops-foot-contact">
+                    <Phone size={15} />
+                    <span dir="ltr">{phone}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div className="ops-foot-hours">
+              <p className="flex items-center gap-2 text-white/80">
+                <Clock size={15} className="text-[#e0c35a]" />
+                {dict.footer.hours}
+              </p>
+              <dl className="mt-2 space-y-1">
+                {site.hours.map((row) => (
+                  <div key={row.days} className="flex justify-between gap-4">
+                    <dt className="text-white/55">{row.days}</dt>
+                    <dd className="ops-mono text-white/85" dir="ltr">{row.time}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="site-footer-inner border-t border-sand/10">
-        <div className="site-wrap flex flex-col gap-2 py-4 text-xs text-mist sm:flex-row sm:items-center sm:justify-between">
+      <div className="ops-foot-mark" aria-hidden data-rise data-spot dir="ltr">
+        <span className="ops-foot-mark-stroke">AGOC</span>
+        <span className="ops-foot-mark-fill">AGOC</span>
+      </div>
+
+      <div className="ops-foot-bar">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-5 text-[0.78rem] text-white/50 lg:flex-row lg:items-center lg:justify-between">
           <p suppressHydrationWarning>
             © {year} {site.name}. {dict.footer.rights}
           </p>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-            <LocaleLink href="/privacy" className="footer-link">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5">
+            <LocaleLink href="/privacy" className="ops-foot-mini">
               {dict.footer.privacy}
             </LocaleLink>
-            <LocaleLink href="/terms" className="footer-link">
+            <LocaleLink href="/terms" className="ops-foot-mini">
               {dict.footer.terms}
             </LocaleLink>
-            <span>{dict.footer.licensed}</span>
+            <span className="hidden text-white/35 sm:inline">{dict.footer.licensed}</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <DubaiClock label={dict.footer.dubaiTime} />
+            <BackToTop label={dict.footer.backToTop} />
           </div>
         </div>
       </div>

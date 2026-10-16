@@ -1,4 +1,5 @@
 import { site as fallbackSite, defaultLogo } from "./site";
+import { DIRECTOR_EDUCATION, DIRECTOR_MESSAGE, DIRECTOR_ROLE } from "./director";
 
 export type TextPair = { title: string; text: string };
 export type Slide = { src: string; alt: string };
@@ -280,12 +281,11 @@ export const DEFAULT_CONTENT: SiteContent = {
     team: [
       {
         name: "Abdul Moeez Awan",
-        role: "Founder & Managing Director",
-        education: "BSc in Human Resources Management",
-        bio: "I am proud to lead AGOC with a clear focus on people, professionalism, and trust. Our teams are trained to protect what matters most to our clients — with discipline, care, and integrity every day. I remain committed to building lasting partnerships across Dubai and the UAE through reliable service and honest standards.",
-        closing:
-          "Leading with Integrity. Serving with Excellence. Growing Through Trust.",
-        image: "",
+        role: DIRECTOR_ROLE,
+        education: DIRECTOR_EDUCATION,
+        bio: DIRECTOR_MESSAGE,
+        closing: "",
+        image: "/images/team/abdul-moeez-awan.jpg",
         kind: "founder",
         founder: true,
       },

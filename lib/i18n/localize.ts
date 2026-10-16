@@ -1,4 +1,5 @@
 import type { SiteContent, TeamMember } from "@/lib/content";
+import { DIRECTOR_EDUCATION, DIRECTOR_MESSAGE, DIRECTOR_ROLE } from "@/lib/director";
 import type { Locale } from "./config";
 import { CONTENT_AR } from "./content-ar";
 import { localizeJob, localizeJobs } from "./careers-ar";
@@ -21,12 +22,28 @@ const ROLE_AR: Record<string, string> = {
   Supervisor: "المشرف",
   "Assistant Accountant": "مساعد محاسب",
   Coordinator: "المنسّق",
+  [DIRECTOR_ROLE]: "المدير",
 };
+
+/** Keyed by the exact English text, so an edited CMS text falls back to itself. */
+const TEXT_AR: Record<string, string> = {
+  [DIRECTOR_EDUCATION]: "بكالوريوس في إدارة الموارد البشرية",
+  [DIRECTOR_MESSAGE]: [
+    "مرحباً بكم في منصتنا. منذ أن توليت قيادة عمليات توريد القوى العاملة عام 2019، أدركت أن قوة أي خدمة تكمن في أفرادها.",
+    "سواء كنتم بحاجة إلى أفراد أمن أكفاء، أو حماية شخصية قريبة بسرية تامة، أو موظفي استقبال وكونسيرج بمظهر راقٍ، أو فرق تنظيف، أو خدمات تدبير منزلي دقيقة.",
+    "وبفضل خلفيتي في إدارة الموارد البشرية، نحرص على التدقيق الصارم في اختيار الموظفين، والتدريب المستمر، وتقديم خدمة مصممة خصيصاً لضمان سلامتكم وراحتكم وطمأنينتكم. نتطلع إلى أن نكون شريككم الموثوق في التميّز.",
+  ].join("\n\n"),
+};
+
+const textAr = (value?: string) => (value ? TEXT_AR[value.trim()] || value : value);
 
 function localizeTeam(team: TeamMember[]): TeamMember[] {
   return team.map((member) => ({
     ...member,
     role: ROLE_AR[member.role] || member.role,
+    education: textAr(member.education),
+    bio: textAr(member.bio) ?? member.bio,
+    closing: textAr(member.closing),
   }));
 }
 
