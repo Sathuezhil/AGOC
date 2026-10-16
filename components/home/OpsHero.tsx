@@ -116,6 +116,21 @@ export default function OpsHero({ copy, rtl = false }: { copy: HomeOps["hero"]; 
             </a>
           </div>
 
+          {copy.cards.length ? (
+            <div
+              className="ops-float-strip mt-5 animate-fadeUp opacity-0 lg:hidden"
+              style={{ animationDelay: "760ms" }}
+              dir="ltr"
+              aria-hidden
+            >
+              <div className="ops-float-strip-track">
+                {[...copy.cards, ...copy.cards].map((card, i) => (
+                  <FloatCard key={`${card.title}-${i}`} card={card} className="ops-float-mini" />
+                ))}
+              </div>
+            </div>
+          ) : null}
+
           <a
             href="#ops-statement"
             className="ops-mono ops-scroll-cue mt-10 hidden flex-col items-center gap-3 text-[0.68rem] tracking-[0.24em] text-[#5B6B7C] uppercase md:flex rtl:tracking-normal"
