@@ -71,7 +71,7 @@ export default function OpsHero({ copy, rtl = false }: { copy: HomeOps["hero"]; 
 
         <div className="ops-hero-dark" aria-hidden />
 
-        <div className="ops-hero-content relative z-[3] mx-auto flex h-full max-w-5xl flex-col items-center justify-center px-5 pb-10 pt-24 text-center">
+        <div className="ops-hero-content relative z-[3] mx-auto flex h-full max-w-5xl flex-col items-center justify-center px-5 pb-6 pt-[4.75rem] text-center sm:pb-10 sm:pt-24">
           <div className="ops-hero-brand" dir="ltr">
             <span className="ops-hero-mark">
               <Image src={MARK_SRC} alt="" width={1035} height={1035} priority unoptimized />
@@ -82,12 +82,12 @@ export default function OpsHero({ copy, rtl = false }: { copy: HomeOps["hero"]; 
             <p className="ops-hero-brand-sub">SECURITY SERVICES L.L.C</p>
           </div>
 
-          <p className="ops-pill mt-5 animate-fadeUp opacity-0" style={{ animationDelay: "60ms" }}>
+          <p className="ops-pill mt-4 animate-fadeUp sm:mt-5 opacity-0" style={{ animationDelay: "60ms" }}>
             <span className="ops-pill-dot" aria-hidden />
             {copy.badge}
           </p>
 
-          <h1 className="ops-h1 mt-5" data-kinetic data-base="750" data-peak="900">
+          <h1 className="ops-h1 mt-4 sm:mt-5" data-kinetic data-base="750" data-peak="900">
             <SplitText
               rtl={rtl}
               lineBreak
@@ -97,14 +97,14 @@ export default function OpsHero({ copy, rtl = false }: { copy: HomeOps["hero"]; 
           </h1>
 
           <p
-            className="mt-5 max-w-2xl animate-fadeUp text-[1.05rem] leading-relaxed text-[#3E4F61] opacity-0 sm:text-lg"
+            className="ops-hero-text mt-4 max-w-2xl animate-fadeUp text-[0.95rem] leading-relaxed text-[#3E4F61] opacity-0 sm:mt-5 sm:text-lg"
             style={{ animationDelay: "520ms" }}
           >
             {copy.text}
           </p>
 
           <div
-            className="mt-8 flex w-full animate-fadeUp flex-col items-center justify-center gap-3 opacity-0 sm:w-auto sm:flex-row"
+            className="mt-6 flex w-full animate-fadeUp sm:mt-8 flex-col items-center justify-center gap-3 opacity-0 sm:w-auto sm:flex-row"
             style={{ animationDelay: "640ms" }}
           >
             <LocaleLink href="#enquire" className="ops-btn ops-btn-primary w-full sm:w-auto">
