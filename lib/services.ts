@@ -1,5 +1,8 @@
 /** Local images live in /public/images */
 import { rewriteImageRefs, uniqueMediaSrcs } from "./media-path";
+import { SERVICE_CATEGORY, type ServiceCategory } from "./pages-ops";
+
+export type { ServiceCategory };
 
 export type Service = {
   slug: string;
@@ -11,13 +14,14 @@ export type Service = {
   gallery: string[];
   points: string[];
   hidden?: boolean;
+  category?: ServiceCategory;
 };
 
 export const DEFAULT_SERVICES: Service[] = [
   {
     slug: "private-guarding",
     title: "Private Guarding Services",
-    short: "Licensed officers for homes, offices, and private sites.",
+    short: "Sira license holders security guards for homes, offices, and private sites.",
     summary:
       "Dedicated private guarding for residences, compounds, offices, and high-value locations. Our licensed officers deliver a calm, professional presence with clear reporting and shift discipline.",
     image: "/images/private-security.jpg",
@@ -489,11 +493,13 @@ export function slugify(title: string) {
 }
 
 function normalize(service: Service): Service {
+  const category = service.category || SERVICE_CATEGORY[service.slug] || "security";
   const rewritten = rewriteImageRefs({
     ...service,
     gallery: service.gallery ?? [],
     points: service.points ?? [],
     hidden: Boolean(service.hidden),
+    category,
   });
   return {
     ...rewritten,

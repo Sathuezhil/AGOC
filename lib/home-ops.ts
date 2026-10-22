@@ -50,6 +50,7 @@ export type OpsTimelineRow = {
 export type HomeOps = {
   hero: {
     badge: string;
+    serviceBadges: string[];
     title: string;
     accent: string;
     text: string;
@@ -147,9 +148,10 @@ export type HomeOps = {
 
 const EN: HomeOps = {
   hero: {
-    badge: "Licensed security company in Dubai",
-    title: "Every post covered.",
-    accent: "Every night reported.",
+    badge: "Sira certified licensed No.1308900 security company in Dubai",
+    serviceBadges: ["Building cleaning services", "On call cleaning services"],
+    title: "Every Post Covered.",
+    accent: "Every Night Reported.",
     text: "Licensed security guards, CCTV monitoring and facility services for towers, villas, hotels and events across Dubai and the UAE. Planned by AGOC, supervised around the clock.",
     primary: "Get a security quote",
     secondary: "See how we work",
@@ -163,7 +165,7 @@ const EN: HomeOps = {
   },
   statement: {
     lead: "Sites are rarely put at risk by the big night. They are put at risk by the empty post that nobody noticed.",
-    turn: "So AGOC makes sure every post is filled, checked and reported.",
+    turn: "So AGOC Security Services makes sure every post is filled, checked and reported.",
     chips: [
       { title: "Gate 2 checked", meta: "Al Barsha villa · 21:40" },
       { title: "Patrol logged", meta: "Tower B, levels 1–14" },
@@ -376,7 +378,7 @@ const EN: HomeOps = {
     label: "Made for the site",
     title: "Built for towers.",
     accent: "Built for villas.",
-    text: "A commercial tower and a family villa need different security. Drag to compare how AGOC plans each one.",
+    text: "A commercial tower and a family villa need different security. Drag to compare how AGOC Security Services plans each one.",
     hint: "Drag to compare",
     left: {
       tag: "Commercial",
@@ -401,7 +403,6 @@ const EN: HomeOps = {
       { value: "Licensed", title: "Security company in Dubai", text: "Licensed to provide security guard services in Dubai, with documented procedures on every post." },
       { value: "24/7", title: "Operations line", text: "A real person answers, day and night, from Sunday through Saturday." },
       { value: "100%", title: "Verified staff", text: "Background checks, licensing and a site briefing before anyone wears the badge." },
-      { value: "1", title: "Named supervisor", text: "One supervisor who knows your site and your team, from day one." },
     ],
     footnote: "AGOC General Security Guard Services LLC · Al Muteena, Dubai",
   },
@@ -428,6 +429,7 @@ const EN: HomeOps = {
 const AR: HomeOps = {
   hero: {
     badge: "شركة أمن مرخّصة في دبي",
+    serviceBadges: ["خدمات تنظيف المباني", "خدمات تنظيف عند الطلب"],
     title: "كل موقع مُغطّى.",
     accent: "وكل ليلة بتقرير.",
     text: "حراس أمن مرخّصون ومراقبة كاميرات وخدمات مرافق للأبراج والفلل والفنادق والفعاليات في دبي والإمارات. تخطيط من AGOC وإشراف على مدار الساعة.",

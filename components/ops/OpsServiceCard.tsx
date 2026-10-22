@@ -2,12 +2,14 @@ import { ArrowRight } from "lucide-react";
 import CoverImage from "@/components/CoverImage";
 import LocaleLink from "@/components/LocaleLink";
 import { ServiceOfferBadge } from "@/components/OffersHighlight";
+import type { ServiceCategory } from "@/lib/pages-ops";
 
 export type OpsServiceCardData = {
   slug: string;
   title: string;
   short: string;
   image: string;
+  category?: ServiceCategory;
 };
 
 export default function OpsServiceCard({

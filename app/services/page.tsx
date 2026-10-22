@@ -71,7 +71,7 @@ export default async function ServicesPage() {
       <section id="services-list" className="ops-light scroll-mt-24 pb-20 md:pb-28">
         <div className="mx-auto max-w-6xl px-5">
           <OpsServiceGrid
-            services={services.map(({ slug, title, short, image }) => ({ slug, title, short, image }))}
+            services={services.map(({ slug, title, short, image, category }) => ({ slug, title, short, image, category }))}
             badges={badges}
             copy={p.services}
             learnMore={dict.servicesList.learnMore}

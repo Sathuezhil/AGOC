@@ -45,6 +45,18 @@ export type SiteContent = {
     titleItalic: string;
     text: string;
     slides: Slide[];
+    badge?: string;
+    accent?: string;
+    primaryCta?: string;
+    secondaryCta?: string;
+  };
+  homeOps?: {
+    statementLead?: string;
+    statementTurn?: string;
+    ctaTitle?: string;
+    ctaAccent?: string;
+    ctaText?: string;
+    ctaPrimary?: string;
   };
   home: {
     pillars: TextPair[];
@@ -127,15 +139,30 @@ export const DEFAULT_CONTENT: SiteContent = {
     companyProfilePdf: fallbackSite.companyProfilePdf,
   },
   hero: {
-    eyebrow: "Dubai · Licensed · Verified staff",
-    title: "AGOC Security",
-    titleItalic: "Protection you can trust.",
-    text: "Licensed guards, CCTV control, and facility services for homes, businesses, and events across Dubai and the UAE.",
+    eyebrow: "Licensed security company in Dubai",
+    badge: "Licensed security company in Dubai",
+    title: "Every post covered.",
+    titleItalic: "Every night reported.",
+    accent: "Every night reported.",
+    text: "Licensed security guards, CCTV monitoring and facility services for towers, villas, hotels and events across Dubai and the UAE. Planned by AGOC, supervised around the clock.",
+    primaryCta: "Get a security quote",
+    secondaryCta: "See how we work",
     slides: [
       { src: "/images/hero.jpg", alt: "Dubai skyline at dusk" },
       { src: "/images/security-guards.png", alt: "AGOC security team on duty" },
       { src: "/images/hero2.jpg", alt: "Downtown Dubai skyline at golden hour" },
     ],
+  },
+  homeOps: {
+    statementLead:
+      "Most security failures happen in the gaps between shifts, unread logs, and unverified patrols.",
+    statementTurn:
+      "AGOC runs a live operations desk — supervising every post, confirming every patrol, and delivering a clear night report every morning.",
+    ctaTitle: "Hand us",
+    ctaAccent: "the night shift.",
+    ctaText:
+      "Tell us the site, the hours, and the risks. We will come back with a clear security proposal for your Dubai property.",
+    ctaPrimary: "Request security quote",
   },
   home: {
     pillars: [
@@ -389,6 +416,10 @@ function mergeContent(stored: SiteContent): SiteContent {
       ) {
         hero.slides = DEFAULT_CONTENT.hero.slides;
       }
+      hero.badge = stored.hero?.badge || stored.hero?.eyebrow || DEFAULT_CONTENT.hero.badge;
+      hero.accent = stored.hero?.accent || stored.hero?.titleItalic || DEFAULT_CONTENT.hero.accent;
+      hero.primaryCta = stored.hero?.primaryCta || DEFAULT_CONTENT.hero.primaryCta;
+      hero.secondaryCta = stored.hero?.secondaryCta || DEFAULT_CONTENT.hero.secondaryCta;
       return hero;
     })(),
     home: (() => {
@@ -402,6 +433,7 @@ function mergeContent(stored: SiteContent): SiteContent {
       }
       return home;
     })(),
+    homeOps: { ...DEFAULT_CONTENT.homeOps, ...stored.homeOps },
     about: {
       ...about,
       membersTitle: about.membersTitle || DEFAULT_CONTENT.about.membersTitle,

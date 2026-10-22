@@ -82,6 +82,18 @@ export default async function HomePage({
   return (
     <>
       <OpsHero copy={ops.hero} rtl={isRtl(locale)} />
+      {director ? (
+        <section id="director" className="ops-light py-20 md:py-28">
+          <div className="mx-auto max-w-6xl px-5">
+            <DirectorMessage
+              member={director}
+              heading={dict.about.founderMessage}
+              quoteFrom={getPagesOps(locale).about.quoteFrom}
+            />
+          </div>
+        </section>
+      ) : null}
+
       <OpsStatement copy={ops.statement} />
       <OpsDashboard copy={ops.demo} />
       <OpsFeatures copy={ops.features} />
@@ -111,18 +123,6 @@ export default async function HomePage({
       ) : null}
 
       <ClientMarquee logos={clientLogos} copy={ops.clients} />
-
-      {director ? (
-        <section id="director" className="ops-light py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-5">
-            <DirectorMessage
-              member={director}
-              heading={dict.about.founderMessage}
-              quoteFrom={getPagesOps(locale).about.quoteFrom}
-            />
-          </div>
-        </section>
-      ) : null}
 
       <OpsCta copy={ops.cta} />
 

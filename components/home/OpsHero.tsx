@@ -82,10 +82,18 @@ export default function OpsHero({ copy, rtl = false }: { copy: HomeOps["hero"]; 
             <p className="ops-hero-brand-sub">SECURITY SERVICES L.L.C</p>
           </div>
 
-          <p className="ops-pill mt-4 animate-fadeUp sm:mt-5 opacity-0" style={{ animationDelay: "60ms" }}>
-            <span className="ops-pill-dot" aria-hidden />
-            {copy.badge}
-          </p>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 animate-fadeUp opacity-0 sm:mt-5" style={{ animationDelay: "60ms" }}>
+            <p className="ops-pill">
+              <span className="ops-pill-dot" aria-hidden />
+              {copy.badge}
+            </p>
+            {copy.serviceBadges.map((badge) => (
+              <p className="ops-pill" key={badge}>
+                <span className="ops-pill-dot" aria-hidden />
+                {badge}
+              </p>
+            ))}
+          </div>
 
           <h1 className="ops-h1 mt-4 sm:mt-5" data-kinetic data-base="750" data-peak="900">
             <SplitText

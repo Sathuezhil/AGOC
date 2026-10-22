@@ -19,13 +19,15 @@ export default function OpsServiceGrid({
   const counts = useMemo(() => {
     const out: Record<string, number> = { all: services.length };
     for (const s of services) {
-      const cat = SERVICE_CATEGORY[s.slug];
+      const cat = s.category || SERVICE_CATEGORY[s.slug];
       if (cat) out[cat] = (out[cat] ?? 0) + 1;
     }
     return out;
   }, [services]);
   const visible =
-    filter === "all" ? services : services.filter((s) => SERVICE_CATEGORY[s.slug] === filter);
+    filter === "all"
+      ? services
+      : services.filter((s) => (s.category || SERVICE_CATEGORY[s.slug]) === filter);
   const filters = copy.filters.filter((f) => f.id === "all" || counts[f.id]);
 
   return (
