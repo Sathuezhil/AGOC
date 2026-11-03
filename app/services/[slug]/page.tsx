@@ -44,13 +44,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     localized.short ||
     `${localized.title} by AGOC Security in Dubai and the UAE.`;
   return pageMetadata({
-    title: `${localized.title} in Dubai`,
-    description,
+    title: `${localized.title} in Dubai | AGOC Security Company`,
+    description:
+      `${description} Provided by AGOC, a licensed Dubai security company serving sites across the UAE.`,
     path: `/services/${slug}`,
+    locale,
     keywords: [
       localized.title,
       `${localized.title} Dubai`,
       `${localized.title} UAE`,
+      "dubai security company",
       "security company Dubai",
       "AGOC security Dubai",
       "security services Dubai",

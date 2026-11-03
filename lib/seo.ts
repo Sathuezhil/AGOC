@@ -1,26 +1,38 @@
 import type { Metadata } from "next";
 import { site } from "./site";
 
-/** Target search phrases for Dubai / UAE security. */
+/** Target search phrases for Dubai / UAE security. Primary query first. */
 export const seoKeywords = [
+  "dubai security company",
+  "security company Dubai",
+  "security company in Dubai",
+  "licensed security company Dubai",
+  "best security company in Dubai",
   "AGOC security Dubai",
   "AGOC Security",
-  "security company Dubai",
-  "private guards UAE",
   "private security Dubai",
   "security guard services Dubai",
+  "SIRA licensed security Dubai",
   "CCTV monitoring Dubai",
+  "event security Dubai",
   "facility management Dubai",
   "housekeeping services Dubai",
-  "event security Dubai",
   "licensed security guards UAE",
   "Al Muteena security company",
 ] as const;
 
-export const defaultTitle = "AGOC Security Dubai";
+export const defaultTitle =
+  "Dubai Security Company | Licensed Guards & CCTV | AGOC";
 
 export const defaultDescription =
-  "AGOC Security — licensed private guards, CCTV control, facility and housekeeping services in Dubai and across the UAE. Trusted protection from Al Muteena, Dubai.";
+  "AGOC is a licensed Dubai security company providing security guards, CCTV monitoring, event security and facility management across the UAE. SIRA licence 1308900. Based in Al Muteena, Dubai.";
+
+export const defaultOgImage = {
+  url: "/images/security-guards.png",
+  width: 1200,
+  height: 630,
+  alt: "AGOC Dubai security company — licensed security guards on duty",
+} as const;
 
 type PageSeoInput = {
   title: string;
@@ -28,6 +40,7 @@ type PageSeoInput = {
   path?: string;
   keywords?: string[];
   noIndex?: boolean;
+  locale?: "en" | "ar";
 };
 
 /** Build consistent Metadata for public pages. */
@@ -37,9 +50,14 @@ export function pageMetadata({
   path = "/",
   keywords = [...seoKeywords],
   noIndex = false,
+  locale = "en",
 }: PageSeoInput): Metadata {
-  const url = path === "/" ? site.url : `${site.url}${path.startsWith("/") ? path : `/${path}`}`;
+  const enUrl = path === "/" ? site.url : `${site.url}${path.startsWith("/") ? path : `/${path}`}`;
   const arPath = path === "/" || path === "" ? "/ar" : `/ar${path.startsWith("/") ? path : `/${path}`}`;
+  const arUrl = `${site.url}${arPath}`;
+  const url = locale === "ar" ? arUrl : enUrl;
+
+  const ogTitle = title.includes("AGOC") ? title : `${title} | AGOC Security Dubai`;
 
   return {
     title,
@@ -48,45 +66,111 @@ export function pageMetadata({
     alternates: {
       canonical: url,
       languages: {
-        en: url,
-        ar: `${site.url}${arPath}`,
-        "x-default": url,
+        en: enUrl,
+        ar: arUrl,
+        "x-default": enUrl,
       },
     },
-  openGraph: {
-    title: `${title} | AGOC Security Dubai`,
-    description,
-    url,
-    siteName: site.name,
-    locale: "en_AE",
-    alternateLocale: ["ar_AE"],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${title} | AGOC Security Dubai`,
-    description,
-  },
+    openGraph: {
+      title: ogTitle,
+      description,
+      url,
+      siteName: site.name,
+      locale: locale === "ar" ? "ar_AE" : "en_AE",
+      alternateLocale: ["ar_AE"],
+      type: "website",
+      images: [defaultOgImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
+      description,
+      images: [defaultOgImage.url],
+    },
     robots: noIndex
       ? { index: false, follow: false }
-      : { index: true, follow: true },
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+          },
+        },
+  };
+}
+
+export function websiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${site.url}/#website`,
+    name: site.name,
+    url: site.url,
+    inLanguage: ["en-AE", "ar-AE"],
+    publisher: { "@id": `${site.url}/#organization` },
+    description: defaultDescription,
+  };
+}
+
+export function faqJsonLd(items: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 }
 
 export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": ["Organization", "LocalBusiness", "SecurityService"],
+    "@type": ["LocalBusiness", "ProfessionalService"],
     "@id": `${site.url}/#organization`,
     name: site.name,
     legalName: site.legalName,
     url: site.url,
-    logo: `${site.url}${site.url.endsWith("/") ? "" : ""}${brandLogoPath()}`,
+    logo: `${site.url}${brandLogoPath()}`,
     image: `${site.url}${brandLogoPath()}`,
     email: site.email,
     telephone: site.phones,
     slogan: site.tagline,
     description: defaultDescription,
+    priceRange: "$$",
+    currenciesAccepted: "AED",
+    paymentAccepted: "Bank transfer, Cash, Cheque",
+    identifier: {
+      "@type": "PropertyValue",
+      name: "SIRA Licence",
+      value: "1308900",
+    },
+    knowsAbout: [
+      "Dubai security company services",
+      "Security guard services",
+      "CCTV monitoring",
+      "Event security",
+      "Facility management",
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Dubai security company services",
+      itemListElement: [
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Private guarding services in Dubai" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Lady security guard services in Dubai" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "CCTV control and monitoring in Dubai" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Event security and club bouncers in Dubai" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Facility management in Dubai" } },
+      ],
+    },
     foundingLocation: {
       "@type": "Place",
       address: {
@@ -109,6 +193,8 @@ export function organizationJsonLd() {
     },
     areaServed: [
       { "@type": "City", name: "Dubai" },
+      { "@type": "AdministrativeArea", name: "Deira" },
+      { "@type": "AdministrativeArea", name: "Al Muteena" },
       { "@type": "Country", name: "United Arab Emirates" },
     ],
     sameAs: [site.facebook, site.instagram, site.tiktok].filter(Boolean),
@@ -143,6 +229,10 @@ export function organizationJsonLd() {
       },
     ],
     keywords: seoKeywords.join(", "),
+    parentOrganization: {
+      "@type": "Organization",
+      name: site.legalName,
+    },
   };
 }
 

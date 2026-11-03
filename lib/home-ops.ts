@@ -144,15 +144,23 @@ export type HomeOps = {
     primary: string;
     whatsapp: string;
   };
+  seo: {
+    label: string;
+    title: string;
+    accent: string;
+    text: string;
+    points: { title: string; text: string; href: string }[];
+    faq: { question: string; answer: string }[];
+  };
 };
 
 const EN: HomeOps = {
   hero: {
-    badge: "Sira certified licensed No.1308900 security company in Dubai",
+    badge: "SIRA licensed No. 1308900 · Dubai security company",
     serviceBadges: ["Building cleaning services", "On call cleaning services"],
-    title: "Every Post Covered.",
-    accent: "Every Night Reported.",
-    text: "Licensed security guards, CCTV monitoring and facility services for towers, villas, hotels and events across Dubai and the UAE. Planned by AGOC, supervised around the clock.",
+    title: "Dubai Security Company.",
+    accent: "Every Post Covered.",
+    text: "AGOC is a licensed Dubai security company providing security guards, CCTV monitoring, event security and facility services for towers, villas, hotels and sites across the UAE. Planned by AGOC, supervised around the clock.",
     primary: "Get a security quote",
     secondary: "See how we work",
     scroll: "Scroll to see it run",
@@ -424,15 +432,70 @@ const EN: HomeOps = {
     primary: "Get a security quote",
     whatsapp: "WhatsApp",
   },
+  seo: {
+    label: "Dubai security company",
+    title: "Hire a licensed",
+    accent: "Dubai security company.",
+    text: "AGOC General Security Guard Services LLC is a Dubai security company based in Al Muteena, Deira. We supply licensed security guards, lady officers, CCTV operators, event teams and facility staff for residential, commercial and hospitality sites anywhere in the UAE. Every post is briefed, supervised and written into a morning report.",
+    points: [
+      {
+        title: "Security guards in Dubai",
+        text: "Male and lady security guards for gates, lobbies, patrols and access control.",
+        href: "/services/private-guarding",
+      },
+      {
+        title: "CCTV monitoring",
+        text: "Control-room operators who watch, log and escalate — not cameras left unattended.",
+        href: "/services/cctv-control",
+      },
+      {
+        title: "Event security",
+        text: "Crowd control, door teams and VIP cover for concerts, clubs and private functions.",
+        href: "/services/events-club-bouncer",
+      },
+      {
+        title: "Facility and cleaning",
+        text: "The same contractor for guarding, housekeeping and building cleaning.",
+        href: "/services",
+      },
+    ],
+    faq: [
+      {
+        question: "Is AGOC a licensed Dubai security company?",
+        answer:
+          "Yes. AGOC General Security Guard Services LLC is a SIRA-licensed Dubai security company (licence 1308900), with an office in Al Muteena, Deira. Guards are verified, briefed for the site and supervised on every shift.",
+      },
+      {
+        question: "What services does a security company in Dubai provide?",
+        answer:
+          "A Dubai security company typically supplies licensed security guards, lady officers, CCTV monitoring, event and club security, parking control, and often facility or housekeeping teams. AGOC covers these services for towers, villas, hotels, warehouses and private homes across Dubai and the UAE.",
+      },
+      {
+        question: "How do I hire security guards in Dubai?",
+        answer:
+          "Share the site address, hours and the risk you want covered. AGOC will propose headcount, shift pattern and supervision, then deploy licensed guards once the contract is agreed. Call, WhatsApp or send the enquiry form on this site for a quote.",
+      },
+      {
+        question: "Which areas of Dubai does AGOC cover?",
+        answer:
+          "AGOC deploys from Al Muteena across Dubai — Deira, Downtown, Marina, Jumeirah, Business Bay, Al Barsha and industrial areas — and supports sites elsewhere in the UAE. Coverage is planned around the post, not a single neighbourhood.",
+      },
+      {
+        question: "Do you provide 24/7 security in Dubai?",
+        answer:
+          "Yes. Day, night and 24-hour posts are rostered with relief guards for leave and sickness. An operations line is answered around the clock, and a daily occurrence report is sent each morning.",
+      },
+    ],
+  },
 };
 
 const AR: HomeOps = {
   hero: {
-    badge: "شركة أمن مرخّصة في دبي",
+    badge: "شركة أمن مرخّصة في دبي · ترخيص سيرة 1308900",
     serviceBadges: ["خدمات تنظيف المباني", "خدمات تنظيف عند الطلب"],
-    title: "كل موقع مُغطّى.",
-    accent: "وكل ليلة بتقرير.",
-    text: "حراس أمن مرخّصون ومراقبة كاميرات وخدمات مرافق للأبراج والفلل والفنادق والفعاليات في دبي والإمارات. تخطيط من AGOC وإشراف على مدار الساعة.",
+    title: "شركة أمن في دبي.",
+    accent: "كل موقع مُغطّى.",
+    text: "AGOC شركة أمن مرخّصة في دبي تقدّم حراس أمن ومراقبة كاميرات وأمن فعاليات وخدمات مرافق للأبراج والفلل والفنادق والمواقع في الإمارات. تخطيط من AGOC وإشراف على مدار الساعة.",
     primary: "اطلب عرض أمن",
     secondary: "شاهد كيف نعمل",
     scroll: "مرّر لترى كيف يعمل",
@@ -704,6 +767,61 @@ const AR: HomeOps = {
     text: "أخبرنا بالموقع والساعات والمخاطر. سنعود إليك بعرض أمني واضح لعقارك في دبي.",
     primary: "اطلب عرض أمن",
     whatsapp: "واتساب",
+  },
+  seo: {
+    label: "شركة أمن في دبي",
+    title: "استعن بـ",
+    accent: "شركة أمن مرخّصة في دبي.",
+    text: "AGOC لخدمات حراسة الأمن العامة ذ.م.م شركة أمن في دبي مقرّها المطينة، ديرة. نقدّم حراس أمن مرخّصين وحارسات ومشغّلي كاميرات وفرق فعاليات وطاقم مرافق للمواقع السكنية والتجارية والضيافة في الإمارات. كل موقع يُحاط علماً ويُشرف عليه ويُوثّق في تقرير صباحي.",
+    points: [
+      {
+        title: "حراس أمن في دبي",
+        text: "حراس وحارسات للبوابات والاستقبال والدوريات والتحكم بالدخول.",
+        href: "/services/private-guarding",
+      },
+      {
+        title: "مراقبة الكاميرات",
+        text: "مشغّلون في غرفة التحكم يراقبون ويسجّلون ويصعّدون التنبيهات.",
+        href: "/services/cctv-control",
+      },
+      {
+        title: "أمن الفعاليات",
+        text: "تنظيم الحشود وأبواب النوادي وتغطية كبار الشخصيات.",
+        href: "/services/events-club-bouncer",
+      },
+      {
+        title: "المرافق والتنظيف",
+        text: "نفس المقاول للحراسة والتدبير المنزلي وتنظيف المباني.",
+        href: "/services",
+      },
+    ],
+    faq: [
+      {
+        question: "هل AGOC شركة أمن مرخّصة في دبي؟",
+        answer:
+          "نعم. AGOC لخدمات حراسة الأمن العامة ذ.م.م شركة أمن في دبي مرخّصة من سيرة (ترخيص 1308900)، ومكتبها في المطينة، ديرة. الحراس موثّقون ويُحاطون بالموقع ويُشرف عليهم في كل وردية.",
+      },
+      {
+        question: "ماذا تقدّم شركة الأمن في دبي؟",
+        answer:
+          "عادةً حراس أمن مرخّصين وحارسات ومراقبة كاميرات وأمن فعاليات ونوادٍ وتنظيم مواقف، وغالباً فرق مرافق أو تدبير منزلي. تغطي AGOC هذه الخدمات للأبراج والفلل والفنادق والمستودعات والمنازل في دبي والإمارات.",
+      },
+      {
+        question: "كيف أوظّف حراس أمن في دبي؟",
+        answer:
+          "أرسل عنوان الموقع والساعات والمخاطر المطلوب تغطيتها. تقترح AGOC العدد وجدول الورديات والإشراف ثم تنشر الحراس المرخّصين بعد الاتفاق. اتصل أو راسل واتساب أو عبّئ نموذج الاستفسار لطلب عرض.",
+      },
+      {
+        question: "أي مناطق دبي تغطيها AGOC؟",
+        answer:
+          "تنتشر الفرق من المطينة في أنحاء دبي — ديرة وداون تاون والمارينا والجميرا وبيزنس باي والبرشاء والمناطق الصناعية — وتدعم مواقع في بقية الإمارات. التغطية تُخطَّط حسب الموقع لا حسب حي واحد.",
+      },
+      {
+        question: "هل تقدّمون أمناً على مدار الساعة في دبي؟",
+        answer:
+          "نعم. ورديات نهار وليل و24 ساعة مع حراس احتياط للإجازات والمرض. خط العمليات يجيب ليلاً ونهاراً، ويُرسل تقرير يومي كل صباح.",
+      },
+    ],
   },
 };
 

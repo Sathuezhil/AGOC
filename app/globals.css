@@ -5781,6 +5781,83 @@ html[data-motion] .ops-foot-mark[data-rise] {
   font-size: 0.85rem;
 }
 
+.ops-seo-points {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ops-seo-point {
+  display: block;
+  border: 1px solid rgba(11, 31, 42, 0.08);
+  border-radius: 1.15rem;
+  background: #fff;
+  padding: 1rem 1.15rem;
+  text-decoration: none;
+  box-shadow: 0 12px 32px -24px rgba(11, 31, 42, 0.35);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.ops-seo-point:hover {
+  border-color: rgba(0, 102, 255, 0.28);
+  transform: translateY(-1px);
+}
+
+.ops-seo-point-title {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0b1f2a;
+}
+
+.ops-seo-point-text {
+  display: block;
+  margin-top: 0.28rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #5b6b7c;
+}
+
+.ops-faq {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.ops-faq-item {
+  border: 1px solid rgba(11, 31, 42, 0.08);
+  border-radius: 1.15rem;
+  background: #fff;
+  overflow: hidden;
+}
+
+.ops-faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 1rem 1.15rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0b1f2a;
+}
+
+.ops-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.ops-faq-item p {
+  margin: 0;
+  padding: 0 1.15rem 1.1rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #3e4f61;
+}
+
+[dir="rtl"] .ops-seo-point-title,
+[dir="rtl"] .ops-faq-item summary {
+  font-family: var(--font-arabic), Tahoma, sans-serif;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ops-foot-live i::after,
   .ops-foot-clock i::after,

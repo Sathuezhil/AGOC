@@ -74,7 +74,14 @@ export default function OpsHero({ copy, rtl = false }: { copy: HomeOps["hero"]; 
         <div className="ops-hero-content relative z-[3] mx-auto flex h-full max-w-5xl flex-col items-center justify-center px-5 pb-6 pt-[4.75rem] text-center sm:pb-10 sm:pt-24">
           <div className="ops-hero-brand" dir="ltr">
             <span className="ops-hero-mark">
-              <Image src={MARK_SRC} alt="" width={1035} height={1035} priority unoptimized />
+              <Image
+                src={MARK_SRC}
+                alt="AGOC Security Dubai logo — licensed Dubai security company"
+                width={1035}
+                height={1035}
+                priority
+                unoptimized
+              />
             </span>
             <p className="ops-hero-brand-name" data-brand-slot>
               {BRAND_NAME}

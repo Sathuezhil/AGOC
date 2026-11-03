@@ -13,10 +13,12 @@ import OpsReport from "@/components/home/OpsReport";
 import OpsCompare from "@/components/home/OpsCompare";
 import OpsTrust from "@/components/home/OpsTrust";
 import OpsCta from "@/components/home/OpsCta";
+import OpsSeo from "@/components/home/OpsSeo";
 import OpsServiceTrack from "@/components/home/OpsServiceTrack";
 import { getClientLogos } from "@/lib/clients";
 import DirectorMessage from "@/components/DirectorMessage";
 import { getContent, teamKind } from "@/lib/content";
+import SeoJsonLd from "@/components/SeoJsonLd";
 import { getHomeOps } from "@/lib/home-ops";
 import { getPagesOps } from "@/lib/pages-ops";
 import {
@@ -28,31 +30,62 @@ import {
 } from "@/lib/i18n";
 import { getLocale } from "@/lib/i18n/server";
 import { listOffers } from "@/lib/offers";
-import { pageMetadata } from "@/lib/seo";
+import { faqJsonLd, pageMetadata } from "@/lib/seo";
 import { getServices, getVisibleServices } from "@/lib/services";
 
-export const metadata: Metadata = {
-  ...pageMetadata({
-    title: "AGOC Security Dubai",
-    description:
-      "Security company in Dubai providing licensed security guards, CCTV monitoring, event security and facility management across the UAE. Every post covered, every night reported.",
-    path: "/",
-    keywords: [
-      "security company Dubai",
-      "security guard services Dubai",
-      "licensed security guards UAE",
-      "private security Dubai",
-      "CCTV monitoring Dubai",
-      "event security Dubai",
-      "lady security guard Dubai",
-      "facility management Dubai",
-      "AGOC security Dubai",
-    ],
-  }),
-  title: {
-    absolute: "AGOC Security Dubai | Licensed Security Guard Services",
-  },
-};
+const HOME_KEYWORDS = [
+  "dubai security company",
+  "security company Dubai",
+  "security company in Dubai",
+  "licensed security company Dubai",
+  "SIRA licensed security Dubai",
+  "security guard services Dubai",
+  "licensed security guards UAE",
+  "private security Dubai",
+  "CCTV monitoring Dubai",
+  "event security Dubai",
+  "lady security guard Dubai",
+  "facility management Dubai",
+  "AGOC security Dubai",
+];
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  if (locale === "ar") {
+    return {
+      ...pageMetadata({
+        title: "شركة أمن في دبي | حراس مرخّصون ومراقبة كاميرات | AGOC",
+        description:
+          "AGOC شركة أمن مرخّصة في دبي تقدّم حراس أمن ومراقبة كاميرات وأمن فعاليات وخدمات مرافق في الإمارات. ترخيص سيرة 1308900. المقر المطينة، دبي.",
+        path: "/",
+        locale: "ar",
+        keywords: [
+          "شركة أمن في دبي",
+          "شركة أمن دبي",
+          "حراس أمن دبي",
+          "مراقبة كاميرات دبي",
+          "أمن فعاليات دبي",
+        ],
+      }),
+      title: {
+        absolute: "شركة أمن في دبي | حراس مرخّصون ومراقبة كاميرات | AGOC",
+      },
+    };
+  }
+
+  return {
+    ...pageMetadata({
+      title: "Dubai Security Company | Licensed Guards & CCTV | AGOC",
+      description:
+        "AGOC is a licensed Dubai security company providing security guards, CCTV monitoring, event security and facility management across the UAE. SIRA licence 1308900. Al Muteena, Dubai.",
+      path: "/",
+      keywords: HOME_KEYWORDS,
+    }),
+    title: {
+      absolute: "Dubai Security Company | Licensed Guards & CCTV | AGOC",
+    },
+  };
+}
 
 export default async function HomePage({
   searchParams,
@@ -123,6 +156,9 @@ export default async function HomePage({
       ) : null}
 
       <ClientMarquee logos={clientLogos} copy={ops.clients} />
+
+      <OpsSeo copy={ops.seo} />
+      <SeoJsonLd data={faqJsonLd(ops.seo.faq)} />
 
       <OpsCta copy={ops.cta} />
 

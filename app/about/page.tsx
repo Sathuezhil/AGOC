@@ -31,12 +31,13 @@ import { getPagesOps } from "@/lib/pages-ops";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "About AGOC Security Dubai",
+  title: "About AGOC | Licensed Dubai Security Company",
   description:
-    "About AGOC Security, a licensed security company in Dubai: founder-led private guarding, CCTV monitoring and facility teams protecting homes, towers and sites across the UAE.",
+    "About AGOC, a SIRA-licensed Dubai security company in Al Muteena: founder-led private guarding, CCTV monitoring and facility teams protecting homes, towers and sites across the UAE.",
   path: "/about",
   keywords: [
     "about AGOC Security",
+    "dubai security company",
     "security company Dubai",
     "licensed security guards UAE",
     "private guarding Dubai",

@@ -15,13 +15,14 @@ import { getServices } from "@/lib/services";
 import { site as siteDefaults } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Contact AGOC Security Dubai | Hire Security Guards Today",
+  title: "Contact a Dubai Security Company | AGOC Al Muteena",
   description:
-    "Contact AGOC Security in Al Muteena, Deira, Dubai. Call, WhatsApp or send an enquiry to hire security guards, CCTV operators, event security and facility staff anywhere in the UAE.",
+    "Contact AGOC, a licensed Dubai security company in Al Muteena, Deira. Call, WhatsApp or send an enquiry to hire security guards, CCTV operators, event security and facility staff in the UAE.",
   path: "/contact",
   keywords: [
     "contact security company Dubai",
     "hire security guards Dubai",
+    "dubai security company",
     "security guard quote Dubai",
     "AGOC Security contact",
     "security company Al Muteena",

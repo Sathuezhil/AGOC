@@ -11,7 +11,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { getContent } from "@/lib/content";
 import { getDictionary, isRtl, localizeContent } from "@/lib/i18n";
 import { getLocale } from "@/lib/i18n/server";
-import { defaultDescription, defaultTitle, seoKeywords } from "@/lib/seo";
+import { defaultDescription, defaultOgImage, defaultTitle, seoKeywords } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -53,14 +53,15 @@ export const metadata: Metadata = {
     locale: "en_AE",
     alternateLocale: ["ar_AE"],
     type: "website",
+    images: [defaultOgImage],
   },
   twitter: {
     card: "summary_large_image",
     title: defaultTitle,
     description: defaultDescription,
+    images: [defaultOgImage.url],
   },
   alternates: {
-    canonical: site.url,
     languages: {
       en: "/",
       ar: "/ar",

@@ -183,7 +183,7 @@ const en: Dictionary = {
     licensed: "Licensed security services · Dubai, United Arab Emirates",
     ctaTitle: "Ready before",
     ctaAccent: "your next shift starts.",
-    ctaText: "Tell us the site and the hours. We will come back with a clear security plan for your property in Dubai.",
+    ctaText: "Tell a licensed Dubai security company the site and the hours. AGOC will come back with a clear security plan for your property.",
     ctaPrimary: "Get a security quote",
     live: "Operations line · open 24/7",
     follow: "Follow AGOC",

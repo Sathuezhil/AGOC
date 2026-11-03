@@ -26,7 +26,7 @@ export default function Logo({
     return (
       <Image
         src={imageSrc}
-        alt="AGOC — A Power That Saves You"
+        alt="AGOC Security Dubai — licensed Dubai security company"
         width={4550}
         height={2288}
         className={`max-w-full w-full h-auto object-contain object-center ${className}`}
@@ -39,7 +39,7 @@ export default function Logo({
   return (
     <Image
       src={imageSrc}
-      alt="AGOC — A Power That Saves You"
+      alt="AGOC Security Dubai — licensed Dubai security company"
       width={420}
       height={120}
       className={`max-w-full object-contain object-left ${className}`}

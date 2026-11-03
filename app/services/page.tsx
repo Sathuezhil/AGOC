@@ -20,11 +20,12 @@ import { pageMetadata } from "@/lib/seo";
 import { getVisibleServices } from "@/lib/services";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Security Services in Dubai & UAE",
+  title: "Security Services in Dubai | Guards, CCTV & Facility",
   description:
-    "Security services in Dubai from AGOC: private security guards, lady security guards, CCTV monitoring, event security, facility management, housekeeping and cleaning across the UAE.",
+    "Security services from a licensed Dubai security company: private guards, lady officers, CCTV monitoring, event security, facility management and cleaning across the UAE. AGOC Security.",
   path: "/services",
   keywords: [
+    "dubai security company",
     "security services Dubai",
     "security guard services Dubai",
     "private security Dubai",

@@ -114,7 +114,7 @@ export default async function Footer({
               <Logo src={brandLogo} compact className="h-auto" />
             </div>
             <p className="mt-4 max-w-[17rem] text-[0.92rem] leading-relaxed text-white/55">
-              {site.tagline}
+              {site.footerBlurb || site.tagline}
             </p>
 
             {socials.length > 0 && (

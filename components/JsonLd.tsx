@@ -1,7 +1,7 @@
-import { organizationJsonLd } from "@/lib/seo";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 
 export default function JsonLd() {
-  const data = organizationJsonLd();
+  const data = [organizationJsonLd(), websiteJsonLd()];
 
   return (
     <script
