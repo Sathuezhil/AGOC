@@ -439,6 +439,11 @@ const EN: HomeOps = {
     text: "AGOC General Security Guard Services LLC is a Dubai security company based in Al Muteena, Deira. We supply licensed security guards, lady officers, CCTV operators, event teams and facility staff for residential, commercial and hospitality sites anywhere in the UAE. Every post is briefed, supervised and written into a morning report.",
     points: [
       {
+        title: "How to hire a Dubai security company",
+        text: "Licence, roster, supervisor and the morning report — before you sign.",
+        href: "/guides/hire-security-company-dubai",
+      },
+      {
         title: "Security guards in Dubai",
         text: "Male and lady security guards for gates, lobbies, patrols and access control.",
         href: "/services/private-guarding",
@@ -774,6 +779,11 @@ const AR: HomeOps = {
     accent: "شركة أمن مرخّصة في دبي.",
     text: "AGOC لخدمات حراسة الأمن العامة ذ.م.م شركة أمن في دبي مقرّها المطينة، ديرة. نقدّم حراس أمن مرخّصين وحارسات ومشغّلي كاميرات وفرق فعاليات وطاقم مرافق للمواقع السكنية والتجارية والضيافة في الإمارات. كل موقع يُحاط علماً ويُشرف عليه ويُوثّق في تقرير صباحي.",
     points: [
+      {
+        title: "كيف توظّف شركة أمن في دبي",
+        text: "الترخيص والجدول والمشرف والتقرير الصباحي — قبل أن توقّع.",
+        href: "/guides/hire-security-company-dubai",
+      },
       {
         title: "حراس أمن في دبي",
         text: "حراس وحارسات للبوابات والاستقبال والدوريات والتحكم بالدخول.",

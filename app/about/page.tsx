@@ -17,8 +17,10 @@ import {
   Target,
   Warehouse,
 } from "lucide-react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import DirectorMessage from "@/components/DirectorMessage";
 import Reveal from "@/components/Reveal";
+import SeoJsonLd from "@/components/SeoJsonLd";
 import OpsCta from "@/components/home/OpsCta";
 import OpsMediaCard from "@/components/ops/OpsMediaCard";
 import OpsPageHero from "@/components/ops/OpsPageHero";
@@ -28,7 +30,7 @@ import { getHomeOps } from "@/lib/home-ops";
 import { getDictionary, localizeContent } from "@/lib/i18n";
 import { getLocale } from "@/lib/i18n/server";
 import { getPagesOps } from "@/lib/pages-ops";
-import { pageMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "About AGOC | Licensed Dubai Security Company",
@@ -106,7 +108,21 @@ export default async function AboutPage() {
 
   return (
     <>
+      <SeoJsonLd
+        data={breadcrumbJsonLd([
+          { name: dict.nav.home, path: "/" },
+          { name: dict.nav.about, path: "/about" },
+        ])}
+      />
       <OpsPageHero
+        breadcrumb={
+          <Breadcrumbs
+            items={[
+              { name: dict.nav.home, href: "/" },
+              { name: dict.nav.about },
+            ]}
+          />
+        }
         eyebrow={about.eyebrow}
         title={about.title}
         text={about.text}

@@ -65,6 +65,7 @@ export default async function Footer({
     { href: "/", label: dict.nav.home },
     { href: "/about", label: dict.nav.about },
     { href: "/services", label: dict.nav.services },
+    { href: "/guides", label: dict.nav.guides },
     { href: "/careers", label: dict.nav.careers },
     { href: "/contact", label: dict.nav.contact },
   ];

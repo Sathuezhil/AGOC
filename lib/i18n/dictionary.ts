@@ -5,6 +5,7 @@ export type Dictionary = {
     home: string;
     about: string;
     services: string;
+    guides: string;
     careers: string;
     contact: string;
   };
@@ -160,6 +161,7 @@ const en: Dictionary = {
     home: "Home",
     about: "About",
     services: "Services",
+    guides: "Guides",
     careers: "Careers",
     contact: "Contact",
   },
@@ -330,6 +332,7 @@ const ar: Dictionary = {
     home: "الرئيسية",
     about: "من نحن",
     services: "خدماتنا",
+    guides: "أدلة",
     careers: "الوظائف",
     contact: "تواصل معنا",
   },

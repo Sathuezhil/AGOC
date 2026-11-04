@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getGuides } from "@/lib/guides";
 import { site } from "@/lib/site";
 import { getVisibleServices } from "@/lib/services";
 
@@ -8,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const paths: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[0]["changeFrequency"] }[] = [
     { path: "", priority: 1, changeFrequency: "weekly" },
     { path: "/services", priority: 0.9, changeFrequency: "weekly" },
+    { path: "/guides", priority: 0.9, changeFrequency: "weekly" },
     { path: "/about", priority: 0.8, changeFrequency: "monthly" },
     { path: "/careers", priority: 0.7, changeFrequency: "weekly" },
     { path: "/contact", priority: 0.8, changeFrequency: "monthly" },
@@ -43,6 +45,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   }));
 
+  const guidePages = getGuides().flatMap((guide) => {
+    const path = `/guides/${guide.slug}`;
+    return [
+      {
+        url: `${site.url}${path}`,
+        lastModified: new Date(guide.updated),
+        changeFrequency: "monthly" as const,
+        priority: 0.88,
+        alternates: {
+          languages: {
+            en: `${site.url}${path}`,
+            ar: `${site.url}/ar${path}`,
+          },
+        },
+      },
+      {
+        url: `${site.url}/ar${path}`,
+        lastModified: new Date(guide.updated),
+        changeFrequency: "monthly" as const,
+        priority: 0.82,
+        alternates: {
+          languages: {
+            en: `${site.url}${path}`,
+            ar: `${site.url}/ar${path}`,
+          },
+        },
+      },
+    ];
+  });
+
   const servicePages = live.flatMap((service) => [
     {
       url: `${site.url}/services/${service.slug}`,
@@ -70,5 +102,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]);
 
-  return [...enPages, ...arPages, ...servicePages];
+  return [...enPages, ...arPages, ...guidePages, ...servicePages];
 }

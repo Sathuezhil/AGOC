@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ArrowRight, Briefcase, Check, Clock, GraduationCap, MapPin, ShieldCheck, Sparkles, Wallet } from "lucide-react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Reveal from "@/components/Reveal";
+import SeoJsonLd from "@/components/SeoJsonLd";
 import CareerApplyForm from "@/components/CareerApplyForm";
 import OpsPageHero from "@/components/ops/OpsPageHero";
 import OpsSectionHead from "@/components/ops/OpsSectionHead";
@@ -9,7 +11,7 @@ import { getDictionary, localizeJobs } from "@/lib/i18n";
 import { getLocale } from "@/lib/i18n/server";
 import { jobTypeLabel, listJobs } from "@/lib/careers";
 import { getPagesOps } from "@/lib/pages-ops";
-import { pageMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Security Guard Jobs in Dubai | Careers at AGOC Security",
@@ -48,7 +50,21 @@ export default async function CareersPage({
 
   return (
     <>
+      <SeoJsonLd
+        data={breadcrumbJsonLd([
+          { name: dict.nav.home, path: "/" },
+          { name: dict.nav.careers, path: "/careers" },
+        ])}
+      />
       <OpsPageHero
+        breadcrumb={
+          <Breadcrumbs
+            items={[
+              { name: dict.nav.home, href: "/" },
+              { name: dict.nav.careers },
+            ]}
+          />
+        }
         eyebrow={dict.careers.eyebrow}
         title={dict.careers.title}
         text={dict.careers.text}

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import SeoJsonLd from "@/components/SeoJsonLd";
 import OpsCta from "@/components/home/OpsCta";
 import OpsTrust from "@/components/home/OpsTrust";
 import OpsPageHero from "@/components/ops/OpsPageHero";
@@ -16,7 +18,7 @@ import {
 import { getLocale } from "@/lib/i18n/server";
 import { listOffers, offerBadgeByService } from "@/lib/offers";
 import { getPagesOps } from "@/lib/pages-ops";
-import { pageMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { getVisibleServices } from "@/lib/services";
 
 export const metadata: Metadata = pageMetadata({
@@ -53,7 +55,21 @@ export default async function ServicesPage() {
 
   return (
     <>
+      <SeoJsonLd
+        data={breadcrumbJsonLd([
+          { name: dict.nav.home, path: "/" },
+          { name: dict.nav.services, path: "/services" },
+        ])}
+      />
       <OpsPageHero
+        breadcrumb={
+          <Breadcrumbs
+            items={[
+              { name: dict.nav.home, href: "/" },
+              { name: dict.nav.services },
+            ]}
+          />
+        }
         eyebrow={content.servicesPage.eyebrow}
         title={content.servicesPage.title}
         text={content.servicesPage.text}

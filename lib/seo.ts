@@ -271,6 +271,54 @@ export function serviceJsonLd(input: {
   };
 }
 
+export function articleJsonLd(input: {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+  datePublished: string;
+  dateModified?: string;
+}) {
+  const url = `${site.url}${input.path.startsWith("/") ? input.path : `/${input.path}`}`;
+  const image = input.image
+    ? input.image.startsWith("http")
+      ? input.image
+      : `${site.url}${input.image.startsWith("/") ? "" : "/"}${input.image}`
+    : `${site.url}${defaultOgImage.url}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: input.title,
+    description: input.description,
+    image,
+    datePublished: input.datePublished,
+    dateModified: input.dateModified || input.datePublished,
+    mainEntityOfPage: url,
+    author: { "@id": `${site.url}/#organization` },
+    publisher: { "@id": `${site.url}/#organization` },
+    inLanguage: "en-AE",
+  };
+}
+
+export function howToJsonLd(input: {
+  name: string;
+  description: string;
+  steps: { name: string; text: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: input.name,
+    description: input.description,
+    step: input.steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
+  };
+}
+
 export function breadcrumbJsonLd(
   items: { name: string; path: string }[],
 ) {

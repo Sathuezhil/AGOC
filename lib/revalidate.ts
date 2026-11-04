@@ -6,6 +6,8 @@ export function revalidateSite() {
   revalidatePath("/about");
   revalidatePath("/services");
   revalidatePath("/contact");
+  revalidatePath("/guides");
+  revalidatePath("/guides", "layout");
   revalidatePath("/privacy");
   revalidatePath("/terms");
   revalidatePath("/admin");

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ArrowUpRight, Clock, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
+import SeoJsonLd from "@/components/SeoJsonLd";
 import Reveal from "@/components/Reveal";
 import OpsTag from "@/components/home/OpsTag";
 import OpsPageHero from "@/components/ops/OpsPageHero";
@@ -10,7 +12,7 @@ import { getContent, phoneLink } from "@/lib/content";
 import { getDictionary, localizeContent, localizeServices } from "@/lib/i18n";
 import { getLocale } from "@/lib/i18n/server";
 import { getPagesOps } from "@/lib/pages-ops";
-import { pageMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { getServices } from "@/lib/services";
 import { site as siteDefaults } from "@/lib/site";
 
@@ -85,7 +87,21 @@ export default async function ContactPage({
 
   return (
     <>
+      <SeoJsonLd
+        data={breadcrumbJsonLd([
+          { name: dict.nav.home, path: "/" },
+          { name: dict.nav.contact, path: "/contact" },
+        ])}
+      />
       <OpsPageHero
+        breadcrumb={
+          <Breadcrumbs
+            items={[
+              { name: dict.nav.home, href: "/" },
+              { name: dict.nav.contact },
+            ]}
+          />
+        }
         eyebrow={contactPage.eyebrow}
         title={contactPage.title}
         text={contactPage.text}
